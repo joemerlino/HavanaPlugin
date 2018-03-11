@@ -7,7 +7,7 @@ export default function (kibana) {
     uiExports: {
 
       app: {
-        title: 'Stub Havana',
+        title: 'Havana Plugin',
         description: 'PoC SWEefty',
         main: 'plugins/stab-havana/app'
       },
