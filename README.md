@@ -1,7 +1,7 @@
 # Havana Plugin - PoC
-Questo progetto realizza una _Proof of Concept_ per il corso di Ingegneria del Software 17/18 tenuto all'Università degli Studi di Padova della LT in Informatica. 
+Questo progetto realizza una _Proof of Concept_ per il corso di Ingegneria del Software 17/18 tenuto all'Università degli Studi di Padova della LT in Informatica.
 
-Esso è un _plugin_ per il framework Kibana v6.2.3, non può essere eseguito singolarmente ma necessita di una istanza di Kibana. Quest'ultima deve essere a sua volta collegata ad un'istanza di Elasticsearch. 
+Esso è un _plugin_ per il framework Kibana v6.2.3, non può essere eseguito singolarmente ma necessita di una istanza di Kibana. Quest'ultima deve essere a sua volta collegata ad un'istanza di Elasticsearch.
 
 Lo sviluppo è stato fatto eseguendo Kibana ed Elasticsearch localmente.
 
@@ -16,4 +16,4 @@ Lo sviluppo è stato fatto eseguendo Kibana ed Elasticsearch localmente.
 8. Una volta avviata l'interfaccia di Kibana, dal menù di sinistra selezionare la voce 'Dev Tools'.
 9. Scrivere nella console `PUT /rp/poc/1` e andare a capo.
 10. Copiare il contenuto del file data.json ed incollarlo all'interno della console.
-11. Eseguire l'intero comando e selezionare dal menù di sinistra la voce 'Stub Havana'.
+11. Eseguire l'intero comando e selezionare dal menù di sinistra la voce 'Havana Plugin'.
