@@ -1,0 +1,102 @@
+<div class="container" ng-controller="stabHavanaHelloWorld">
+    <div class="row">
+        <h1>Mappa Topologica</h1>
+        <div class="col-12-sm">
+            <svg width="960" height="500"></svg>
+        </div>
+<br /><br /><br/>
+<h1>Stack Trace</h1>
+ <!-- ng-class="{'bg-warning': totalNodeTime(node) > 700, 'bg-danger': totalNodeTime(node) > 1000}" -->
+
+<ul class="list-group">
+    <li class="list-group-item showmenu" ng-repeat="node in data.nodes" >
+        {{node.name}} <span class="badge" ng-class="{'bg-warning': totalNodeTime(node) > 700, 'bg-danger': totalNodeTime(node) > 1000}">{{ totalNodeTime(node) }} ms</span>
+        <div style="display:none;" class="hiddenData">
+            <br />
+            <table class="table table-bordered table-inverse" style="background-color:#FFF;">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Errore</th>
+                        <th>Durata</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat>
+
+                    </tr>
+                    <tr ng-repeat="stack in node.stack_trace"
+                    ng-class="{'bg-warning': stack.duration > 700, 'bg-danger': stack.duration > 1000}" >
+                        <td>{{ stack.nome }}</td>
+                        <td>{{ stack.error }}</td>
+                        <td>{{ stack.duration }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        <div>
+    </li>
+
+</ul>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    $('.showmenu').click(function(e) {
+        console.log(e.target);
+        $(this).children('.hiddenData').slideToggle("fast");
+    });
+});
+</script>
+
+
+    </div>
+</div>
+
+
+<style>
+
+    h1 {
+        font-size: 2.5em;
+        margin: 0.5em;
+    }
+    .bg-warning {
+        background-color: #f0ad4e;
+    }
+
+    .bg-danger {
+            background-color: #d9534f;
+    }
+
+    .links line {
+        stroke: #999;
+        stroke-opacity: 0.6;
+    }
+
+    .nodes circle {
+        stroke: #fff;
+        stroke-width: 1.5px;
+    }
+    .node text {
+        pointer-events: none;
+        font: 10px sans-serif;
+    }       
+    .container {
+        background-color: #FFF;
+        width: 97%;
+        display: flex;
+        font-size: 1.3em;
+        justify-content: space-between;
+    }
+    .col-12-sm{
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #ffffff;
+        border: 1px solid #dddddd;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        border-bottom-right-radius: 4px;
+        border-bottom-left-radius: 4px;
+    }
+
+</style>

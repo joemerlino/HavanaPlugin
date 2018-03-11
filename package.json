@@ -1,0 +1,30 @@
+{
+  "name": "stab-havana",
+  "version": "0.0.1",
+  "description": "PoC SWEefty",
+  "main": "index.js",
+  "kibana": {
+    "version": "kibana"
+  },
+  "scripts": {
+    "lint": "eslint",
+    "start": "plugin-helpers start",
+    "test:server": "plugin-helpers test:server",
+    "test:browser": "plugin-helpers test:browser",
+    "build": "plugin-helpers build",
+    "postinstall": "plugin-helpers postinstall"
+  },
+  "devDependencies": {
+    "@elastic/eslint-config-kibana": "0.0.2",
+    "@elastic/plugin-helpers": "^6.0.0",
+    "babel-eslint": "4.1.8",
+    "chai": "^3.5.0",
+    "eslint": "1.10.3",
+    "eslint-plugin-mocha": "1.1.0"
+  },
+  "dependencies": {
+    "chart.js": "^2.7.1",
+    "d3": "^4.13.0",
+    "d3-fetch": "^1.0.1"
+  }
+}
