@@ -1,7 +1,14 @@
 const DataCleaner = require('./DataCleaner');
 const GraphStrategy = require('./strategies/graphcleaner');
 
-let cc = new DataCleaner();
-cc.setStrategy(new GraphStrategy);
 
-console.log(cc.query());
+const Grapher = function() {
+    this.cc = new DataCleaner(new GraphStrategy);
+
+    this.getData = function() {
+        return "getting data";
+    }
+}
+
+let g = new Grapher();
+console.log(g.getData());
