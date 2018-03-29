@@ -4,16 +4,23 @@ import { uiModules } from 'ui/modules';
 import uiRoutes from 'ui/routes';
 
 
+// new imports
+let dc = require('./dataCleaner');
+let Grapher = require('./grapher');
+let GraphStrategy = require('./strategies/graphcleaner');
+let StackStrategy = require('./strategies/stackcleaner');
+
+
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
 import databaseSvg from 'plugins/stab-havana/res/img/database.svg';
 
 var d3 = Object.assign(
-  require("d3-selection"), 
-  require("d3-scale"), 
-  require("d3-force"), 
+  require("d3-selection"),
+  require("d3-scale"),
+  require("d3-force"),
   require("d3-timer"),
   require("d3-zoom"),
-  require("d3-fetch"), 
+  require("d3-fetch"),
   require("d3-drag")
 );
 
@@ -28,9 +35,12 @@ uiRoutes
   resolve: {
     getData($http) {
       return $http.get('../api/stabHavana/logs').then(function(resp) {
-        console.log(resp);
+        // console.log(resp);
         return resp.data.logs;
       })
+    },
+    getMsh() {
+      return "returning some data";
     }
   }
 });
@@ -42,10 +52,51 @@ uiModules
   $scope.description = 'PoC SWEefty';
   const currentTime = moment($route.current.locals.currentTime);
 
+
+
   const elastic = $route.current.locals.getData;
-  const ddd = elastic.hits[0]._source;
+  // const ddd = elastic.hits[0]._source;
 
   $scope.data = $route.current.locals.getData.hits[0]._source;
+
+  console.log($route.current.locals.getMsh);
+
+
+  const elasticInstance = $route.current.locals;
+
+  // passare elasticInstance direttamente alla strategy mi risparmia un bel po
+  // di passaggi di variabile peró é bruttino
+  let strategy = new GraphStrategy(elasticInstance);
+
+  // setto la strategy in dataClenaer
+  dc.setStrategy(strategy);
+
+  // creo grapher e setto il dataCleaner con la strategia giusta
+  let g = new Grapher(dc);
+  g.setDataCleaner(dc);
+
+  // console.log(g.getData());
+
+
+  const ddd = g.getData();
+
+  // console.log("Dati ricevuti");
+  console.log(ddd);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   $scope.getTotalTime = function() {
      let tt = 0;
@@ -114,7 +165,7 @@ node.append("title")
 
 var nodelabels = svg.append("g")
   .attr("class", "nodelabel")
-  .selectAll("text") 
+  .selectAll("text")
        .data(ddd.nodes)
        .enter().append("text")
        .text(function(d){return d.name;});
@@ -148,7 +199,7 @@ node
     .attr("y", function(d) { return d.y-8; });
 
 nodelabels
-    .attr("x", function(d) { return d.x+30; }) 
+    .attr("x", function(d) { return d.x+30; })
     .attr("y", function(d) { return d.y+12; });
 }
 
