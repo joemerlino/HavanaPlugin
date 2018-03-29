@@ -20,7 +20,8 @@
     "babel-eslint": "4.1.8",
     "chai": "^3.5.0",
     "eslint": "1.10.3",
-    "eslint-plugin-mocha": "1.1.0"
+    "eslint-plugin-mocha": "1.1.0",
+    "mocha": "^5.0.5"
   },
   "dependencies": {
     "chart.js": "^2.7.1",
