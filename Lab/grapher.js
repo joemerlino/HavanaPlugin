@@ -1,14 +1,20 @@
 const DataCleaner = require('./DataCleaner');
 const GraphStrategy = require('./strategies/graphcleaner');
+const StackStrategy = require('./strategy/stackcleaner');
 
 
-const Grapher = function() {
-    this.cc = new DataCleaner(new GraphStrategy);
+class Grapher {
 
-    this.getData = function() {
-        return "getting data";
-    }
+  constructor() {
+    this.cc = null;
+  }
+
+  setDataCleaner(dc) {
+    this.cc = dc;
+  }
+
+  getData() {
+    return "getting data from datcleaner";
+  }
+
 }
-
-let g = new Grapher();
-console.log(g.getData());
