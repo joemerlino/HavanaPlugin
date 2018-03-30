@@ -34,8 +34,8 @@ uiRoutes
   template,
   resolve: {
     getData($http) {
-      return $http.get('../api/stabHavana/logs').then(function(resp) {
-        // console.log(resp);
+      return $http.get('../api/stabHavana/indices').then(function(resp) {
+        console.log(resp);
         return resp.data.logs;
       })
     },
