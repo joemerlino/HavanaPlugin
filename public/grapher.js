@@ -22,13 +22,22 @@ class Grapher {
 
     // retieve data
     this.data = this.cc.query();
-
+    
     // parse data
     this.data = this.data.hits[0]._source;
 
+    // stubberini
+    return this.data = {
+      nodes : {
+
+      },
+      edges : {
+        
+      }
+    }
 
     // return data
-    return this.data;
+    // return this.data;
   }
 
 }

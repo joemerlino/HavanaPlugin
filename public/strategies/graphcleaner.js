@@ -22,6 +22,8 @@ class GraphCleaner {
 
   query() {
     // return "ho bisogno di un testo a parte perché c'é confusione";
+    
+    // OUTPUT DI PROVA QUI PAOLO
     return this.es.getData;
     // this.data = "ho bisogno di un testo a parte perché c'é confusione";
   }
@@ -31,7 +33,8 @@ class GraphCleaner {
   }
 
   getdata() {
-
+    // query
+    // return clean della precedente
   }
 
 }
