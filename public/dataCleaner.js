@@ -12,15 +12,19 @@ class DataCleaner {
   }
 
   query() {
+    console.log("fatta una query con datacleaner");
     return this.strategy.query();
   }
 
   clean() {
+    console.log("richiesta una clean con datacleaner");
       return this.strategy.clean();
       // return "cleaned data";
   }
 
   getData() {
+
+    console.log("datacleaner::getData eseguito");
       return this.strategy.getData();
       // return "getting some data";
   }

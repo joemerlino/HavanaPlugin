@@ -35,7 +35,7 @@ uiRoutes
   resolve: {
     getData($http) {
       return $http.get('../api/stabHavana/indices').then(function(resp) {
-        console.log(resp);
+        console.log(resp); // la risposta della query
         return resp.data.logs;
       })
     },
@@ -50,20 +50,16 @@ uiModules
 .controller('stabHavanaHelloWorld', function ($scope, $route, $interval) {
   $scope.title = 'Stub Havana';
   $scope.description = 'PoC SWEefty';
-  const currentTime = moment($route.current.locals.currentTime);
 
-
-
-  const elastic = $route.current.locals.getData;
+  console.log("questo qui sotto dovrebbe avere le informazioni ma non riceve nulla");
+  console.log($route.current.locals.getData); //undefined
+  // const elastic = $route.current.locals.getData;
+  // console.log(elastic); //undefined
   // const ddd = elastic.hits[0]._source;
-
-  $scope.data = $route.current.locals.getData.hits[0]._source;
-
-  console.log($route.current.locals.getMsh);
-
+  // $scope.data = $route.current.locals.getData.hits[0]._source;
+  // console.log($route.current.locals.getMsh);
 
   const elasticInstance = $route.current.locals;
-
   // passare elasticInstance direttamente alla strategy mi risparmia un bel po
   // di passaggi di variabile peró é bruttino
   let strategy = new GraphStrategy(elasticInstance);
@@ -77,11 +73,11 @@ uiModules
 
   // console.log(g.getData());
 
-
+  //console.log($route.current.locals.getData); //undefined
   const ddd = g.getData();
 
   // console.log("Dati ricevuti");
-  console.log(ddd);
+  // console.log(ddd);
 
 
 

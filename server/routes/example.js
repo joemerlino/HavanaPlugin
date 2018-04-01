@@ -15,7 +15,7 @@ server.route({
     method: 'GET',
     handler(req, reply) {
         callWithRequest(req, 'search', {
-            index: 'stagemonitor-metrics-2018.03.30'
+            index: 'stagemonitor-metrics-2018.03.29'
         }).then(function (response) {
             reply(response);
         });
