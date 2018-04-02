@@ -5,8 +5,10 @@ import uiRoutes from 'ui/routes';
 
 
 // new imports
-let dc = require('./dataCleaner');
-let Grapher = require('./grapher');
+let DataCleaner = require('./dataCleaner');
+let DataReader = require('./dataReader');
+let GraphBuilder = require('./graphBuilder');
+let StackBuilder = require('./stackBuilder');
 let GraphStrategy = require('./strategies/graphcleaner');
 let StackStrategy = require('./strategies/stackcleaner');
 
@@ -30,60 +32,58 @@ import template from './templates/index.html';
 
 uiRoutes.enable();
 uiRoutes
-.when('/', {
-  template,
-  resolve: {
-    getData($http) {
-      return $http.get('../api/stabHavana/indices').then(function(resp) {
-        console.log(resp); // la risposta della query
-        return resp.data.logs;
-      })
-    },
-    getMsh() {
-      return "returning some data";
+  .when('/', {
+    template,
+    resolve: {
+      getData($http) {
+        return $http.get('../api/stabHavana/indices').then(function (resp) {
+          // console.log(resp); // la risposta della query
+          return resp;
+        })
+      },
+      getMsh() {
+        return "returning some data";
+      }
     }
-  }
-});
+  });
 
 uiModules
-.get('app/stabHavana', [])
-.controller('stabHavanaHelloWorld', function ($scope, $route, $interval) {
-  $scope.title = 'Stub Havana';
-  $scope.description = 'PoC SWEefty';
+  .get('app/stabHavana', [])
+  .controller('stabHavanaHelloWorld', function ($scope, $route, $interval) {
+    $scope.title = 'Stub Havana';
+    $scope.description = 'PoC SWEefty';
 
-  console.log("questo qui sotto dovrebbe avere le informazioni ma non riceve nulla");
-  console.log($route.current.locals.getData); //undefined
-  // const elastic = $route.current.locals.getData;
-  // console.log(elastic); //undefined
-  // const ddd = elastic.hits[0]._source;
-  // $scope.data = $route.current.locals.getData.hits[0]._source;
-  // console.log($route.current.locals.getMsh);
+    // const dati = $route.current.locals.getData;
+    // console.log(elastic); //undefined
+    // const ddd = elastic.hits[0]._source;
+    // $scope.data = $route.current.locals.getData.hits[0]._source;
+    // console.log($route.current.locals.getMsh);
 
-  const elasticInstance = $route.current.locals;
-  // passare elasticInstance direttamente alla strategy mi risparmia un bel po
-  // di passaggi di variabile peró é bruttino
-  let strategy = new GraphStrategy(elasticInstance);
+    console.log('init');
 
-  // setto la strategy in dataClenaer
-  dc.setStrategy(strategy);
+    // link ai dati su elasticsearch
+    const elasticInstance = $route.current.locals;
 
-  // creo grapher e setto il dataCleaner con la strategia giusta
-  let g = new Grapher(dc);
-  g.setDataCleaner(dc);
+    // lettori di dati
+    let dr = new DataReader(elasticInstance);
+    // strategia con cui pulire i dati
+    let strategy = new GraphStrategy();
+    // pulitore di dati
+    let dc = new DataCleaner(strategy);
 
-  // console.log(g.getData());
+    // check dei dati grezzi
+    // console.log(dr.readData());
+    // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
+    console.log(dc.cleanData(dr.readData()));
 
-  //console.log($route.current.locals.getData); //undefined
-  const ddd = g.getData();
+    // componente dal quale ottenere il grafo
+    let g = new GraphBuilder(dr,dc);
 
-  // console.log("Dati ricevuti");
-  // console.log(ddd);
+    // check dei dati sottoforma di grafo
+    console.log(g.getGraph());
 
-
-
-
-
-
+    // impostazione dei nodi del grafo
+    const ddd = g.getGraph();
 
 
 
@@ -94,124 +94,126 @@ uiModules
 
 
 
-  $scope.getTotalTime = function() {
-     let tt = 0;
-     $scope.data.nodes.forEach(function(el) {
-         el.stack_trace.forEach(function(e) {
-             tt += e.duration;
-         });
-     });
-     return tt;
- }
 
- $scope.totalNodeTime = function(node) {
-     let tt = 0;
-     node.stack_trace.forEach(function(e) {
-         tt += e.duration;
-     });
-     return tt;
- }
 
- console.log($scope.getTotalTime());
-  $scope.currentTime = currentTime.format('HH:mm:ss');
-  const unsubscribe = $interval(function () {
-    $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
-  }, 1000);
-  $scope.$watch('$destroy', unsubscribe);
+    $scope.getTotalTime = function () {
+      let tt = 0;
+      $scope.data.nodes.forEach(function (el) {
+        el.stack_trace.forEach(function (e) {
+          tt += e.duration;
+        });
+      });
+      return tt;
+    }
 
-var svg = d3.select("svg"),
-    width = +svg.attr("width"),
-    height = +svg.attr("height"),
-    transform = d3.zoomIdentity;
+    $scope.totalNodeTime = function (node) {
+      let tt = 0;
+      node.stack_trace.forEach(function (e) {
+        tt += e.duration;
+      });
+      return tt;
+    }
 
-var color = d3.scaleOrdinal(d3.schemeCategory20);
+    console.log($scope.getTotalTime());
+    $scope.currentTime = currentTime.format('HH:mm:ss');
+    const unsubscribe = $interval(function () {
+      $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
+    }, 1000);
+    $scope.$watch('$destroy', unsubscribe);
 
-var simulation = d3.forceSimulation()
-.force("link", d3.forceLink().distance(150).id(function(d) { return d.id; }))
-.force("charge", d3.forceManyBody())
-.force("center", d3.forceCenter(width / 2, height / 2));
+    var svg = d3.select("svg"),
+      width = +svg.attr("width"),
+      height = +svg.attr("height"),
+      transform = d3.zoomIdentity;
 
-var link = svg.append("g")
-  .attr("class", "links")
-  .selectAll("line")
-  .data(ddd.links)
-  .enter().append("line")
-  .attr("stroke-width", function(d) { return Math.sqrt(d.value); });
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
 
-var node = svg.append("g")
-  .attr("class", "nodes")
-  .selectAll("circle")
-  .data(ddd.nodes)
-  .enter().append("image")
-    .attr("xlink:href", function(d) {
-      if(d.type == "Database")
-        return databaseSvg;
-      else
-        return serverSvg;
-    })
-    .attr("width",30)
-    .attr("height",30)
-    .call(d3.drag()
-         .on("start", dragstarted)
-         .on("drag", dragged)
-         .on("end", dragended));
+    var simulation = d3.forceSimulation()
+      .force("link", d3.forceLink().distance(150).id(function (d) { return d.id; }))
+      .force("charge", d3.forceManyBody())
+      .force("center", d3.forceCenter(width / 2, height / 2));
 
-node.append("title")
-  .text(function(d) { return d.name; });
+    var link = svg.append("g")
+      .attr("class", "links")
+      .selectAll("line")
+      .data(ddd.links)
+      .enter().append("line")
+      .attr("stroke-width", function (d) { return Math.sqrt(d.value); });
 
-var nodelabels = svg.append("g")
-  .attr("class", "nodelabel")
-  .selectAll("text")
-       .data(ddd.nodes)
-       .enter().append("text")
-       .text(function(d){return d.name;});
+    var node = svg.append("g")
+      .attr("class", "nodes")
+      .selectAll("circle")
+      .data(ddd.nodes)
+      .enter().append("image")
+      .attr("xlink:href", function (d) {
+        if (d.type == "Database")
+          return databaseSvg;
+        else
+          return serverSvg;
+      })
+      .attr("width", 30)
+      .attr("height", 30)
+      .call(d3.drag()
+        .on("start", dragstarted)
+        .on("drag", dragged)
+        .on("end", dragended));
 
-simulation
-  .nodes(ddd.nodes)
-  .on("tick", ticked);
+    node.append("title")
+      .text(function (d) { return d.name; });
 
-simulation.force("link")
-  .links(ddd.links);
+    var nodelabels = svg.append("g")
+      .attr("class", "nodelabel")
+      .selectAll("text")
+      .data(ddd.nodes)
+      .enter().append("text")
+      .text(function (d) { return d.name; });
 
-svg.call(d3.zoom()
-    .scaleExtent([1 / 2, 8])
-    .on("zoom", zoomed));
+    simulation
+      .nodes(ddd.nodes)
+      .on("tick", ticked);
 
-function zoomed() {
-  node.attr("transform", d3.event.transform);
-  link.attr("transform", d3.event.transform);
-  nodelabels.attr("transform", d3.event.transform);
-}
+    simulation.force("link")
+      .links(ddd.links);
 
-function ticked() {
-link
-    .attr("x1", function(d) { return d.source.x; })
-    .attr("y1", function(d) { return d.source.y; })
-    .attr("x2", function(d) { return d.target.x; })
-    .attr("y2", function(d) { return d.target.y; });
+    svg.call(d3.zoom()
+      .scaleExtent([1 / 2, 8])
+      .on("zoom", zoomed));
 
-node
-    .attr("x", function(d) { return d.x-8; })
-    .attr("y", function(d) { return d.y-8; });
+    function zoomed() {
+      node.attr("transform", d3.event.transform);
+      link.attr("transform", d3.event.transform);
+      nodelabels.attr("transform", d3.event.transform);
+    }
 
-nodelabels
-    .attr("x", function(d) { return d.x+30; })
-    .attr("y", function(d) { return d.y+12; });
-}
+    function ticked() {
+      link
+        .attr("x1", function (d) { return d.source.x; })
+        .attr("y1", function (d) { return d.source.y; })
+        .attr("x2", function (d) { return d.target.x; })
+        .attr("y2", function (d) { return d.target.y; });
 
-function dragstarted(d) {
-    if (!d3.event.active) simulation.alphaTarget(0.3).restart();
-    d.fx = d.x;
-    d.fy = d.y;
-}
+      node
+        .attr("x", function (d) { return d.x - 8; })
+        .attr("y", function (d) { return d.y - 8; });
 
-function dragged(d) {
-    d.fx = d3.event.x;
-    d.fy = d3.event.y;
-}
+      nodelabels
+        .attr("x", function (d) { return d.x + 30; })
+        .attr("y", function (d) { return d.y + 12; });
+    }
 
-function dragended(d) {
-    d3.select(this).classed("active", false);
-}
+    function dragstarted(d) {
+      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      d.fx = d.x;
+      d.fy = d.y;
+    }
 
-});
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
+
+    function dragended(d) {
+      d3.select(this).classed("active", false);
+    }
+
+  });
