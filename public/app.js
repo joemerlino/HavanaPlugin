@@ -53,17 +53,8 @@ uiModules
     $scope.title = 'Stub Havana';
     $scope.description = 'PoC SWEefty';
 
-    // const dati = $route.current.locals.getData;
-    // console.log(elastic); //undefined
-    // const ddd = elastic.hits[0]._source;
-    // $scope.data = $route.current.locals.getData.hits[0]._source;
-    // console.log($route.current.locals.getMsh);
-
     // link ai dati su elasticsearch
     const elasticInstance = $route.current.locals;
-
-    // dati grezzi
-    console.log(elasticInstance.getData);
 
     // lettori di dati
     let dr = new DataReader(elasticInstance);
@@ -73,14 +64,17 @@ uiModules
     let dc = new DataCleaner(strategy);
 
     // check dei dati grezzi
-    // console.log(dr.readData());
+    console.log('Dati grezzi:');
+    console.log(dr.readData());
     // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
+    console.log('Dati puliti dal cleaner');
     console.log(dc.cleanData(dr.readData()));
 
     // componente dal quale ottenere il grafo
     let g = new GraphBuilder(dr,dc);
 
     // check dei dati sottoforma di grafo
+    console.log('Dati finali del grafo');
     console.log(g.getGraph());
 
     // impostazione dei nodi del grafo
