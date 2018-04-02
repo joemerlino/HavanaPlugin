@@ -20,7 +20,7 @@ export default function (server) {
             // stagemonitor-spans-2018.03.28
             // stagemonitor-spans-2018.04.01
             // stagemonitor-spans-2018.03.25
-
+            
             callWithRequest(req, 'search', {
                 index: 'stagemonitor-spans-2018.03.28'
             }).then(function (response) {

@@ -114,12 +114,13 @@ uiModules
       return tt;
     }
 
-    console.log($scope.getTotalTime());
-    $scope.currentTime = currentTime.format('HH:mm:ss');
-    const unsubscribe = $interval(function () {
-      $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
-    }, 1000);
-    $scope.$watch('$destroy', unsubscribe);
+    // commentato la roba che segue perchè fa rompere il plugin
+    // console.log($scope.getTotalTime());
+    // $scope.currentTime = currentTime.format('HH:mm:ss');
+    // const unsubscribe = $interval(function () {
+    //   $scope.currentTime = currentTime.add(1, 'second').format('HH:mm:ss');
+    // }, 1000);
+    // $scope.$watch('$destroy', unsubscribe);
 
     var svg = d3.select("svg"),
       width = +svg.attr("width"),
