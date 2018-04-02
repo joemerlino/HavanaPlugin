@@ -13,8 +13,20 @@ class DataCleaner {
     this.strategy = str;
   }
 
+  // rimuove i metdati di elasticsearch
+  removeMetaData(data){
+    data = data['data']['hits']['hits'];
+    var newData = Array();
+    for(var key in data){
+      newData.push(data[key]['_source']);
+    }
+    return newData;
+  }
+
   cleanData(data){
-    return this.strategy.clean(data);
+    return this.strategy.clean(
+      this.removeMetaData(data)
+    );
   }
 }
 

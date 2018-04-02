@@ -4,7 +4,7 @@
 class GraphCleaner {
   clean(data) {
     // deve pulire per grafo
-    return data['data']['hits']['hits'];
+    return data;
   }
 }
 
