@@ -59,10 +59,11 @@ uiModules
     // $scope.data = $route.current.locals.getData.hits[0]._source;
     // console.log($route.current.locals.getMsh);
 
-    console.log('init');
-
     // link ai dati su elasticsearch
     const elasticInstance = $route.current.locals;
+
+    // dati grezzi
+    console.log(elasticInstance.getData);
 
     // lettori di dati
     let dr = new DataReader(elasticInstance);
