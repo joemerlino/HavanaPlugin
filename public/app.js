@@ -9,7 +9,8 @@ let DataCleaner = require('./dataCleaner');
 let DataReader = require('./dataReader');
 let GraphBuilder = require('./graphBuilder');
 let StackBuilder = require('./stackBuilder');
-let GraphStrategy = require('./strategies/graphcleaner');
+//graphstrategy è diventata graphcleaner
+let GraphCleaner = require('./strategies/graphcleaner');
 let StackStrategy = require('./strategies/stackcleaner');
 
 
@@ -59,7 +60,7 @@ uiModules
     // lettori di dati
     let dr = new DataReader(elasticInstance);
     // strategia con cui pulire i dati
-    let strategy = new GraphStrategy();
+    let strategy = new GraphCleaner();
     // pulitore di dati
     let dc = new DataCleaner(strategy);
 

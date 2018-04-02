@@ -18,115 +18,71 @@ class GraphBuilder {
     this.dr = dr;
   }
 
+
+  checkIfPresent(dg, st) {
+  //dg contiene tutte i nodi da plottare, st(singletrace) è il candidato ad entrare nell'insieme.
+  //controllo stupido sul nome del nodo per stabilire se esso debba entrare
+  //TODO: ovviamente da cambiare
+    var result=true;
+    for ( var i = 0 ; i < dg['nodes'].length && result==true ; i++ ) {
+      if ( dg['nodes'][i].name == st.name ) {
+        result=false;
+      }
+    }
+    return result; 
+  }
+
   getGraph() {
     
     // retieve data
     this.data = this.dc.cleanData(this.dr.readData());
     
     // parse data
-    // magia da implementare
-    this.data = this.data;
+    var dataGraph = {};
+    var nodes = [];
+    var id_counter=1;
+    for ( var i = 0; i < this.data.length; i++ ) {
+      //TODO: mock
+      if ( this.data[i]['type'] == "jdbc") {
+        var name=this.data[i]['db.type'];
+        var type="Database";
+        var id=id_counter++;
+        //TODO: stack trace mock, da sistemare anche qui
+        var stack_trace = [ {
+          "nome": "SQL QUERY",
+          "error" : false,
+          "duration" : 4
+        } ]
 
-    // stubberini
-    return this.data = {
-      nodes: [
-        {
-          name: 'AWS Server',
-          type: 'Server',
-          id: 1,
-          stack_trace: [
-            {
-              nome: 'SQL QUERY',
-              error: false,
-              duration: 3
-            },
-            {
-              nome: 'SYS_CALL',
-              error: true,
-              duration: 711
-            }
-          ]
-        },
-        {
-          name: 'DB_STORE',
-          type: 'Database',
-          id: 2,
-          stack_trace: [
-            {
-              nome: 'SQL QUERY',
-              error: false,
-              duration: 340
-            },
-            {
-              nome: 'trigger execution',
-              error: true,
-              duration: 1200
-            }
-          ]
-        },
-        {
-          name: 'Neo4j',
-          type: 'Database',
-          id: 3,
-          stack_trace: [
-            {
-              nome: 'executing query',
-              error: false,
-              duration: 21
-            },
-            {
-              nome: 'com.graph.reflect.distr',
-              error: true,
-              duration: 11
-            }
-          ]
-        },
-        {
-          name: 'Graph Database',
-          type: 'Database',
-          id: 4,
-          stack_trace: [
-            {
-              nome: 'computing query',
-              error: false,
-              duration: 800
-            },
-            {
-              nome: 'SYS_CALL',
-              error: true,
-              duration: 12
-            }
-          ]
-        }
-      ],
-      links: [
-        {
-          source: 1,
-          target: 2,
-          type: '40'
-        },
-        {
-          source: 1,
-          target: 3,
-          type: '20'
-        },
-        {
-          source: 2,
-          target: 4,
-          type: '40'
-        },
-        {
-          source: 1,
-          target: 4,
-          type: '10'
-        }
-      ]
-    };
+        nodes.push( {
+          "name":name,
+          "type":type,
+          "id":id,
+          "stack_trace":stack_trace
+        })
+      }
+    }
+    
+    dataGraph['nodes']=[];
+    for ( var i = 0 ; i < nodes.length ; i++ ) {
+      //controllo stupido sul nome per stabilire se è già presente oppure no
+      var check = this.checkIfPresent(dataGraph, nodes[i]);
+      if ( check ) {
+        dataGraph.nodes[i]=nodes[i];
+      }
+    }
 
-    // return data
+    dataGraph['links']=[];
+    //TODO: implementare links
+    //collegamento stub per non far crashare tutto
+    var link = {
+      "source": 1,
+      "target": 2,
+      "type": "40"
+    }
+    this.data=dataGraph;
     return this.data;
-  }
-
+    }
 }
 
 module.exports = GraphBuilder;
