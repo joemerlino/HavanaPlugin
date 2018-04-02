@@ -20,7 +20,7 @@ class StackBuilder {
       
       // parse data
       // magia da implementare
-      this.data = this.data;
+      this.data = this.data; 
   
       // stubberini
       return this.data = {

@@ -7,6 +7,7 @@ class DataReader {
         this.es = elasticInstance;
     }
 
+    // imposta la sorgente dei dati
     setElasticsearchInstance(elastic) {
         this.es = elastic;
     }

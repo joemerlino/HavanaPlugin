@@ -17,8 +17,13 @@ class DataCleaner {
   removeMetaData(data) {
     data = data['data'];
     var flatData = new Array();
+    // i dati vengono passati come un array di risultati legati ad un indice, quindi...
     for (var i = 0; i < data.length; i++) {
+      // per ogni indice...
       for(var j = 0; j<data[i].length;j++){
+        //per ogni trace....
+
+        //aggiungi il contenuto della trace alla lista completa dei dati, essa è contenuta nel campo source
         flatData.push(data[i][j]['_source']);
       }
     }
