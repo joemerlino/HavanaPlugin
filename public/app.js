@@ -9,7 +9,6 @@ let DataCleaner = require('./dataCleaner');
 let DataReader = require('./dataReader');
 let GraphBuilder = require('./graphBuilder');
 let StackBuilder = require('./stackBuilder');
-//graphstrategy è diventata graphcleaner
 let GraphCleaner = require('./strategies/graphcleaner');
 let StackStrategy = require('./strategies/stackcleaner');
 
@@ -32,18 +31,38 @@ import './less/main.less';
 import template from './templates/index.html';
 
 uiRoutes.enable();
+
 uiRoutes
   .when('/', {
     template,
     resolve: {
+
+      // ritorna un array composto da tutti e soli gli indici che contengono nel nome spans
+      tracesIndices($http){
+        return $http.get('../api/stabHavana/allIndices').then(function (resp) {
+          var tracesIndices = new Array();
+          for(var k in resp['data']){
+            if(resp['data'][k]['index'].includes('span')){
+              tracesIndices.push(resp['data'][k]['index']);
+            }
+          }
+          return tracesIndices;
+        })
+      },
+
+      // ritorna un indice, per ora fisso, ma un bel giorno variabile
+      getIndex($http){
+        return $http.get('../api/stabHavana/index?index=stagemonitor-spans-2018.03.25').then(function (resp) { // da testare
+          return resp;
+        })
+      },
+
       getData($http) {
+        // return $http.get('../api/stabHavana/indices').then(function (resp) {
         return $http.get('../api/stabHavana/indices').then(function (resp) {
           // console.log(resp); // la risposta della query
           return resp;
         })
-      },
-      getMsh() {
-        return "returning some data";
       }
     }
   });
@@ -56,6 +75,9 @@ uiModules
 
     // link ai dati su elasticsearch
     const elasticInstance = $route.current.locals;
+
+    console.log('Lista degli indici span in elasticsearch:');
+    console.log(elasticInstance.tracesIndices);
 
     // lettori di dati
     let dr = new DataReader(elasticInstance);
