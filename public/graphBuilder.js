@@ -75,6 +75,9 @@ class GraphBuilder {
     dataGraph['links']=[];
     //TODO: implementare links
     //collegamento stub per non far crashare tutto
+
+    //da aggiungere all 'interfaccia: medium rensponde time e modificare il type invece che in numerico in db/server
+
     var link = {
       "source": 1,
       "target": 2,
