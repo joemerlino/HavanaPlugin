@@ -132,8 +132,8 @@ uiModules
     console.log('Dati finali della stack trace');
     console.log(s.getStack())
 
-
-
+    // passa i dati alla stack trace
+    $scope.nodes = s.getStack();
 
 
 
@@ -261,3 +261,46 @@ uiModules
     }
 
   });
+
+ // Angular per stack trace
+
+ uiModules.get('app/stabHavana', [])
+.directive('tree', function() {
+  return {
+    restrict: 'E',
+    replace: true, 
+    scope: {
+      t: '=src'  
+    },    
+    template: '<ul><branch ng-repeat="c in t.children" src="c"></branch></ul>'    
+  };
+})
+
+.directive('branch', function($compile) {
+  return {
+    restrict: 'E', 
+    replace: true, 
+    scope: {
+      b: '=src' 
+    },    
+    template: '<li><span class="toggle">{{ b.name }}<div class="spacetree">{{b.timestamp}}</div><div class="spacetree">{{b.time}} ms</div></span></li>',
+    link: function(scope, element, attrs) {
+      if (angular.isArray(scope.b.children)) {        
+        element.append('<tree src="b"></tree>');
+        $compile(element.contents())(scope); 
+      }
+    }
+  };
+  
+}).directive('querylist', function() {
+  return {
+    restrict: 'E', 
+    replace: true,
+    scope: {
+      t: '=src',
+    },    
+    template: '<div><div ng-repeat="c in t.query"><li><div id="nrDAT">1</div><div id="nameDAT">{{c.name}}</div><div id="time2DAT">{{c.timestamp}}</div><div id="timeDAT">{{c.time}} ms</div><div id="dbDAT">{{c.database}}</div></li></div><querylist ng-repeat="x in t.children" src="x"></querylist></div>' ,
+  };
+});
+
+

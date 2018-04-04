@@ -1,51 +1,147 @@
 <div class="container" ng-controller="stabHavanaHelloWorld">
-    <div class="row">
-        <h1>Mappa Topologica</h1>
-        <div class="col-12-sm">
-            <svg width="960" height="500"></svg>
-        </div>
-<br /><br /><br/>
-<h1>Stack Trace</h1>
- <!-- ng-class="{'bg-warning': totalNodeTime(node) > 700, 'bg-danger': totalNodeTime(node) > 1000}" -->
+  <div class="row">
+    <h1>Mappa Topologica</h1>
+      <div class="col-12-sm">
+        <svg width="960" height="500"></svg>
+      </div>
 
-<ul class="list-group">
-    <li class="list-group-item showmenu" ng-repeat="node in data.nodes" >
-        {{node.name}} <span class="badge" ng-class="{'bg-warning': totalNodeTime(node) > 700, 'bg-danger': totalNodeTime(node) > 1000}">{{ totalNodeTime(node) }} ms</span>
-        <div style="display:none;" class="hiddenData">
-            <br />
-            <table class="table table-bordered table-inverse" style="background-color:#FFF;">
-                <thead>
+    <br /><br /><br/>
+
+    <h1>Stack Trace</h1>
+
+    <table class="stack">
+      <thead>
+        <tr>
+          <th id="nr"> Nr. </th>
+          <th id="name"> Richiesta </th>
+          <th id="time"> Execution Time</th>
+          <th id="time2"> Timestamp </th>
+          <th id="err"> Errore </th>
+        </tr>
+      </thead>
+      <tbody >
+        <tr ng-repeat-start="item in nodes.children">
+          <td colspan="5" class="table-gap"></td>
+        </tr>
+        <tr class="main-row">
+          <td><div class="data">{{$index+1}}</div></td>
+          <td><div class="data">{{item.name}}</div></td>
+          <td><div class="data">{{item.time}} ms</div></td>
+          <td><div class="data">{{item.timestamp}}</div></td>
+          <td><div class="data">{{item.Cod_errore}}</div></td>
+        </tr>
+        <tr class="contentRow">
+          <td colspan="5" class="content-td">
+            <div class="contentST">
+              <div class="list-switcher">
+              <p class="fieldset">
+                <input type="radio" name="view" value="call" id="call-{{item.name}}" checked>
+                <label for="call-{{item.name}}">Call tree</label>
+                <input type="radio" name="view" value="query" id="query-{{item.name}}">
+                <label for="query-{{item.name}}">Query list</label>
+                <span class="switch left"></span>
+              </p>
+            </div>
+              <div class="calltree">
+                <table class="call-table">
+                  <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Errore</th>
-                        <th>Durata</th>
+                      <th id="nameMet"> Nome </th>
+                      <th id="timeMet"> Execution </br>Time</th>
+                      <th id="time2Met"> Timestamp </th>
                     </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat>
-
+                  </thead>
+                  <tbody>
+                    <td colspan="3">
+                    <ul class="list">
+                      <span class="toggle"></span>
+                      <tree src="item"></tree>
+                    </ul>
+                    </td>
+                  </tbody>
+              </table>
+              </div>
+              <div class="querylist hidden">
+                <table>
+                  <thead>
+                    <tr>
+                      <th id="nrQR"> Nr. </th>
+                      <th id="nameQR"> Query </th>
+                      <th id="db"> Database </th>
+                      <th id="timeQR"> Execution Time</th>
+                      <th id="time2QR"> Timestamp </th>
                     </tr>
-                    <tr ng-repeat="stack in node.stack_trace"
-                    ng-class="{'bg-warning': stack.duration > 700, 'bg-danger': stack.duration > 1000}" >
-                        <td>{{ stack.nome }}</td>
-                        <td>{{ stack.error }}</td>
-                        <td>{{ stack.duration }}</td>
-                    </tr>
-                </tbody>
-            </table>
-        <div>
-    </li>
+                  </thead>
+                  <tbody>
+                    <td colspan="5">
+                    <ul class="queries">
+                      <querylist ng-repeat="x in item.children" src="x"><querylist>
+                    </ul>
+                    </td>
+                     
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="table-card "></div>
+          </td>
+        </tr>
+        <tr ng-repeat-end="item in nodes.children">
+          <td colspan="5" class="table-gap"></td>
+        </tr>
+      </tbody>
+    </table>
 
-</ul>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    $('.showmenu').click(function(e) {
-        console.log(e.target);
-        $(this).children('.hiddenData').slideToggle("fast");
-    });
-});
-</script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function() {
+
+      /* Expand row */
+      $('.main-row').click(function(e) {
+        $(this).next().toggleClass("expanded");
+        $(this).prev().children(".table-gap").toggleClass("tg-ok");
+        $(this).next().next().children(".table-gap").toggleClass("tg-ok");
+        $(this).next().children(".content-td").children(".table-card").toggleClass("tc-ok");
+      });
+
+      /* Switch call tree / query list */
+      $('.content').click(function(e) {
+        var ogg = $(this);
+        $(this).find(".list-switcher").change(function(){
+          if(ogg.find("input[name=view]:checked").val()=="query") {
+            ogg.find(".calltree").addClass("hidden");
+            ogg.find(".querylist").removeClass("hidden");
+          }
+          else {
+            ogg.find(".calltree").removeClass("hidden");
+            ogg.find(".querylist").addClass("hidden");
+          }
+        });
+      });
+      
+      $('.content').click(function(e) {
+        var ogg = $(this);
+        $(this).find(".list-switcher").change(function(){
+          if(ogg.find("input[name=view]:checked").val()=="query") {
+            ogg.find(".switch").addClass("right");
+            ogg.find(".switch").removeClass("left");
+          }
+          else {
+            ogg.find(".switch").addClass("left");
+            ogg.find(".switch").removeClass("right");
+          }
+        });
+      });
+      
+        /* call tree*/
+        $("ul span.toggle").click(function() {
+          $(this).next("ul").slideToggle();
+        });
+      });
+
+      </script>
 
 
     </div>
@@ -54,10 +150,6 @@ $(document).ready(function() {
 
 <style>
 
-    h1 {
-        font-size: 2.5em;
-        margin: 0.5em;
-    }
     .bg-warning {
         background-color: #f0ad4e;
     }
@@ -79,11 +171,10 @@ $(document).ready(function() {
         pointer-events: none;
         font: 10px sans-serif;
     }       
-    .container {
+    .containerST {
         background-color: #FFF;
         width: 97%;
         display: flex;
-        font-size: 1.3em;
         justify-content: space-between;
     }
     .col-12-sm{
@@ -98,5 +189,376 @@ $(document).ready(function() {
         border-bottom-right-radius: 4px;
         border-bottom-left-radius: 4px;
     }
+
+    /**/
+
+
+    table.stack {
+      margin:auto;
+      margin-bottom: 50px;
+      border-spacing: 0;
+      min-width: 60vw;
+      max-width: 100vw;
+      background: #fff;
+      border-radius: 6px;
+      border: 1px solid  #E1E1E1;
+      text-align: center;
+      box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+      font-size:12px;
+    }
+
+    table.stack th {
+      padding: 10px 15px;
+    }
+
+    table.stack td, th {
+      border-right: 0.5px solid  #E1E1E1;
+      border-bottom: 1px solid #E1E1E1;
+    }
+
+    table.stack td {
+      white-space: unset;
+      word-break: break-all;
+      position: relative;
+    }
+
+    table.stack thead {
+      font-size: 1.2em;
+      color: #99999;
+    }
+
+    #nr, #time, #time2{
+      width: 1em;
+    }
+    
+    #err{
+      width: 2em;
+    }
+
+    th{
+      border-bottom: 1px solid #A1E2FF;
+    }
+
+    th:last-child{
+      border-right:0;
+    }
+
+    .data {
+      position: relative;
+      z-index: 4;
+      padding: 10px 20px;
+    }
+
+    .content-td {
+      padding-top: 0;
+    }
+
+    .contentST {
+      position: relative;
+      z-index: 3;
+      border-top: 1px solid #cacaca;
+    }
+
+    .table-card {
+      position: absolute;
+      display: none;
+      background: #fff;
+      left: -16px;
+      right: -16px;
+      bottom: 0;
+      top: -45px;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+      z-index: 2;
+      border-radius: 3px;
+      border: 0.5px solid  #999999; 
+    }
+
+    tbody {
+      position: relative;
+    }
+
+    .table-gap {
+      padding: 8px;
+      display: none;
+      background: #E1E1E1;
+      border: none;
+    }
+
+    .main-row {
+      cursor: pointer;
+    }
+
+    .contentRow {
+      display: none;
+      text-align: left;
+    }
+
+    .tc-ok {
+      display: block;
+    }
+
+    .tg-ok {
+      display: table-cell;
+    }
+
+    .expanded {
+      display: table-row;
+    }
+
+    /* Switcher */
+    .list-switcher {
+      text-align: center;
+    }
+
+    .list-switcher .fieldset {
+      display: inline-block;
+      position: relative;
+      padding: 2px;
+      border-radius: 50em;
+      border: 2px solid #A1E2FF;;
+      margin: 2em;
+    }
+
+    .list-switcher input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+
+    .list-switcher label {
+      position: relative;
+      z-index: 1;
+      display: inline-block;
+      float: left;
+      width: 90px;
+      height: 40px;
+      line-height: 40px;
+      cursor: pointer;
+      font-family: "Open Sans", sans-serif;
+      color: #000000;
+    }
+
+    .switch {
+      position: absolute;
+      top: 2px;
+      height: 40px;
+      width: 90px;
+      background-color: #A1E2FF;
+      /*background: radial-gradient(#fff,#A1E2FF);*/
+      border-radius: 50em;
+      -webkit-transition: -webkit-transform 0.5s;
+      -moz-transition: -moz-transform 0.5s;
+      transition: transform 0.5s;
+      color: #FFFFFF;
+      padding: 1em;
+    }
+
+    .left {
+      left: 2px;
+    }
+
+    .right{
+      left:2px;
+      -webkit-transform: translateX(90px);
+      -moz-transform: translateX(90px);
+      -ms-transform: translateX(90px);
+      -o-transform: translateX(90px);
+      transform: translateX(90px);
+    }
+
+    /* call tree */
+    .hidden {
+      display: none;
+    }
+
+    .calltree, .querylist {
+      padding: 0em 3em 3em 3em;
+    }
+
+    .call-table {
+      border: 1px solid #ddd;
+      width: 100%;
+    }
+
+    .call-table th {
+      font: 10px;
+    }
+
+    .call-table th:last-child{
+      border-right:0;
+    }
+
+    .call-table td:last-child{
+      border:0;
+      padding: 1em 0em 1em 1em;
+    }
+
+    #timeMet, #time2Met {
+      width: 120px;
+    }
+
+    #nameMet, #timeMet, #time2Met {
+      padding-bottom:10px;
+      padding-top:10px;
+      text-align: center;
+    }
+
+    ul {
+      list-style-type: none;
+    }
+
+    .toggle {
+      cursor: pointer;
+    }
+
+    ul.list,
+    ul.list ul {
+      margin:0;
+      padding:0;
+      list-style-type: none;
+      
+    }
+
+    ul.list ul {
+      position:relative;
+      margin-left:10px;  
+    }
+
+    ul.list ul:before {
+      content:"";
+      display:block;
+      position:absolute;
+      top:0;
+      left:0;
+      bottom:0;
+      width:0; 
+      border-left:1px solid #ccc;
+    }
+
+    ul.list li  {
+      position:relative;
+      padding:3px 0px 3px 12px;
+      text-decoration: none;
+      font-weight:normal;
+      line-height:20px;  
+    }
+
+    ul.list li span:hover, ul.list li span:hover+ul li span
+     {
+      color: #C0C0C0;
+    }
+
+    ul.list ul li:before {
+      content:"";
+      display:block;
+      position:absolute;
+      top:10px;
+      left: 0;
+      width:8px;
+      height:0;
+      border-top:1px solid #ccc;    
+    }
+
+    ul.list ul li:last-child:before {
+      top: 10px; 
+      bottom: 0;
+      height: auto; 
+    }
+
+    ul.list ul li:last-child:before {
+      top: 10px; 
+      bottom: 0;
+      height: auto;
+      background: #fff;
+    }
+
+    .spacetree{
+      display: inline-block;
+      padding: 0em;
+      float: right;
+      width: 120px;
+      text-align: center;
+    }
+
+
+    /* Query list*/
+    .querylist table {
+      border: 1px solid #ddd;
+      width: 100%;
+    }
+
+    .querylist > th {
+      font: 10px;
+    }
+
+    .querylist th:last-child{
+      border-right:0;
+    }
+
+    .querylist td:last-child{
+      border:0;
+      padding: 0;
+    }
+
+    .queries {
+      padding: 0;
+      margin: 0;
+    }
+
+    #nrQR, #nameQR, #db, #timeQR, #time2QR {
+      padding:10px 0px;
+      text-align: center;
+    }
+
+    #nrDAT, #nameDAT, #dbDAT, #timeDAT, #time2DAT {
+      display: inline-block;
+      text-align: center;
+    }
+
+    #nrQR {
+      width:7%;
+    }
+    #nrDAT {
+      width:7%;
+    }
+
+    #nameQR{}
+    #nameDAT{
+      width:40%;
+    }
+
+    #db{
+      width:15%;
+    }
+    #dbDAT{
+      float: right;
+      width:15%;
+    }
+
+    #timeQR{
+      width:20%;
+    }
+    #timeDAT{
+      float: right;
+      width:20%;
+    }
+
+    #time2QR{
+      width:15%;
+    }
+    #time2DAT{
+      width:15%;
+      float: right;
+    }
+
+    .querylist ul li {
+      padding: 7px 0px;
+      border-bottom: 0.5px solid #ddd;
+    }
+
+    .querylist li:hover
+     {
+      background-color: #ddd;
+    }
+
 
 </style>
