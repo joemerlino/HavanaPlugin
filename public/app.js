@@ -10,7 +10,7 @@ let DataReader = require('./dataReader');
 let GraphBuilder = require('./graphBuilder');
 let StackBuilder = require('./stackBuilder');
 let GraphCleaner = require('./strategies/graphcleaner');
-let StackStrategy = require('./strategies/stackcleaner');
+let StackCleaner = require('./strategies/stackcleaner');
 
 
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
