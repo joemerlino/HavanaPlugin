@@ -2,13 +2,30 @@ var elasticsearch = require('elasticsearch');
 
 export default function (server) {
 
+    // server.route({
+    //     path: '/api/stabHavana/example',
+    //     method: 'GET',
+    //     handler(req, reply) {
+    //         reply({ time: (new Date()).toISOString() });
+    //     }
+    // });
+
     server.route({
-        path: '/api/stabHavana/example',
+        path: '/api/stabHavana/allIndices',
         method: 'GET',
         handler(req, reply) {
-            reply({ time: (new Date()).toISOString() });
+            var client = new elasticsearch.Client({
+                host: '34.245.86.64:9200',
+            });
+            client.cat.indices({
+                format : 'json'
+            }).then(function (resp) {
+                reply(resp);
+            }, function (err) {
+                console.trace(err.message);
+            });
         }
-    });
+    })
 
     const { callWithRequest } = server.plugins.elasticsearch.getCluster('data');
 
@@ -34,7 +51,7 @@ export default function (server) {
             }).then(function (resp) {
 
                 pastResults.push(resp.hits.hits);
-                console.log(pastResults);
+                // console.log(pastResults);
                 reply(pastResults);
 
             }, function (err) {
@@ -49,7 +66,7 @@ export default function (server) {
             }).then(function (resp) {
 
                 pastResults.push(resp.hits.hits);
-                console.log(pastResults);
+                // console.log(pastResults);
                 forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
 
             }, function (err) {
@@ -58,6 +75,27 @@ export default function (server) {
         }
 
     }
+
+    server.route({
+        path: '/api/stabHavana/index',
+        method: 'GET',
+        handler(req, reply) {
+            console.log(req['query']['index']); // da testare
+            const requiredIndex= req['query']['index'];
+
+            var client = new elasticsearch.Client({
+                host: '34.245.86.64:9200',
+            });
+
+            client.search({
+                index: requiredIndex
+            }).then(function (resp) {
+                reply(resp);
+            }, function (err) {
+                console.trace(err.message);
+            });
+        }
+    })
 
     server.route({
         path: '/api/stabHavana/indices',
