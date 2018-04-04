@@ -2,16 +2,13 @@
 // const GraphStrategy = require('./strategies/graphcleaner');
 // const StackStrategy = require('./strategy/stackcleaner');
 
+let GraphCleaner = require('./strategies/graphcleaner');
+let DataCleaner = require('./dataCleaner');
 
 class GraphBuilder {
 
-  constructor(dataReader, dataCleaner) {
+  constructor(dataReader) {
     this.dr = dataReader;
-    this.dc = dataCleaner;
-  }
-
-  setDataCleaner(dc) {
-    this.dc = dc;
   }
 
   setDataReader(dr){
@@ -35,7 +32,8 @@ class GraphBuilder {
   getGraph() {
     
     // retieve data
-    this.data = this.dc.cleanData(this.dr.readData());
+    this.dataCleaner = new DataCleaner(new GraphCleaner());
+    this.data = this.dataCleaner.cleanData(this.dr.readData());
     
     // parse data
     var dataGraph = {};

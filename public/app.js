@@ -95,11 +95,11 @@ uiModules
     console.log('Dati dopo removemetadati:');
     console.log(dc.removeMetaData(dr.readData()));
     // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
-    console.log('Dati puliti dal cleaner');
+    console.log('Dati puliti dal cleaner secondo strategia grafo');
     console.log(dc.cleanData(dr.readData()));
 
     // componente dal quale ottenere il grafo QUESTO NON COMMENTARLO
-    let g = new GraphBuilder(dr,dc);
+    let g = new GraphBuilder(dr);
 
     // check dei dati sottoforma di grafo
     console.log('Dati finali del grafo');
@@ -123,14 +123,14 @@ uiModules
     // pulitore di dati
     dc.setStrategy(stack_strategy);
     // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
-    console.log('Dati puliti dal cleaner');
+    console.log('Dati puliti dal cleaner secondo strategia stack');
     console.log(dc.cleanData(dr.readData()));
     // componente dal quale ottenere il grafo
-    let s = new StackBuilder(dr,dc);
+    let s = new StackBuilder(dr);
 
     // check dei dati sottoforma di grafo
-    console.log('Dati finali del grafo');
-    console.log(s.getStack)
+    console.log('Dati finali della stack trace');
+    console.log(s.getStack())
 
 
 

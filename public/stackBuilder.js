@@ -1,12 +1,10 @@
+let StackCleaner = require('./strategies/graphcleaner');
+let DataCleaner = require('./dataCleaner');
+
 class StackBuilder {
 
-    constructor(dataReader, dataCleaner) {
+    constructor(dataReader) {
       this.dr = dataReader;
-      this.dc = dataCleaner;
-    }
-  
-    setDataCleaner(dc) {
-      this.dc = dc;
     }
   
     setDataReader(dr){
@@ -16,7 +14,8 @@ class StackBuilder {
     getStack() {
       
       // retieve data
-      this.data = this.dc.cleanData(this.dr.readData());
+      this.dataCleaner = new DataCleaner(new StackCleaner());
+      this.data = this.dataCleaner.cleanData(this.dr.readData());
       
       // parse data
       // magia da implementare
