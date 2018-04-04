@@ -6,16 +6,29 @@ class GraphCleaner {
   clean(data) {
     // deve pulire per grafo: per esempio probabilmente dovrai ignorare le chiamate di tipo http...
 
-    var cleanedGraphData = [];
-    var counter=0;
-    for ( var i = 0 ; i < data.length ; i++ ) {
-      //ci saranno da mettere altre condizioni per stabilire se il tal json deve essere mantenuto o scartato xD
-      //TODO: ovviamente sistemare
-      if ( 'db.type' in data[i]) {
-        cleanedGraphData[counter++]=data[i];
-      }
+  var cleanedGraphData = [];
+  var counter=0;
+  
+  var sec_counter=0;
+  var ob
+  for ( var i = 0 ; i < data.length ; i++ ) {
+    /*
+    if ( 'db.type' in data[i]) {
+      cleanedGraphData[counter++]=data[i];
     }
-    return cleanedGraphData;
+    */
+    //queste richieste di span.kind=="server" sono richieste http che l'applicazione fa a se stessa, anche se comunque sono scatenate da un utente "finale"
+
+    if ( "span.kind" in data[i] && data[i]["span.kind"]=="server") {
+      cleanedGraphData[counter++]=data[i];
+    }
+    //queste sono richieste effettuate al database.
+    if ( 'db.type' in data[i]) {
+      cleanedGraphData[counter++]=data[i];
+    }
+    
+  }
+  return cleanedGraphData;
   }
  
 }
