@@ -11,6 +11,7 @@
     "start": "plugin-helpers start",
     "test:server": "plugin-helpers test:server",
     "test:browser": "plugin-helpers test:browser",
+    "test" : "mocha public/test",
     "build": "plugin-helpers build",
     "postinstall": "plugin-helpers postinstall"
   },
