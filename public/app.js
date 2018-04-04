@@ -67,6 +67,10 @@ uiModules
     // check dei dati grezzi
     console.log('Dati grezzi:');
     console.log(dr.readData());
+
+    console.log('Dati dopo removemetadati:');
+    console.log(dc.removeMetaData(dr.readData()));
+
     // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
     console.log('Dati puliti dal cleaner');
     console.log(dc.cleanData(dr.readData()));
