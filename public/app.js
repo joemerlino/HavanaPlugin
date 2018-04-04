@@ -86,30 +86,51 @@ uiModules
     // pulitore di dati
     let dc = new DataCleaner(strategy);
 
+
+    //CHECK MAPPA QUI
     // check dei dati grezzi
     console.log('Dati grezzi:');
     console.log(dr.readData());
-
+    //check dati dopo removemetadata
     console.log('Dati dopo removemetadati:');
     console.log(dc.removeMetaData(dr.readData()));
-
     // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
     console.log('Dati puliti dal cleaner');
     console.log(dc.cleanData(dr.readData()));
 
-    // componente dal quale ottenere il grafo
+    // componente dal quale ottenere il grafo QUESTO NON COMMENTARLO
     let g = new GraphBuilder(dr,dc);
 
     // check dei dati sottoforma di grafo
     console.log('Dati finali del grafo');
     console.log(g.getGraph());
 
-    // impostazione dei nodi del grafo
+    // impostazione dei nodi del grafo QUESTO NON COMMENTARLO
     const ddd = g.getGraph();
 
 
+    
 
+    //STACK LOG QUI
+    // strategia con cui pulire i dati
+    let stack_strategy = new StackCleaner();
+    // check dei dati grezzi
+    console.log('Dati grezzi:');
+    console.log(dr.readData());
+    //check dati dopo removemetadata
+    console.log('Dati dopo removemetadati:');
+    console.log(dc.removeMetaData(dr.readData()));
+    // pulitore di dati
+    dc.setStrategy(stack_strategy);
+    // check dei dati puliti secondo la strategia ma ancora senza una forma particolare
+    console.log('Dati puliti dal cleaner');
+    console.log(dc.cleanData(dr.readData()));
+    // componente dal quale ottenere il grafo
+    let s = new StackBuilder(dr,dc);
 
+    // check dei dati sottoforma di grafo
+    console.log('Dati finali del grafo');
+    console.log(s.getStack)
 
 
 
