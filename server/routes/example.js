@@ -36,6 +36,7 @@ export default function (server) {
         ind.push('stagemonitor-spans-2018.03.28');
         ind.push('stagemonitor-spans-2018.03.29');
         ind.push('stagemonitor-spans-2018.04.01');
+        ind.push('stagemonitor-spans-2018.04.05');
         return ind;
     }
 

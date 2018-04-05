@@ -133,7 +133,7 @@ uiModules
     console.log(s.getStack())
 
     // passa i dati alla stack trace
-    $scope.nodes = s.getStack();
+    //$scope.nodes = s.getStack();//
 
 
 
