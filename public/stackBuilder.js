@@ -1,4 +1,4 @@
-let StackCleaner = require('./strategies/graphcleaner');
+let StackCleaner = require('./strategies/stackcleaner');
 let DataCleaner = require('./dataCleaner');
 
 class StackBuilder {
@@ -10,18 +10,128 @@ class StackBuilder {
     setDataReader(dr){
       this.dr = dr;
     }
+
+    /* ---- help functionss ------ */
+
+    build_pageload_request(traceHTTP, tracePL) {
+      var traceHP = {} 
+      traceHP['type'] = "loadpage";
+      traceHP['trace_id'] =  traceHTTP['id'];
+      traceHP['error'] =  traceHTTP['error'];
+      traceHP['call_tree'] =  traceHTTP['call_tree_ascii'];
+      traceHP['status_code'] =  traceHTTP['http.status_code'];
+      traceHP['duration'] =  traceHTTP['duration_ms'] + tracePL['duration_ms'];
+      traceHP['timestamp'] =  traceHTTP['@timestamp'];
+      traceHP['name'] =  traceHTTP['name'];
+
+      return traceHP;
+    }
+
+    build_request(traceHTTP, tracePL) {
+      var traceH = {} 
+      traceH['type'] = "http";
+      traceH['trace_id'] =  traceHTTP['id'];
+      traceH['error'] =  traceHTTP['error'];
+      traceH['call_tree'] =  traceHTTP['call_tree_ascii'];
+      traceH['status_code'] =  traceHTTP['http.status_code'];
+      traceH['duration'] =  traceHTTP['duration_ms'];
+      traceH['timestamp'] =  traceHTTP['@timestamp'];
+      traceH['name'] =  traceHTTP['name'];
+
+      return traceH;
+    }
+
+    build_querylist(list) {
+      var aux = [];
+      var count = 0 
+        for (var i = 0; i < list.length; i++) {
+          var x = {};
+          x['duration'] = list[i]['duration_ms'];
+          x['timestamp'] = list[i]['@timestamp'];
+          x['text'] = list[i]['db.statement'];
+          aux[count++] = x;
+        } 
+      return aux;
+    }
   
+    checkPageload(id) {
+      for (var i = 0; i < this.data['pageload'].length; i++) {
+        if(id == this.data['pageload'][i].trace_id)
+          return this.data['pageload'][i];
+      } 
+      return null;
+    }
+
+    checkQueries(id) {
+      var qrs = [];
+      var count = 0;
+
+      for (var i = 0; i < this.data['query'].length; i++) {
+        if(id == this.data['query'][i]['parent_id']){
+          qrs[count++] = this.data['query'][i];
+        }
+      } 
+      if(count != 0){
+        var ret = this.build_querylist(qrs);
+        return ret;
+      }
+      else
+        return null;
+    }
+
+    changeDuration(listQR) {
+      var time = 0;
+      for (var i = 0; i < listQR.length; i++) {
+          time += listQR[i]['duration'];
+      } 
+      console.log(time);
+      return time;
+    }
+
+    /*---------------------------- */
+
     getStack() {
       
       // retieve data
       this.dataCleaner = new DataCleaner(new StackCleaner());
       this.data = this.dataCleaner.cleanData(this.dr.readData());
       
-      // parse data
-      // magia da implementare
-      this.data = this.data; 
-  
-      // stubberini
+
+      var dataStack = {};
+      var countRQ = 0;
+
+      for (var i = 0; i < this.data['http'].length; i++) {
+
+        var traceID = this.data['http'][i]['trace_id']; 
+        var trace = {};
+
+        var pageload = this.checkPageload(traceID);
+    
+        if(pageload != null){ // se ha un pageload associato
+
+            trace = this.build_pageload_request(this.data['http'][i], pageload);
+
+            var queries = this.checkQueries(traceID);
+
+            if(queries != null) { // se ha anche delle query associate
+              trace['DBrequest'] = queries;
+              trace['duration'] = trace['duration'] + this.changeDuration(queries);
+            }
+            dataStack[countRQ++] = trace; 
+        }
+        else {
+          // Singola richiesta HTTP
+          trace = this.build_request(this.data['http'][i]);
+          dataStack[countRQ++] = trace;
+        }
+      }
+
+      this.data = dataStack;
+      
+
+      return this.data;
+      
+      /*
       return this.data = {
         // DATI FALZZZZI
         "children": [
@@ -781,7 +891,7 @@ class StackBuilder {
             ]
           }
         ]
-      };
+      };*/
     }
   
   }
