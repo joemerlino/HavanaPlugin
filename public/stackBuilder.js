@@ -84,7 +84,6 @@ class StackBuilder {
       for (var i = 0; i < listQR.length; i++) {
           time += listQR[i]['duration'];
       } 
-      console.log(time);
       return time;
     }
 
