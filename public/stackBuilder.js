@@ -11,14 +11,103 @@ class StackBuilder {
       this.dr = dr;
     }
 
-    /* ---- help functionss ------ */
+    /* --- Dati belli in build --- */
+
+    tableTOtree(table, rowP) {
+      var tree = [];
+      var salto = 0;
+      var row;
+      if(rowP == 0) {
+        var branch = {};
+          branch['name'] = table[rowP]['name'];
+          branch['selftime'] = table[rowP]['selftime'];
+          branch['totaltime'] = table[rowP]['totaltime'];
+          branch['children'] = this.tableTOtree(table, rowP+1);
+          tree[0] = branch;
+      }
+      else {
+        for(var x = 0; x < table[rowP-1]['figli'] && rowP+salto < table.length; x++) {
+          row = rowP + salto;
+          if(table[row]['prole'] == 0) { 
+            var branch = {};
+            branch['name'] = table[row]['name'];
+            branch['selftime'] = table[row]['selftime'];
+            branch['totaltime'] = table[row]['totaltime'];
+            tree[x] = branch;
+            return tree;
+          }
+          else if(table[row]['indent'] < table[row+1]['indent']) {
+            var branch = {};
+            branch['name'] = table[row]['name'];
+            branch['selftime'] = table[row]['selftime'];
+            branch['totaltime'] = table[row]['totaltime'];
+            branch['children'] = this.tableTOtree(table, row+1);
+            tree[x] = branch;
+          }
+          salto = table[row]['prole']+1;
+        }
+      }
+      return tree;
+    }
+
+    more_data(table){
+      for (var i = 0; i < table.length; i++) {
+        var prole = 0;
+        var figli = 0;
+        for (var j = i+1; j < table.length && table[i]['indent'] < table[j]['indent'] ; j++) {
+          prole++;
+          if(table[j]['indent'] == table[i+1]['indent'])
+            figli++;
+        }
+        table[i]['prole'] = prole;
+        table[i]['figli'] = figli;
+      }
+      return table;
+    }
+
+
+    space(str, rel, point) {
+      if(str[point] == " " || str[point] == "│"){
+        rel++;
+        return this.space(str, rel, point+4);
+      }
+      if(str[point] == "├" || str[point] == "└"){
+        return rel+1;
+      }
+
+      return rel;
+    }
+
+    build_tree(ascii) {
+      var table = [];
+      table = ascii.split("\n");
+
+      var treeTAB = [];
+      var count = 0;
+      for (var i = 3; i < table.length-1; i++) {
+        var method = {};
+        method['selftime'] = table[i].slice(0, 9);
+        method['totaltime'] = table[i].slice(27, 36);
+        var relaz = table[i].slice(54);
+        method['indent'] = this.space(relaz, 0, 0);
+        method['name'] = table[i].slice(54+(method['indent']*4));
+        treeTAB[count++] = method;
+      }
+
+      var tabPLUS = this.more_data(treeTAB);
+      return this.tableTOtree(tabPLUS, 0);
+
+    }
+
+
+    /* ---- structure functionss ------ */
 
     build_pageload_request(traceHTTP, tracePL) {
       var traceHP = {}
       traceHP['type'] = "loadpage";
       traceHP['trace_id'] =  traceHTTP['id'];
       traceHP['error'] =  traceHTTP['error'];
-      traceHP['call_tree'] =  traceHTTP['call_tree_ascii'];
+      traceHP['call_tree'] =  this.build_tree(traceHTTP['call_tree_ascii']);
       traceHP['status_code'] =  traceHTTP['http.status_code'];
       traceHP['duration'] =  traceHTTP['duration_ms'] + tracePL['duration_ms'];
       traceHP['timestamp'] =  traceHTTP['@timestamp'];
@@ -32,7 +121,7 @@ class StackBuilder {
       traceH['type'] = "http";
       traceH['trace_id'] =  traceHTTP['id'];
       traceH['error'] =  traceHTTP['error'];
-      traceH['call_tree'] =  traceHTTP['call_tree_ascii'];
+      traceH['call_tree'] =  this.build_tree(traceHTTP['call_tree_ascii']);
       traceH['status_code'] =  traceHTTP['http.status_code'];
       traceH['duration'] =  traceHTTP['duration_ms'];
       traceH['timestamp'] =  traceHTTP['@timestamp'];
