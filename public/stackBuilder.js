@@ -6,7 +6,7 @@ class StackBuilder {
     constructor(dataReader) {
       this.dr = dataReader;
     }
-  
+
     setDataReader(dr){
       this.dr = dr;
     }
@@ -14,7 +14,7 @@ class StackBuilder {
     /* ---- help functionss ------ */
 
     build_pageload_request(traceHTTP, tracePL) {
-      var traceHP = {} 
+      var traceHP = {}
       traceHP['type'] = "loadpage";
       traceHP['trace_id'] =  traceHTTP['id'];
       traceHP['error'] =  traceHTTP['error'];
@@ -28,7 +28,7 @@ class StackBuilder {
     }
 
     build_request(traceHTTP, tracePL) {
-      var traceH = {} 
+      var traceH = {}
       traceH['type'] = "http";
       traceH['trace_id'] =  traceHTTP['id'];
       traceH['error'] =  traceHTTP['error'];
@@ -43,22 +43,22 @@ class StackBuilder {
 
     build_querylist(list) {
       var aux = [];
-      var count = 0 
+      var count = 0
         for (var i = 0; i < list.length; i++) {
           var x = {};
           x['duration'] = list[i]['duration_ms'];
           x['timestamp'] = list[i]['@timestamp'];
           x['text'] = list[i]['db.statement'];
           aux[count++] = x;
-        } 
+        }
       return aux;
     }
-  
+
     checkPageload(id) {
       for (var i = 0; i < this.data['pageload'].length; i++) {
         if(id == this.data['pageload'][i].trace_id)
           return this.data['pageload'][i];
-      } 
+      }
       return null;
     }
 
@@ -70,7 +70,7 @@ class StackBuilder {
         if(id == this.data['query'][i]['parent_id']){
           qrs[count++] = this.data['query'][i];
         }
-      } 
+      }
       if(count != 0){
         var ret = this.build_querylist(qrs);
         return ret;
@@ -83,53 +83,103 @@ class StackBuilder {
       var time = 0;
       for (var i = 0; i < listQR.length; i++) {
           time += listQR[i]['duration'];
-      } 
+      }
       return time;
     }
 
     /*---------------------------- */
 
     getStack() {
-      
-      // retieve data
-      this.dataCleaner = new DataCleaner(new StackCleaner());
-      this.data = this.dataCleaner.cleanData(this.dr.readData());
-      
+        return new Promise((resolve, reject) => {
+            this.dataCleaner = new DataCleaner(new StackCleaner());
+            this.dr.readData().then(res => {
+                console.log("Dati in getStack: ");
 
-      var dataStack = {};
-      var countRQ = 0;
+                this.data = this.dataCleaner.cleanData(res);
+                console.log(this.data);
 
-      for (var i = 0; i < this.data['http'].length; i++) {
+                var dataStack = {};
+                var countRQ = 0;
 
-        var traceID = this.data['http'][i]['trace_id']; 
-        var trace = {};
+                for (var i = 0; i < this.data['http'].length; i++) {
 
-        var pageload = this.checkPageload(traceID);
-    
-        if(pageload != null){ // se ha un pageload associato
+                    var traceID = this.data['http'][i]['trace_id'];
+                    var trace = {};
 
-            trace = this.build_pageload_request(this.data['http'][i], pageload);
+                    var pageload = this.checkPageload(traceID);
 
-            var queries = this.checkQueries(traceID);
+                    if(pageload != null){ // se ha un pageload associato
 
-            if(queries != null) { // se ha anche delle query associate
-              trace['DBrequest'] = queries;
-              trace['duration'] = trace['duration'] + this.changeDuration(queries);
-            }
-            dataStack[countRQ++] = trace; 
-        }
-        else {
-          // Singola richiesta HTTP
-          trace = this.build_request(this.data['http'][i]);
-          dataStack[countRQ++] = trace;
-        }
-      }
+                        trace = this.build_pageload_request(this.data['http'][i], pageload);
 
-      this.data = dataStack;
-      
+                        var queries = this.checkQueries(traceID);
 
-      return this.data;
-      
+                        if(queries != null) { // se ha anche delle query associate
+                            trace['DBrequest'] = queries;
+                            trace['duration'] = trace['duration'] + this.changeDuration(queries);
+                        }
+                        dataStack[countRQ++] = trace;
+                    }
+                    else {
+                        // Singola richiesta HTTP
+                        trace = this.build_request(this.data['http'][i]);
+                        dataStack[countRQ++] = trace;
+                    }
+                }
+
+                this.data = dataStack;
+
+
+                // return this.data;
+                resolve(this.data);
+            });
+
+
+        })
+        // retieve data
+
+
+
+
+      // // retieve data
+      // this.dataCleaner = new DataCleaner(new StackCleaner());
+      // this.data = this.dataCleaner.cleanData(this.dr.readData());
+      //
+      //
+      // var dataStack = {};
+      // var countRQ = 0;
+      //
+      // for (var i = 0; i < this.data['http'].length; i++) {
+      //
+      //   var traceID = this.data['http'][i]['trace_id'];
+      //   var trace = {};
+      //
+      //   var pageload = this.checkPageload(traceID);
+      //
+      //   if(pageload != null){ // se ha un pageload associato
+      //
+      //       trace = this.build_pageload_request(this.data['http'][i], pageload);
+      //
+      //       var queries = this.checkQueries(traceID);
+      //
+      //       if(queries != null) { // se ha anche delle query associate
+      //         trace['DBrequest'] = queries;
+      //         trace['duration'] = trace['duration'] + this.changeDuration(queries);
+      //       }
+      //       dataStack[countRQ++] = trace;
+      //   }
+      //   else {
+      //     // Singola richiesta HTTP
+      //     trace = this.build_request(this.data['http'][i]);
+      //     dataStack[countRQ++] = trace;
+      //   }
+      // }
+      //
+      // this.data = dataStack;
+      //
+      //
+      // return this.data;
+
       /*
       return this.data = {
         // DATI FALZZZZI
@@ -892,8 +942,7 @@ class StackBuilder {
         ]
       };*/
     }
-  
+
   }
-  
+
   module.exports = StackBuilder;
-  

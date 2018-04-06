@@ -13,7 +13,14 @@ class DataReader {
     }
 
     readData() {
-        return this.es.getData;
+        // Esempio: passo dei dati al nostro getData dove verranno gestiti
+        let customIndices = [
+            'stagemonitor-spans-2018.03.25',
+            'stagemonitor-spans-2018.03.28',
+            'stagemonitor-spans-2018.03.29',
+            'stagemonitor-spans-2018.04.01'
+        ]
+        return this.es.getData(customIndices);
     }
 }
 

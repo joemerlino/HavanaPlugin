@@ -26,7 +26,7 @@ class GraphBuilder {
       result=false;
     }
   }
-  return result; 
+  return result;
   }
 
   //dato un array di span contenente richieste http e a db deve estrapolare una lista di tutti i nodi che faranno parte della mappa senza che vi siano ripetizioni
@@ -35,7 +35,7 @@ class GraphBuilder {
     var id_counter=1;
     var nodes=[];
     for ( var i = 0; i < this.data.length; i++ ) {
-      
+
       if ( this.data[i]['type'] == "jdbc" ) {
         var candidate = {
           "name" : this.data[i]['db.type'],
@@ -75,7 +75,7 @@ class GraphBuilder {
     return result;
 
   }
-  
+
   //Dato un nome di un nodo(assunto come chiave... not advisable) ritorna il suo id nella lista dei nodi.
   //TODO: nome non dovrà essere chiave.
   //TODO: gestire caso in cui non vi sia nella lista.
@@ -121,14 +121,14 @@ class GraphBuilder {
           total_response_time = total_response_time + candidate['avg_response_time_ms'];
           candidate['number_of_requests']=links[index]['number_of_requests']+1;
           candidate['avg_response_time_ms'] = total_response_time / candidate['number_of_requests'];
-          
+
           //togli il collegamento e inserisci il candidate con tempo medio e numero di richieste aggiornato
           var index = this.getIndexOfSameLink(links, candidate );
           if ( index > -1) {
            var x=links.splice(index, 1);
           }
           links.push(candidate);
-          
+
         }
       }
     }
@@ -136,20 +136,50 @@ class GraphBuilder {
   }
 
 
-  
+
   getGraph() {
-    // retieve data
-    this.dataCleaner = new DataCleaner(new GraphCleaner());
-    this.data = this.dataCleaner.cleanData(this.dr.readData());
-    
+      // retieve data
+     this.dataCleaner = new DataCleaner(new GraphCleaner());
 
-    var dataGraph = {};
-    dataGraph['nodes']=this.getNodes(this.data);
-    dataGraph['links']=this.getLinks( dataGraph['nodes'], this.data);
+     return new Promise((resolve, reject) => {
+         this.dr.readData().then(res => {
+           // Promise risolta, ora ho i dati
+           this.data = this.dataCleaner.cleanData(res);
 
-    this.data=dataGraph;
-    return this.data;
-    }
+           var dataGraph = {};
+           dataGraph['nodes'] = this.getNodes(this.data);
+           dataGraph['links'] = this.getLinks(dataGraph['nodes'], this.data);
+
+           this.data = dataGraph;
+           console.log("Dati che ho ricevuto: ");
+           console.log(this.data);
+
+           // return this.data;
+           resolve(dataGraph);
+
+         });
+     });
+
+
+     // this.dr.readData().then(res => {
+     //   // Promise risolta, ora ho i dati
+     //   this.data = this.dataCleaner.cleanData(res);
+     //
+     //   var dataGraph = {};
+     //   dataGraph['nodes'] = this.getNodes(this.data);
+     //   dataGraph['links'] = this.getLinks(dataGraph['nodes'], this.data);
+     //
+     //   this.data = dataGraph;
+     //   console.log("Dati che ho ricevuto: ");
+     //   console.log(this.data);
+     //
+     //   return this.data;
+     //
+     // });
+
+
+
+   }
 }
 
 module.exports = GraphBuilder;
