@@ -25,20 +25,20 @@
         </tr>
         <tr class="main-row">
           <td><div class="data">{{$index+1}}</div></td>
-          <td><div class="data">{{item.name}}</div></td>
-          <td><div class="data">{{item.time}} ms</div></td>
+          <td><div class="data">{{item.name}} - {{item.type}}</div></td>
+          <td><div class="data">{{item.duration}} ms</div></td>
           <td><div class="data">{{item.timestamp}}</div></td>
-          <td><div class="data">{{item.Cod_errore}}</div></td>
+          <td><div class="data">{{item.error}}</div></td>
         </tr>
         <tr class="contentRow">
           <td colspan="5" class="content-td">
             <div class="contentST">
               <div class="list-switcher">
               <p class="fieldset">
-                <input type="radio" name="view" value="call" id="call-{{item.name}}" checked>
-                <label for="call-{{item.name}}">Call tree</label>
-                <input type="radio" name="view" value="query" id="query-{{item.name}}">
-                <label for="query-{{item.name}}">Query list</label>
+                <input type="radio" name="view" value="call" id="call-{{item.trace_id}}" checked>
+                <label for="call-{{item.trace_id}}">Call tree</label>
+                <input type="radio" name="view" value="query" id="query-{{item.trace_id}}">
+                <label for="query-{{item.trace_id}}">Query list</label>
                 <span class="switch left"></span>
               </p>
             </div>
@@ -73,12 +73,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <td colspan="5">
-                    <ul class="queries">
-                      <querylist ng-repeat="x in item.children" src="x"><querylist>
-                    </ul>
-                    </td>
-
+                    <!-- riguardare il css, prima era una lista class="queries" --> 
+                    <tr ng-repeat="x in item.DBrequest" src="x" class="queries">
+                      <td>{{index+1}}</td>
+                      <td>{{x.text}}</td>
+                      <td>HO DIMENTICATO IL DB</td>
+                      <td>{{x.duration}}</td>
+                      <td>{{x.timestamp}}</td>
+                    </tr>
                   </tbody>
                 </table>
               </div>
@@ -86,7 +88,7 @@
             <div class="table-card "></div>
           </td>
         </tr>
-        <tr ng-repeat-end="item in nodes.children">
+        <tr ng-repeat-end="item in nodes">
           <td colspan="5" class="table-gap"></td>
         </tr>
       </tbody>

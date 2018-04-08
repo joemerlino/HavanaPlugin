@@ -214,6 +214,7 @@ class StackBuilder {
 
                             if(queries != null) { // se ha anche delle query associate
                                 trace['DBrequest'] = queries;
+                                trace['type'] = "JDBC";
                                 trace['duration'] = trace['duration'] + this.changeDuration(queries);
                             }
                             dataStack[countRQ++] = trace;

@@ -429,7 +429,10 @@ uiModules.get('app/stabHavana', [])
       }
     };
 
-  }).directive('querylist', function() {
+    
+  })
+  /* FORSE non serve più
+  .directive('querylist', function() {
     return {
       restrict: 'E',
       replace: true,
@@ -438,4 +441,5 @@ uiModules.get('app/stabHavana', [])
       },
       template: '<div><div ng-repeat="c in t.query"><li><div id="nrDAT">1</div><div id="nameDAT">{{c.name}}</div><div id="time2DAT">{{c.timestamp}}</div><div id="timeDAT">{{c.time}} ms</div><div id="dbDAT">{{c.database}}</div></li></div><querylist ng-repeat="x in t.children" src="x"></querylist></div>',
     };
-  });
+  });*/
+
