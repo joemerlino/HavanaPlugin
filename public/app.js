@@ -276,7 +276,7 @@ uiModules
     //
     // //STACK LOG QUI
     // // strategia con cui pulire i dati
-    // let stack_strategy = new StackCleaner();
+    let stack_strategy = new StackCleaner();
     //
     // // check dei dati grezzi
     // // console.log('Dati grezzi:');
@@ -286,22 +286,22 @@ uiModules
     // // console.log('Dati dopo removemetadati:');
     // // console.log(dc.removeMetaData(dr.readData()));
     //
-    // dc.setStrategy(stack_strategy);
+    dc.setStrategy(stack_strategy);
     //
-    // let s = new StackBuilder(dr);
+    let s = new StackBuilder(dr);
     // $scope.nodes = s.getStack();
     //
-    // s.getStack().then(res => {
-    //   console.log("Dati finali Stack");
-    //   console.log(res);
-    //
-    //   $scope.nodes = res;
-    //
-    //   console.log("$scope.nodes: ");
-    //   console.log($scope.nodes);
-    //
-    //
-    // }).catch(e => console.log(e));
+    s.getStack().then(res => {
+      console.log("Dati finali Stack");
+      console.log(res);
+
+      $scope.nodes = res;
+
+      console.log("$scope.nodes: ");
+      console.log($scope.nodes);
+
+
+    }).catch(e => console.log(e));
 
 
 

@@ -20,7 +20,7 @@
         </tr>
       </thead>
       <tbody >
-        <tr ng-repeat-start="item in nodes.children">
+        <tr ng-repeat-start="item in nodes">
           <td colspan="5" class="table-gap"></td>
         </tr>
         <tr class="main-row">
@@ -78,7 +78,7 @@
                       <querylist ng-repeat="x in item.children" src="x"><querylist>
                     </ul>
                     </td>
-                     
+
                   </tbody>
                 </table>
               </div>
@@ -120,7 +120,7 @@
           }
         });
       });
-      
+
       $('.content').click(function(e) {
         var ogg = $(this);
         $(this).find(".list-switcher").change(function(){
@@ -134,7 +134,7 @@
           }
         });
       });
-      
+
         /* call tree*/
         $("ul span.toggle").click(function() {
           $(this).next("ul").slideToggle();
@@ -170,7 +170,7 @@
     .node text {
         pointer-events: none;
         font: 10px sans-serif;
-    }       
+    }
     .containerST {
         background-color: #FFF;
         width: 97%;
@@ -230,7 +230,7 @@
     #nr, #time, #time2{
       width: 1em;
     }
-    
+
     #err{
       width: 2em;
     }
@@ -270,7 +270,7 @@
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
       z-index: 2;
       border-radius: 3px;
-      border: 0.5px solid  #999999; 
+      border: 0.5px solid  #999999;
     }
 
     tbody {
@@ -415,12 +415,12 @@
       margin:0;
       padding:0;
       list-style-type: none;
-      
+
     }
 
     ul.list ul {
       position:relative;
-      margin-left:10px;  
+      margin-left:10px;
     }
 
     ul.list ul:before {
@@ -430,7 +430,7 @@
       top:0;
       left:0;
       bottom:0;
-      width:0; 
+      width:0;
       border-left:1px solid #ccc;
     }
 
@@ -439,7 +439,7 @@
       padding:3px 0px 3px 12px;
       text-decoration: none;
       font-weight:normal;
-      line-height:20px;  
+      line-height:20px;
     }
 
     ul.list li span:hover, ul.list li span:hover+ul li span
@@ -455,17 +455,17 @@
       left: 0;
       width:8px;
       height:0;
-      border-top:1px solid #ccc;    
+      border-top:1px solid #ccc;
     }
 
     ul.list ul li:last-child:before {
-      top: 10px; 
+      top: 10px;
       bottom: 0;
-      height: auto; 
+      height: auto;
     }
 
     ul.list ul li:last-child:before {
-      top: 10px; 
+      top: 10px;
       bottom: 0;
       height: auto;
       background: #fff;

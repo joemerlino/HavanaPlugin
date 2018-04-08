@@ -28,7 +28,7 @@ class StackBuilder {
       else {
         for(var x = 0; x < table[rowP-1]['figli'] && rowP+salto < table.length; x++) {
           row = rowP + salto;
-          if(table[row]['prole'] == 0) { 
+          if(table[row]['prole'] == 0) {
             var branch = {};
             branch['name'] = table[row]['name'];
             branch['selftime'] = table[row]['selftime'];
@@ -185,42 +185,67 @@ class StackBuilder {
                 console.log("Dati in getStack: ");
                 console.log(res);
 
-                this.data = this.dataCleaner.cleanData(res);
+                var tmp = [];
 
-                var dataStack = {};
-                var countRQ = 0;
+                res.forEach(el => {
+                    console.log("Elemento ricevuto: ");
+                    console.log(el);
+                    this.data = this.dataCleaner.cleanDataStack(el);
 
-                for (var i = 0; i < this.data['http'].length; i++) {
+                    console.log("Dato pulito: ");
+                    console.log(this.data);
 
-                    var traceID = this.data['http'][i]['trace_id'];
-                    var trace = {};
 
-                    var pageload = this.checkPageload(traceID);
+                    var dataStack = {};
+                    var countRQ = 0;
 
-                    if(pageload != null){ // se ha un pageload associato
+                    for (var i = 0; i < this.data['http'].length; i++) {
 
-                        trace = this.build_pageload_request(this.data['http'][i], pageload);
+                        var traceID = this.data['http'][i]['trace_id'];
+                        var trace = {};
 
-                        var queries = this.checkQueries(traceID);
+                        var pageload = this.checkPageload(traceID);
 
-                        if(queries != null) { // se ha anche delle query associate
-                            trace['DBrequest'] = queries;
-                            trace['duration'] = trace['duration'] + this.changeDuration(queries);
+                        if(pageload != null){ // se ha un pageload associato
+
+                            trace = this.build_pageload_request(this.data['http'][i], pageload);
+
+                            var queries = this.checkQueries(traceID);
+
+                            if(queries != null) { // se ha anche delle query associate
+                                trace['DBrequest'] = queries;
+                                trace['duration'] = trace['duration'] + this.changeDuration(queries);
+                            }
+                            dataStack[countRQ++] = trace;
                         }
-                        dataStack[countRQ++] = trace;
+                        else {
+                            // Singola richiesta HTTP
+                            trace = this.build_request(this.data['http'][i]);
+                            dataStack[countRQ++] = trace;
+                        }
                     }
-                    else {
-                        // Singola richiesta HTTP
-                        trace = this.build_request(this.data['http'][i]);
-                        dataStack[countRQ++] = trace;
-                    }
-                }
 
-                this.data = dataStack;
+                    this.data = dataStack;
 
+                    tmp.push(dataStack);
 
+                })
+
+                var def = [];
+
+                tmp.forEach(el => {
+                    console.log("porcgetto");
+                    console.log(el);
+                    Object.keys(el).forEach(ss => {
+                        def.push(el[ss]);
+                    })
+
+                })
+
+                console.log("T-9000");
+                console.log(def);
                 // return this.data;
-                resolve(this.data);
+                resolve(def);
             });
 
 

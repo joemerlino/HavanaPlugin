@@ -36,6 +36,8 @@ class DataCleaner {
     //     flatData.push(data[i][j]['_source']);
     //   }
     // }
+    console.log("FlatData");
+    console.log(flatData);
 
     return flatData;
   }
@@ -57,6 +59,14 @@ class DataCleaner {
       this.ignorantCaller(data)
     );
   }
+
+  cleanDataStack(data) {
+    return this.strategy.clean(
+      this.removeMetaData(data.data.hits.hits)
+    );
+  }
+
+
 }
 
 module.exports = DataCleaner;
