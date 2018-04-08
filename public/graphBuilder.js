@@ -34,11 +34,11 @@ class GraphBuilder {
   getNodes(data) {
     var id_counter=1;
     var nodes=[];
-    for ( var i = 0; i < this.data.length; i++ ) {
+    for ( var i = 0; i < data.length; i++ ) {
 
-      if ( this.data[i]['type'] == "jdbc" ) {
+      if ( data[i]['type'] == "jdbc" ) {
         var candidate = {
-          "name" : this.data[i]['db.type'],
+          "name" : data[i]['db.type'],
           "type" : "Database",
           "id" : id_counter
         }
@@ -49,9 +49,9 @@ class GraphBuilder {
 
       }
 
-      if ( this.data[i]['type'] == "http" ) {
+      if ( data[i]['type'] == "http" ) {
         var candidate = {
-          "name" : this.data[i]["application"],
+          "name" : data[i]["application"],
           "type" : "Server",
           "id" : id_counter
         }
@@ -100,6 +100,7 @@ class GraphBuilder {
   //TODO: implementare chiamate a server
   //TODO: refactorizzare
   getLinks(nodes, data) {
+
     var links=[];
     for ( var i = 0 ; i < data.length ; i++ ) {
       //analizza chiamate a db
@@ -112,6 +113,9 @@ class GraphBuilder {
           "avg_response_time_ms": data[i].duration_ms,
           "number_of_requests": 1
         }
+
+        // console.log("Candidato: ");
+        // console.log(candidate);
         //se il link non era presente (controllo su univocità della coppia source/target) nella lista dei links inseriscilo
         if ( this.checkIfLinkIsNotPresent(links, candidate) ) {
           links.push(candidate);
@@ -143,24 +147,60 @@ class GraphBuilder {
 
      return new Promise((resolve, reject) => {
          this.dr.readData().then(res => {
-           // Promise risolta, ora ho i dati
-           this.data = this.dataCleaner.cleanData(res);
 
+           let d = this.dataCleaner.cleanData(res);
            var dataGraph = {};
-           dataGraph['nodes'] = this.getNodes(this.data);
-           dataGraph['links'] = this.getLinks(dataGraph['nodes'], this.data);
+           // dataGraph['nodes'] = this.getNodes(d);
+           // dataGraph['links'] = this.getLinks(dataGraph['nodes'], d);
 
-           this.data = dataGraph;
-           console.log("Dati che ho ricevuto: ");
-           console.log(this.data);
+           //faccio diventare d un array serio
+           // let tmpd = [];
+           // d.forEach(function(el){
+           //     for(let i=0; i<el.length; i++) {
+           //         tmpd.push(el[i]);
+           //     }
+           // })
+
+           let arrOfNodes = [];
+           d.forEach(el => {
+               arrOfNodes.push(this.getNodes(el));
+           });
+
+           // converti d in un array di oggetti
+           var arr = [];
+           arrOfNodes.forEach(function(el) {
+               for(let i=0; i<el.length; i++) {
+                   arr.push(el[i]);
+               }
+           })
+
+
+           let arrOfLinks = [];
+           d.forEach((el) => {
+               arrOfLinks.push(this.getLinks(arr, el));
+           });
+
+           // trasformo in array di soli oggetti
+           let tmpa = [];
+           arrOfLinks.forEach(function(el){
+               for(let i=0; i<el.length; i++) {
+                   tmpa.push(el[i]);
+               }
+           });
+
+           dataGraph['links'] = tmpa;
+           dataGraph['nodes'] = arr;
+
+
+           d = dataGraph; // useless ma la lascio per legacy
 
            // return this.data;
            resolve(dataGraph);
 
-         });
+       }).catch(e => console.log(e));
      });
 
-
+     // metodo vecchio lascio per legacy
      // this.dr.readData().then(res => {
      //   // Promise risolta, ora ho i dati
      //   this.data = this.dataCleaner.cleanData(res);

@@ -15,24 +15,46 @@ class DataCleaner {
 
   // rimuove i metdati di elasticsearch
   removeMetaData(data) {
-    data = data['data'];
+    // data = data['data'];
+    // console.log("Remove metadata:");
+    // console.log(data);
     var flatData = new Array();
-    // i dati vengono passati come un array di risultati legati ad un indice, quindi...
-    for (var i = 0; i < data.length; i++) {
-      // per ogni indice...
-      for(var j = 0; j<data[i].length;j++){
-        //per ogni trace....
 
-        //aggiungi il contenuto della trace alla lista completa dei dati, essa è contenuta nel campo source
-        flatData.push(data[i][j]['_source']);
-      }
-    }
+    data.forEach(el => {
+        flatData.push(el['_source']);
+    });
+
+    // i dati vengono passati come un array di risultati legati ad un indice, quindi...
+    // for (var i = 0; i < data.length; i++) {
+    //   // per ogni indice...
+    //   for(var j = 0; j<data[i].length;j++){
+    //     //per ogni trace....
+    //
+    //     //aggiungi il contenuto della trace alla lista completa dei dati, essa è contenuta nel campo source
+    //     console.log("sauce: ");
+    //     console.log(data[i][j]['_source']);
+    //     flatData.push(data[i][j]['_source']);
+    //   }
+    // }
+
     return flatData;
+  }
+
+  ignorantCaller(data) {
+      var flatData = [];
+      data.forEach(el => {
+          let tmp = this.removeMetaData(el.data.hits.hits);
+          flatData.push(tmp);
+      });
+
+      console.log("Flatdata:");
+      console.log(flatData);
+      return flatData;
   }
 
   cleanData(data) {
     return this.strategy.clean(
-      this.removeMetaData(data)
+      this.ignorantCaller(data)
     );
   }
 }

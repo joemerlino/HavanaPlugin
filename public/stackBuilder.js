@@ -183,9 +183,9 @@ class StackBuilder {
             this.dataCleaner = new DataCleaner(new StackCleaner());
             this.dr.readData().then(res => {
                 console.log("Dati in getStack: ");
+                console.log(res);
 
                 this.data = this.dataCleaner.cleanData(res);
-                console.log(this.data);
 
                 var dataStack = {};
                 var countRQ = 0;
