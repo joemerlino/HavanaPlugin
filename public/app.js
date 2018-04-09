@@ -83,6 +83,7 @@ uiModules
 
     // lettori di dati
     let dr = new DataReader(servomuto);
+    dr.tracesIndices();
     // strategia con cui pulire i dati
     let strategy = new GraphCleaner();
     // pulitore di dati

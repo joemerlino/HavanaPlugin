@@ -12,6 +12,11 @@ class DataReader {
         this.es = elastic;
     }
 
+    tracesIndices(){
+        // TODO estrarre la salse
+        return this.es.tracesIndices(); 
+    }
+
     readData() {
         // Esempio: passo dei dati al nostro getData dove verranno gestiti
         let customIndices = [
