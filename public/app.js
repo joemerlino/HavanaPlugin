@@ -150,6 +150,14 @@ uiModules
       .attr("font-size", "10pt")
       .text(function (d) { return Math.round(d.avg_response_time_ms*100)/100 + ' ms'; });
 
+      var connectionLabel = svg.append("g")
+      .attr("class", "connectionLabel")
+      .selectAll("text")
+      .data(ddd.links)
+      .enter().append("text")
+      .attr("font-size", "10pt")
+      .text(function(d){return d.type});
+
       var node = svg.append("g")
         .attr("class", "nodes")
         .selectAll("circle")
@@ -197,6 +205,7 @@ uiModules
         node.attr("transform", d3.event.transform);
         link.attr("transform", d3.event.transform);
         linkLabel.attr("transform", d3.event.transform);
+        connectionLabel.attr("transform", d3.event.transform);
         nodelabels.attr("transform", d3.event.transform);
       }
 
@@ -237,6 +246,13 @@ uiModules
           })
           .attr("y", function (d) { 
             return (d.source.y + d.target.y)/2; 
+          });
+        connectionLabel
+          .attr("x", function (d) { 
+            return (d.source.x + d.target.x)/2; 
+          })
+          .attr("y", function (d) { 
+            return (d.source.y + d.target.y)/2 - 15; 
           });
       }
 
