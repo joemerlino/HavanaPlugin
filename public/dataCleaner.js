@@ -14,7 +14,7 @@ class DataCleaner {
   }
 
   // rimuove i metdati di elasticsearch
-  removeMetaData(data) {
+  removeMetaDataFromIndex(data) {
     // data = data['data'];
     // console.log("Remove metadata:");
     // console.log(data);
@@ -43,10 +43,10 @@ class DataCleaner {
   }
 
   //TODO: cambiare nome magari
-  ignorantCaller(data) {
+  removeMetaDataFromIndeces(data) {
       var flatData = [];
       data.forEach(el => {
-          let tmp = this.removeMetaData(el.data.hits.hits);
+          let tmp = this.removeMetaDataFromIndex(el.data.hits.hits);
           flatData.push(tmp);
       });
 
@@ -57,13 +57,13 @@ class DataCleaner {
 
   cleanData(data) {
     return this.strategy.clean(
-      this.ignorantCaller(data)
+      this.removeMetaDataFromIndeces(data)
     );
   }
 
   cleanDataStack(data) {
     return this.strategy.clean(
-      this.removeMetaData(data.data.hits.hits)
+      this.removeMetaDataFromIndex(data.data.hits.hits)
     );
   }
 

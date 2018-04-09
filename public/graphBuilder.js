@@ -17,7 +17,7 @@ class GraphBuilder {
 
 
 
-  checkIfNotPresent(dg, st) {
+  checkIfNodeIsNotPresent(dg, st) {
   //dg contiene tutte i nodi da plottare, st(singletrace) è il candidato ad entrare nell'insieme.
   //funzione che controlla che un candidato ad entrare nel set dei nodi univoci non sia già presente nel set (Array)
   var result=true;
@@ -42,7 +42,7 @@ class GraphBuilder {
           "type" : "Database",
           "id" : id_counter
         }
-        if ( this.checkIfNotPresent(nodes, candidate) ) {
+        if ( this.checkIfNodeIsNotPresent(nodes, candidate) ) {
           nodes.push(candidate);
           id_counter++;
         }
@@ -55,7 +55,7 @@ class GraphBuilder {
           "type" : "Server",
           "id" : id_counter
         }
-        if ( this.checkIfNotPresent(nodes, candidate) ) {
+        if ( this.checkIfNodeIsNotPresent(nodes, candidate) ) {
           nodes.push(candidate);
           id_counter++;
         }
@@ -192,7 +192,7 @@ class GraphBuilder {
                   console.log(arr);
                   console.log("el[i]");
                   console.log(el[i]);
-                  if( this.checkIfNotPresent(arr, el[i])) {
+                  if( this.checkIfNodeIsNotPresent(arr, el[i])) {
                     arr.push(el[i]);
                   }
                }
