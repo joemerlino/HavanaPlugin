@@ -8,6 +8,7 @@ class DataReader {
     }
 
     // imposta la sorgente dei dati
+    // TODO: questa diventerà elasticsearchClient  !!!!!!!
     setElasticsearchInstance(elastic) {
         this.es = elastic;
     }
@@ -16,6 +17,7 @@ class DataReader {
         // TODO estrarre la salse
         return this.es.tracesIndices(); 
     }
+    //TODO: aggiungere readIndex(index)
 
     readData() {
         // Esempio: passo dei dati al nostro getData dove verranno gestiti
