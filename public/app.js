@@ -104,7 +104,9 @@ uiModules
     // });
     //
 
-
+    function getLimit(){
+      return 1;
+    }
     //
     // //
     // // componente dal quale ottenere il grafo QUESTO NON COMMENTARLO
@@ -138,8 +140,9 @@ uiModules
         .selectAll("line")
         .data(ddd.links)
         .enter().append("line")
-        .attr("stroke-width", function(d) {
-          return Math.sqrt(d.value);
+        .style("stroke", function(d){
+          if(d.avg_response_time_ms > getLimit())
+            return "red";
         });
 
       var linkLabel = svg.append("g")
