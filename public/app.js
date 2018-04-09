@@ -427,7 +427,7 @@ uiModules.get('app/stabHavana', [])
       scope: {
         t: '=src'
       },
-      template: '<ul><branch ng-repeat="c in t.children" src="c"></branch></ul>'
+      template: '<ul><branch ng-repeat="c in t.call_tree" src="c"></branch></ul>'
     };
   })
 
@@ -438,9 +438,14 @@ uiModules.get('app/stabHavana', [])
       scope: {
         b: '=src'
       },
-      template: '<li><span class="toggle">{{ b.name }}<div class="spacetree">{{b.timestamp}}</div><div class="spacetree">{{b.time}} ms</div></span></li>',
+      template: '<li>\
+                  <span class="toggle">{{ b.name }}\
+                    <div class="spacetree">{{b.selftime}}</div>\
+                    <div class="spacetree">{{b.totaltime}} ms</div>\
+                  </span>\
+                </li>',
       link: function(scope, element, attrs) {
-        if (angular.isArray(scope.b.children)) {
+        if (angular.isArray(scope.b.call_tree)) {
           element.append('<tree src="b"></tree>');
           $compile(element.contents())(scope);
         }

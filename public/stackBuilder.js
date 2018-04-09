@@ -22,7 +22,7 @@ class StackBuilder {
           branch['name'] = table[rowP]['name'];
           branch['selftime'] = table[rowP]['selftime'];
           branch['totaltime'] = table[rowP]['totaltime'];
-          branch['children'] = this.tableTOtree(table, rowP+1);
+          branch['call_tree'] = this.tableTOtree(table, rowP+1);
           tree[0] = branch;
       }
       else {
@@ -41,7 +41,7 @@ class StackBuilder {
             branch['name'] = table[row]['name'];
             branch['selftime'] = table[row]['selftime'];
             branch['totaltime'] = table[row]['totaltime'];
-            branch['children'] = this.tableTOtree(table, row+1);
+            branch['call_tree'] = this.tableTOtree(table, row+1);
             tree[x] = branch;
           }
           salto = table[row]['prole']+1;

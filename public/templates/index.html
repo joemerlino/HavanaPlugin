@@ -101,7 +101,7 @@
     $(document).ready(function() {
 
       /* Expand row */
-      $('.main-row').click(function(e) {
+      $("body").on("click", ".main-row", function() {
         $(this).next().toggleClass("expanded");
         $(this).prev().children(".table-gap").toggleClass("tg-ok");
         $(this).next().next().children(".table-gap").toggleClass("tg-ok");
@@ -109,7 +109,7 @@
       });
 
       /* Switch call tree / query list */
-      $('.content').click(function(e) {
+      $("body").on("click", ".content", function() {
         var ogg = $(this);
         $(this).find(".list-switcher").change(function(){
           if(ogg.find("input[name=view]:checked").val()=="query") {
@@ -123,7 +123,7 @@
         });
       });
 
-      $('.content').click(function(e) {
+      $("body").on("click", ".content", function() {
         var ogg = $(this);
         $(this).find(".list-switcher").change(function(){
           if(ogg.find("input[name=view]:checked").val()=="query") {
@@ -138,7 +138,7 @@
       });
 
         /* call tree*/
-        $("ul span.toggle").click(function() {
+        $("body").on("click", "ul span.toggle", function() {
           $(this).next("ul").slideToggle();
         });
       });
@@ -248,7 +248,8 @@
     .data {
       position: relative;
       z-index: 4;
-      padding: 10px 20px;
+      padding: 10px;
+      min-width: 20px;
     }
 
     .content-td {
@@ -268,7 +269,7 @@
       left: -16px;
       right: -16px;
       bottom: 0;
-      top: -45px;
+      top: -58px;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
       z-index: 2;
       border-radius: 3px;
