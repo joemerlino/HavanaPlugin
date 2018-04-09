@@ -161,20 +161,46 @@ class GraphBuilder {
            //     }
            // })
 
-           let arrOfNodes = [];
-           d.forEach(el => {
-               arrOfNodes.push(this.getNodes(el));
+          let data=[]; //flaterizzo data
+          for(var i=0 ; i < d.length ; i++){
+            for(var j=0 ; j < d[i].length ; j++){
+              data.push(d[i][j]);
+            }
+          }
+          let nodesArr=this.getNodes(data);
+          let linksArr=this.getLinks(nodesArr,data);
+          /*
+          let arrOfNodes = [];
+          d.forEach(el => {
+              //console.log("el");
+              //console.log(el);
+              arrOfNodes.push(this.getNodes(el));
            });
+           */
 
+           
            // converti d in un array di oggetti
+           /*
+           console.log("arrofnodes");
+           console.log(arrOfNodes);
            var arr = [];
            arrOfNodes.forEach(function(el) {
+             console.log("el");
+             console.log(el);
                for(let i=0; i<el.length; i++) {
-                   arr.push(el[i]);
+                  console.log("arr");
+                  console.log(arr);
+                  console.log("el[i]");
+                  console.log(el[i]);
+                  if( this.checkIfNotPresent(arr, el[i])) {
+                    arr.push(el[i]);
+                  }
                }
-           })
-
-
+           }).call(this);
+           console.log("arr");
+           console.log(arr);
+           */
+           /*
            let arrOfLinks = [];
            d.forEach((el) => {
                arrOfLinks.push(this.getLinks(arr, el));
@@ -187,12 +213,13 @@ class GraphBuilder {
                    tmpa.push(el[i]);
                }
            });
-
-           dataGraph['links'] = tmpa;
-           dataGraph['nodes'] = arr;
+           */
 
 
-           d = dataGraph; // useless ma la lascio per legacy
+          dataGraph['nodes'] = nodesArr;
+          dataGraph['links'] = linksArr;
+
+          d = dataGraph; // useless ma la lascio per legacy
 
            // return this.data;
            resolve(dataGraph);

@@ -188,12 +188,12 @@ class StackBuilder {
                 var tmp = [];
 
                 res.forEach(el => {
-                    console.log("Elemento ricevuto: ");
-                    console.log(el);
+                    //console.log("Elemento ricevuto: ");
+                    //console.log(el);
                     this.data = this.dataCleaner.cleanDataStack(el);
 
-                    console.log("Dato pulito: ");
-                    console.log(this.data);
+                    //console.log("Dato pulito: ");
+                    //console.log(this.data);
 
 
                     var dataStack = {};
@@ -235,16 +235,16 @@ class StackBuilder {
                 var def = [];
 
                 tmp.forEach(el => {
-                    console.log("porcgetto");
-                    console.log(el);
+                    //console.log("porcgetto");
+                    //console.log(el);
                     Object.keys(el).forEach(ss => {
                         def.push(el[ss]);
                     })
 
                 })
 
-                console.log("T-9000");
-                console.log(def);
+                //console.log("T-9000");
+                //console.log(def);
                 // return this.data;
                 resolve(def);
             });

@@ -36,12 +36,13 @@ class DataCleaner {
     //     flatData.push(data[i][j]['_source']);
     //   }
     // }
-    console.log("FlatData");
-    console.log(flatData);
+    //console.log("FlatData");
+    //console.log(flatData);
 
     return flatData;
   }
 
+  //TODO: cambiare nome magari
   ignorantCaller(data) {
       var flatData = [];
       data.forEach(el => {
@@ -49,8 +50,8 @@ class DataCleaner {
           flatData.push(tmp);
       });
 
-      console.log("Flatdata:");
-      console.log(flatData);
+      //console.log("Flatdata:");
+      //console.log(flatData);
       return flatData;
   }
 
