@@ -13,7 +13,7 @@ class StackBuilder {
 
     /* --- Dati belli in build --- */
 
-    tableTOtree(table, rowP) {
+    tableToTree(table, rowP) {
       var tree = [];
       var salto = 0;
       var row;
@@ -22,7 +22,7 @@ class StackBuilder {
           branch['name'] = table[rowP]['name'];
           branch['selftime'] = table[rowP]['selftime'];
           branch['totaltime'] = table[rowP]['totaltime'];
-          branch['call_tree'] = this.tableTOtree(table, rowP+1);
+          branch['call_tree'] = this.tableToTree(table, rowP+1);
           tree[0] = branch;
       }
       else {
@@ -41,7 +41,7 @@ class StackBuilder {
             branch['name'] = table[row]['name'];
             branch['selftime'] = table[row]['selftime'];
             branch['totaltime'] = table[row]['totaltime'];
-            branch['call_tree'] = this.tableTOtree(table, row+1);
+            branch['call_tree'] = this.tableToTree(table, row+1);
             tree[x] = branch;
           }
           salto = table[row]['prole']+1;
@@ -95,7 +95,7 @@ class StackBuilder {
       }
 
       var tabPLUS = this.more_data(treeTAB);
-      return this.tableTOtree(tabPLUS, 0);
+      return this.tableToTree(tabPLUS, 0);
 
     }
 
