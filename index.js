@@ -1,5 +1,5 @@
 
-import exampleRoute from './server/routes/example';
+import exampleRoute from './server/routes/routes';
 export default function (kibana) {
   return new kibana.Plugin({
     require: ['elasticsearch'],
