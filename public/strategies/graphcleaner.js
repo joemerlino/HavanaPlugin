@@ -16,8 +16,6 @@ class GraphCleaner {
   wipe(data) {
     // deve pulire per grafo: per esempio probabilmente dovrai ignorare le chiamate di tipo http...
 
-    // console.log("Dati  dento il metodo clean()");
-    // console.log(data);
     var cleanedGraphData = [];
     var counter = 0;
 

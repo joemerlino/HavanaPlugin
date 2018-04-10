@@ -15,34 +15,15 @@ class DataCleaner {
 
   // rimuove i metdati di elasticsearch
   removeMetaDataFromIndex(data) {
-    // data = data['data'];
-    // console.log("Remove metadata:");
-    // console.log(data);
     var flatData = new Array();
 
     data.forEach(el => {
         flatData.push(el['_source']);
     });
 
-    // i dati vengono passati come un array di risultati legati ad un indice, quindi...
-    // for (var i = 0; i < data.length; i++) {
-    //   // per ogni indice...
-    //   for(var j = 0; j<data[i].length;j++){
-    //     //per ogni trace....
-    //
-    //     //aggiungi il contenuto della trace alla lista completa dei dati, essa è contenuta nel campo source
-    //     console.log("sauce: ");
-    //     console.log(data[i][j]['_source']);
-    //     flatData.push(data[i][j]['_source']);
-    //   }
-    // }
-    //console.log("FlatData");
-    //console.log(flatData);
-
     return flatData;
   }
 
-  //TODO: cambiare nome magari
   removeMetaDataFromIndeces(data) {
       var flatData = [];
       data.forEach(el => {
@@ -50,8 +31,6 @@ class DataCleaner {
           flatData.push(tmp);
       });
 
-      //console.log("Flatdata:");
-      //console.log(flatData);
       return flatData;
   }
 
@@ -66,7 +45,6 @@ class DataCleaner {
       this.removeMetaDataFromIndex(data.data.hits.hits)
     );
   }
-
 
 }
 
