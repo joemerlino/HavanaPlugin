@@ -4,12 +4,12 @@ import { uiModules } from 'ui/modules';
 import uiRoutes from 'ui/routes';
 
 // Imports for strategies and classes
-let DataCleaner = require('./dataCleaner');
-let DataReader = require('./dataReader');
-let GraphBuilder = require('./graphBuilder');
-let StackBuilder = require('./stackBuilder');
-let GraphCleaner = require('./strategies/graphcleaner');
-let StackCleaner = require('./strategies/stackcleaner');
+let DataCleaner = require('./components/dataCleaner');
+let DataReader = require('./components/dataReader');
+let GraphBuilder = require('./components/graphBuilder');
+let StackBuilder = require('./components/stackBuilder');
+let GraphCleaner = require('./components/strategies/graphcleaner');
+let StackCleaner = require('./components/strategies/stackcleaner');
 
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
 import databaseSvg from 'plugins/stab-havana/res/img/database.svg';
