@@ -59,7 +59,7 @@ uiModules
 
 
     function getLimit() {
-      return 1;
+      return 3000;
     }
 
 
