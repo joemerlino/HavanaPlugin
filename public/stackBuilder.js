@@ -136,6 +136,7 @@ class StackBuilder {
       x['duration'] = list[i]['duration_ms'];
       x['timestamp'] = list[i]['@timestamp'];
       x['text'] = list[i]['db.statement'];
+      x['database'] = list[i]['db.type'];
       aux[count++] = x;
     }
     return aux;

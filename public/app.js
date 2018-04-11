@@ -312,9 +312,9 @@ uiModules.get('app/stabHavana', [])
         b: '=src'
       },
       template: '<li>\
-                  <span class="toggle">{{ b.name }}\
-                    <div class="spacetree">{{b.selftime}}</div>\
-                    <div class="spacetree">{{b.totaltime}} ms</div>\
+                  <span class="toggle">{{ b.name | limitTo:50}}\
+                    <div class="spacetree">{{b.selftime | number}}</div>\
+                    <div class="spacetree">{{b.totaltime | number}} ms</div>\
                   </span>\
                 </li>',
       link: function(scope, element, attrs) {
