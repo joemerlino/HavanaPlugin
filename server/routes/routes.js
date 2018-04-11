@@ -19,53 +19,41 @@ export default function (server) {
         }
     })
 
-    const { callWithRequest } = server.plugins.elasticsearch.getCluster('data');
+    // const { callWithRequest } = server.plugins.elasticsearch.getCluster('data');
 
-    function getIndices() {
-        // TODO: questa funzione dovrà essere resa intelligente ed essere in
-        // grado di leggere tutti gli indici automaticamente, per ora inseriti a mani
-        var ind = new Array();
-        ind.push('stagemonitor-spans-2018.03.25');
-        ind.push('stagemonitor-spans-2018.03.28');
-        ind.push('stagemonitor-spans-2018.03.29');
-        ind.push('stagemonitor-spans-2018.04.01');
-        ind.push('stagemonitor-spans-2018.04.05');
-        return ind;
-    }
+    // // funzione per la lettura di tutti gli indici presenti nella lista degli indici
+    // function forwardFetchIndices(indicesList, elasticClient, pastResults, reply) {
+    //     // TODO: sistemare, se indiceList è vuoto si rompe!
 
-    // funzione per la lettura di tutti gli indici presenti nella lista degli indici
-    function forwardFetchIndices(indicesList, elasticClient, pastResults, reply) {
-        // TODO: sistemare, se indiceList è vuoto si rompe!
+    //     if (indicesList.length == 1) {
+    //         // 1 solo indice => puoi completare immediatamente la ricerca erestituire
+    //         const currentIndex = indicesList.pop();
+    //         elasticClient.search({
+    //             index: currentIndex
+    //         }).then(function (resp) {
 
-        if (indicesList.length == 1) {
-            // 1 solo indice => puoi completare immediatamente la ricerca erestituire
-            const currentIndex = indicesList.pop();
-            elasticClient.search({
-                index: currentIndex
-            }).then(function (resp) {
+    //             pastResults.push(resp.hits.hits);
+    //             reply(pastResults);
 
-                pastResults.push(resp.hits.hits);
-                reply(pastResults);
+    //         }, function (err) {
+    //             console.trace(err.message);
+    //         });
 
-            }, function (err) {
-                console.trace(err.message);
-            });
+    //     } else {
+    //         // più di 1 indice => devi eseguire la ricerca sul corrente e far restituire la risposta in seguito
+    //         const currentIndex = indicesList.pop();
+    //         elasticClient.search({
+    //             index: currentIndex
+    //         }).then(function (resp) {
 
-        } else {
-            // più di 1 indice => devi eseguire la ricerca sul corrente e far restituire la risposta in seguito
-            const currentIndex = indicesList.pop();
-            elasticClient.search({
-                index: currentIndex
-            }).then(function (resp) {
+    //             pastResults.push(resp.hits.hits);
+    //             forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
 
-                pastResults.push(resp.hits.hits);
-                forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
-
-            }, function (err) {
-                console.trace(err.message);
-            });
-        }
-    }
+    //         }, function (err) {
+    //             console.trace(err.message);
+    //         });
+    //     }
+    // }
 
     server.route({
         path: '/api/havana/index',
@@ -88,17 +76,17 @@ export default function (server) {
         }
     })
 
-    server.route({
-        path: '/api/havana/indices',
-        method: 'GET',
-        handler(req, reply) {
+    // server.route({
+    //     path: '/api/havana/indices',
+    //     method: 'GET',
+    //     handler(req, reply) {
 
-            var client = new elasticsearch.Client({
-                host: '34.245.86.64:9200',
-            });
+    //         var client = new elasticsearch.Client({
+    //             host: '34.245.86.64:9200',
+    //         });
 
-            forwardFetchIndices(getIndices(), client, new Array(), reply);
-        }
-    });
+    //         forwardFetchIndices(getIndices(), client, new Array(), reply);
+    //     }
+    // });
 
 }

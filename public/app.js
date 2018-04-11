@@ -32,6 +32,7 @@ uiRoutes.enable();
 
 uiRoutes
   .when('/', {
+    // serve?
     template,
     resolve: {
       getData($http) {
@@ -43,15 +44,17 @@ uiRoutes
 uiModules
   .get('app/stabHavana', [])
   .controller('stabHavanaHelloWorld', function($scope, $route, $interval, servomuto) {
-    $scope.title = 'Stub Havana';
-    $scope.description = 'PoC SWEefty';
+    $scope.title = 'Havana';
+    $scope.description = 'Havana plugin implementation';
 
     // link ai dati su elasticsearch
     const elasticInstance = $route.current.locals;
 
     // lettori di dati
     let dr = new DataReader(servomuto);
-    dr.tracesIndices();
+    console.log('Indici delle traces:');
+    console.log(dr.tracesIndices().then(res => {return res}));
+    
     // strategia con cui pulire i dati
     let strategy = new GraphCleaner();
     // pulitore di dati
@@ -253,22 +256,24 @@ uiModules
     // ritorna un array composto da tutti e soli gli indici che contengono nel nome spans
     this.tracesIndices = function() {
       return $http.get('../api/havana/allIndices').then(function(resp) {
+        // console.log(resp);
         var tracesIndices = new Array();
         for (var k in resp['data']) {
           if (resp['data'][k]['index'].includes('span')) {
             tracesIndices.push(resp['data'][k]['index']);
           }
         }
+        // console.log(tracesIndices);
         return tracesIndices;
       })
-    }
+    };
 
     // ritorna un indice, per ora fisso, ma un bel giorno variabile
     this.getIndex = function(index) {
       return $http.get('../api/havana/index?index=' + index).then(function(resp) { // da testare
         return resp;
       });
-    }
+    };
 
     this.getData = function(multipleIndices) {
       return this.tracesIndices().then(res => {

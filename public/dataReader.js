@@ -14,10 +14,13 @@ class DataReader {
     }
 
     tracesIndices(){
-        // TODO estrarre la salse
-        return this.es.tracesIndices(); 
+        const indices = this.es.tracesIndices();
+        return indices; 
     }
-    //TODO: aggiungere readIndex(index)
+    
+    readIndex(indexName){
+        return this.es.getIndex(indexName);
+    }
 
     readData() {
         // Esempio: passo dei dati al nostro getData dove verranno gestiti
