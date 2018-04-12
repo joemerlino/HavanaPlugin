@@ -1,3 +1,23 @@
+/*
+
+* File : dataCleaner.js
+* Versione : 1.0
+* Tipo : Javascript
+* Data : 2018-03-22
+* Autore : SWEefty Team 
+* E-mail : sweeftyteam@gmail.com 
+*
+* Licenza :				
+*				
+* Descrizione: 
+*
+* Registro modifiche :
+* Elia Montecchio || 2018-03-24 || Implementazione funzione "cleanDataStack" 
+* Elia Montecchio || 2018-03-23 || Implementazione funzioni "removeMetaDataFromIndex" e "CleanData"
+* Lisa Parma || 2018-03-22 || Realizzazione classe DataCleaner
+* Lisa Parma || 2018-03-22 || Creazione file
+*
+*/
 
 
 // classe che si deve occupare di pulire i dati che arrivano grezzi da elasticsearch.
