@@ -12,14 +12,14 @@
 * Descrizione: 
 *
 * Registro modifiche : 
-* Alberto Gallinaro  || 2018-03-10 || Rivista logica funzione "getGraph"
-* Davide Zago        || 2018-03-10 || Implementazione funzione "getGraph"
-* Joe Merlino        || 2018-03-08 || Corretto BUG sulla variabile id_counter della funzione "getNodes"
-* Alberto Gallinaro  || 2018-03-07 || Costruita array di collegamenti tra nodi funzione "getLinks"
-* Elia Montecchio    || 2018-03-06 || Implementate chiamate server funzione "getLinks"
-* Elia Montecchio    || 2018-03-05 || Scrittura funzione "getLinks"
-* Paolo Eccher       || 2018-03-04 || Rivista funzione funzioni "checkIfNodeIsNotPresent"
-* Francesco Parolini || 2018-03-03 || Implementazione funzioni "getLinks"
+* Alberto Gallinaro  || 2018-04-10 || Rivista logica funzione "getGraph"
+* Davide Zago        || 2018-04-10 || Implementazione funzione "getGraph"
+* Giuseppe Merlino   || 2018-04-08 || Corretto BUG sulla variabile id_counter della funzione "getNodes"
+* Alberto Gallinaro  || 2018-04-07 || Costruita array di collegamenti tra nodi funzione "getLinks"
+* Elia Montecchio    || 2018-04-06 || Implementate chiamate server funzione "getLinks"
+* Elia Montecchio    || 2018-04-05 || Scrittura funzione "getLinks"
+* Paolo Eccher       || 2018-04-04 || Rivista funzione funzioni "checkIfNodeIsNotPresent"
+* Francesco Parolini || 2018-04-03 || Implementazione funzioni "getLinks"
 * Alberto Gallinaro  || 2018-03-30 || Implementazione funzioni "getIdOfNode","getIndexOfSameLink"
 * Davide Zago        || 2018-03-28 || Implementazione funzioni "checkIfNodeIsNotPresent","getNodes"
 * Alberto Gallinaro  || 2018-03-27 || Realizzazione classe GraphBuilder

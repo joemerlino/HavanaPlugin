@@ -1,3 +1,33 @@
+/*
+
+* File : stackBuilder.js
+* Versione : 1.0
+* Tipo : Javascript
+* Data : 2018-03-5
+* Autore : SWEefty Team 
+* E-mail : sweeftyteam@gmail.com 
+*
+* Licenza :				
+*				
+* Descrizione: 
+*
+* Registro modifiche : 
+
+* Lisa Parma        || 2018-04-14 || Conclusa funzione "getStack"
+* Lisa Parma        || 2018-04-13 || Apportate alcune correzioni alla funzione "getStack"
+* Alberto Zago      || 2018-04-11 || Prima implementazione funzione "getStack"
+* Giuseppe Merlino  || 2018-04-10 || Realizzazione funzione "build_tree"
+* Alberto Gallinaro || 2018-04-10 || Prima implementazione funzione "build_tree"
+* Paolo Eccher      || 2018-04-8 || Realizzazione funzione "space"
+* Paolo Eccher      || 2018-04-7 || Realizzazione funzione "more_data"
+* Paolo Eccher      || 2018-04-6 || Realizzazione funzione "tableToTree"
+* Lisa Parma        || 2018-04-5 || Realizzazione funzione StackBuilder
+* Lisa Parma        || 2018-04-5 || Creazione file
+*
+*/
+
+
+
 let StackCleaner = require('./strategies/stackcleaner');
 let DataCleaner = require('./dataCleaner');
 

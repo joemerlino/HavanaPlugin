@@ -13,8 +13,8 @@
 *
 * Registro modifiche :
 * Lisa Parma         || 2018-03-26 || Realizzazione modulo Stack Trace
-* Joe Merlino        || 2018-03-19 || Realizzazione servizio per chiamate API con iniezione nel controller
-* Joe Merlino        || 2018-03-18 || Stesura funzione "dragended","dragged"
+* Giuseppe Merlino        || 2018-03-19 || Realizzazione servizio per chiamate API con iniezione nel controller
+* Giuseppe Merlino        || 2018-03-18 || Stesura funzione "dragended","dragged"
 * Alberto Gallinaro  || 2018-03-17 || Stesura funzione "ticked","dragstarted"
 * Alberto Gallinaro  || 2018-03-16 || Inserimento componente per visualizzare il grafo e impostazioni
 * Francesco Parolini || 2018-03-15 || Inserimento import e link ad elasticsearch
