@@ -1,3 +1,22 @@
+/*
+
+* File : routes.js
+* Versione : 1.0
+* Tipo : Javascript
+* Data : 2018-03-20
+* Autore : SWEefty Team 
+* E-mail : sweeftyteam@gmail.com 
+*
+* Licenza :				
+*				
+* Descrizione: 
+*
+* Registro modifiche :
+* Paolo Eccher || 2018-03-20 || Scrittura funzione default
+* Paolo Eccher || 2018-03-20 || Creazione file
+*
+*/
+
 var elasticsearch = require('elasticsearch');
 
 export default function (server) {
