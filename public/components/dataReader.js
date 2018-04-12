@@ -15,23 +15,20 @@ class DataReader {
 
     tracesIndices(){
         const indices = this.es.tracesIndices();
-        return indices; 
+        return indices;
     }
-    
+
     readIndex(indexName){
         return this.es.getIndex(indexName);
     }
 
     readData() {
         // Esempio: passo dei dati al nostro getData dove verranno gestiti
-        this.tracesIndices().then(res => {
+        return this.tracesIndices().then(res => {
             console.log("Trace ricevuti: ");
             console.log(res);
 
-
-            this.es.getData(res).then(r => {
-                console.log(r);
-            })
+            return this.es.getData(res);
         });
         // let customIndices = [
         //     'stagemonitor-spans-2018.03.25',
