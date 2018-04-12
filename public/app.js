@@ -52,8 +52,8 @@ uiModules
 
     // lettori di dati
     let dr = new DataReader(servomuto);
-    console.log('Indici delle traces:');
-    console.log(dr.tracesIndices().then(res => {return res}));
+    // console.log('Indici delle traces:');
+    // console.log(dr.tracesIndices().then(res => {return res}));
     
     // strategia con cui pulire i dati
     let strategy = new GraphCleaner();

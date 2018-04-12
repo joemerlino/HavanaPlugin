@@ -24,13 +24,22 @@ class DataReader {
 
     readData() {
         // Esempio: passo dei dati al nostro getData dove verranno gestiti
-        let customIndices = [
-            'stagemonitor-spans-2018.03.25',
-            'stagemonitor-spans-2018.03.28',
-            'stagemonitor-spans-2018.03.29',
-            'stagemonitor-spans-2018.04.01'
-        ]
-        return this.es.getData(customIndices);
+        this.tracesIndices().then(res => {
+            console.log("Trace ricevuti: ");
+            console.log(res);
+
+
+            this.es.getData(res).then(r => {
+                console.log(r);
+            })
+        });
+        // let customIndices = [
+        //     'stagemonitor-spans-2018.03.25',
+        //     'stagemonitor-spans-2018.03.28',
+        //     'stagemonitor-spans-2018.03.29',
+        //     'stagemonitor-spans-2018.04.01'
+        // ]
+        // return this.es.getData(customIndices);
     }
 }
 
