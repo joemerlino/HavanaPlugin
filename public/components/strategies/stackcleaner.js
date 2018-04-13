@@ -1,6 +1,6 @@
 /*
 
-* File : stackBuilder.js
+* File : stackcleaner.js
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-30
