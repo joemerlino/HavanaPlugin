@@ -14,8 +14,8 @@
 * Registro modifiche :
 * Elia Montecchio || 2018-03-24 || Implementazione funzione "cleanDataStack" 
 * Elia Montecchio || 2018-03-23 || Implementazione funzioni "removeMetaDataFromIndex" e "CleanData"
-* Lisa Parma || 2018-03-22 || Realizzazione classe DataCleaner
-* Lisa Parma || 2018-03-22 || Creazione file
+* Lisa Parma      || 2018-03-22 || Realizzazione classe DataCleaner
+* Lisa Parma      || 2018-03-22 || Creazione file
 *
 */
 

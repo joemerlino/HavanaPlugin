@@ -12,7 +12,7 @@
 * Descrizione: 
 *
 * Registro modifiche : 
-* Giuseppe Merlino || 2018-03-24 || Implementazione funzioni "tracesIndices","readIndex","readData"
+* Giuseppe Merlino  || 2018-03-24 || Implementazione funzioni "tracesIndices","readIndex","readData"
 * Alberto Gallinaro || 2018-03-23 || Realizzazione classe DataReader
 * Alberto Gallinaro || 2018-03-23 || Creazione file
 *

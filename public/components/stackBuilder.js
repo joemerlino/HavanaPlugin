@@ -3,7 +3,7 @@
 * File : stackBuilder.js
 * Versione : 1.0
 * Tipo : Javascript
-* Data : 2018-03-5
+* Data : 2018-03-05
 * Autore : SWEefty Team 
 * E-mail : sweeftyteam@gmail.com 
 *
@@ -18,11 +18,11 @@
 * Alberto Zago      || 2018-04-11 || Prima implementazione funzione "getStack"
 * Giuseppe Merlino  || 2018-04-10 || Realizzazione funzione "build_tree"
 * Alberto Gallinaro || 2018-04-10 || Prima implementazione funzione "build_tree"
-* Paolo Eccher      || 2018-04-8 || Realizzazione funzione "space"
-* Paolo Eccher      || 2018-04-7 || Realizzazione funzione "more_data"
-* Paolo Eccher      || 2018-04-6 || Realizzazione funzione "tableToTree"
-* Lisa Parma        || 2018-04-5 || Realizzazione funzione StackBuilder
-* Lisa Parma        || 2018-04-5 || Creazione file
+* Paolo Eccher      || 2018-04-08 || Realizzazione funzione "space"
+* Paolo Eccher      || 2018-04-07 || Realizzazione funzione "more_data"
+* Paolo Eccher      || 2018-04-06 || Realizzazione funzione "tableToTree"
+* Lisa Parma        || 2018-04-05 || Realizzazione funzione StackBuilder
+* Lisa Parma        || 2018-04-05 || Creazione file
 *
 */
 

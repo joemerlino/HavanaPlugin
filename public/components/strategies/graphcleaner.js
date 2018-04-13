@@ -1,3 +1,27 @@
+/*
+
+* File : stackBuilder.js
+* Versione : 1.0
+* Tipo : Javascript
+* Data : 2018-03-05
+* Autore : SWEefty Team 
+* E-mail : sweeftyteam@gmail.com 
+*
+* Licenza :				
+*				
+* Descrizione: 
+*
+* Registro modifiche : 
+
+
+* Paolo Eccher           || 2018-04-10 || Apportate modifiche funzione "wipe"
+* Giuseppe Merlino       || 2018-04-06 || Realizzazione funzione "wipe"
+* Elia Montecchio        || 2018-04-05 || Realizzazione classe GraphCleaner
+* Elia Montecchio        || 2018-04-05 || Creazione file
+*
+*/
+
+
 //  STRATEGY
 
 // classe per la pulizia dei dati per un grafo: non deve creare il grafo ma solamente pulire i dati da metadati ed informazioni inutil
