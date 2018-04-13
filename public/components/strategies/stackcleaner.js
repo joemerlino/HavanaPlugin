@@ -14,7 +14,7 @@
 * Registro modifiche : 
 
 
-* Davide Zago || 2018-04-05|| Realizzazione funzione "clean"
+* Davide Zago || 2018-04-05 || Realizzazione funzione "clean"
 * Lisa Parma  || 2018-03-31 || Realizzazione classe StackCleaner
 * Lisa Parma  || 2018-03-30 || Creazione file
 *
