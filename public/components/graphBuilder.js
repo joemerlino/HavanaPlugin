@@ -100,9 +100,8 @@ class GraphBuilder {
     return result;
   }
 
-  //Dato un nome di un nodo(assunto come chiave... not advisable) ritorna il suo id nella lista dei nodi.
-  //TODO: nome non dovrà essere chiave.
-  //TODO: gestire caso in cui non vi sia nella lista.
+  //Dato un nome di un nodo ritorna il suo id nella lista dei nodi.
+
   getIdOfNode(nodes, name) {
     for (var i = 0; i < nodes.length; i++) {
       if (nodes[i].name == name) {
@@ -121,7 +120,6 @@ class GraphBuilder {
 
   //data una lista di nodi e di richiesta http, db costruisce un array di collegamenti tra nodi
   //per ora riesce a captare chiamate a DB, senza esempi di server è difficile
-  //TODO: implementare chiamate a server
   //TODO: refactorizzare
   getLinks(nodes, data) {
 
