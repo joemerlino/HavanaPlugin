@@ -3,7 +3,7 @@
 * File : stackBuilder.js
 * Versione : 1.0
 * Tipo : Javascript
-* Data : 2018-03-05
+* Data : 2018-04-05
 * Autore : SWEefty Team 
 * E-mail : sweeftyteam@gmail.com 
 *
