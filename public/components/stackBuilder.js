@@ -16,7 +16,7 @@
 * Lisa Parma        || 2018-04-14 || Conclusa funzione "getStack"
 * Lisa Parma        || 2018-04-13 || Apportate alcune correzioni alla funzione "getStack"
 * Alberto Zago      || 2018-04-11 || Prima implementazione funzione "getStack"
-* Giuseppe Merlino  || 2018-04-10 || Realizzazione funzione "build_tree"
+* Lisa Parma        || 2018-04-10 || Realizzazione funzione "build_tree"
 * Alberto Gallinaro || 2018-04-10 || Prima implementazione funzione "build_tree"
 * Paolo Eccher      || 2018-04-08 || Realizzazione funzione "space"
 * Paolo Eccher      || 2018-04-07 || Realizzazione funzione "more_data"
