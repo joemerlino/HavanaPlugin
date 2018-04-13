@@ -277,6 +277,7 @@ uiModules
 
     s.getStack().then(res => {
       $scope.nodes = res;
+      $scope.$apply();
     }).catch(e => console.log(e));
 
   })
