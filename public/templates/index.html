@@ -47,8 +47,8 @@
                   <thead>
                     <tr>
                       <th id="nameMet"> Nome </th>
-                      <th id="timeMet"> Execution </br>Time</th>
-                      <th id="time2Met"> Timestamp </th>
+                      <th id="timeMet"> Selftime</th>
+                      <th id="time2Met"> Totaltime </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -109,7 +109,7 @@
       });
 
       /* Switch call tree / query list */
-      $("body").on("click", ".content", function() {
+      $("body").on("click", ".contentST", function() {
         var ogg = $(this);
         $(this).find(".list-switcher").change(function(){
           if(ogg.find("input[name=view]:checked").val()=="query") {
@@ -123,7 +123,7 @@
         });
       });
 
-      $("body").on("click", ".content", function() {
+      $("body").on("click", ".contentST", function() {
         var ogg = $(this);
         $(this).find(".list-switcher").change(function(){
           if(ogg.find("input[name=view]:checked").val()=="query") {
@@ -242,6 +242,21 @@
 
     th:last-child{
       border-right:0;
+    }
+
+    tr:hover 
+     { 
+      background-color: #ddd; 
+    } 
+
+    tr:first-child:hover 
+     { 
+      background-color: #FFFFFF;
+    }
+
+    .contentRow tr:hover 
+     { 
+      background-color: #FFFFFF;
     }
 
     .data {

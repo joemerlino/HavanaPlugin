@@ -351,8 +351,8 @@ uiModules.get('app/stabHavana', [])
       },
       template: '<li>\
                   <span class="toggle">{{ b.name | limitTo:50}}\
-                    <div class="spacetree">{{b.selftime | number}}</div>\
                     <div class="spacetree">{{b.totaltime | number}} ms</div>\
+                    <div class="spacetree">{{b.selftime | number}} ms</div>\
                   </span>\
                 </li>',
       link: function(scope, element, attrs) {
@@ -362,17 +362,4 @@ uiModules.get('app/stabHavana', [])
         }
       }
     };
-
-
   })
-/* FORSE non serve più
-.directive('querylist', function() {
-  return {
-    restrict: 'E',
-    replace: true,
-    scope: {
-      t: '=src',
-    },
-    template: '<div><div ng-repeat="c in t.query"><li><div id="nrDAT">1</div><div id="nameDAT">{{c.name}}</div><div id="time2DAT">{{c.timestamp}}</div><div id="timeDAT">{{c.time}} ms</div><div id="dbDAT">{{c.database}}</div></li></div><querylist ng-repeat="x in t.children" src="x"></querylist></div>',
-  };
-});*/
