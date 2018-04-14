@@ -4,14 +4,15 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-23
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
 *
-* Registro modifiche : 
+* Descrizione: classe che si deve occupare della lettura di dati da elasticsearch
+*              ritorna dati grezzi. Si avvale del service dichiarato in app.js
+*
+* Registro modifiche :
 * Giuseppe Merlino  || 2018-03-24 || Implementazione funzioni "tracesIndices","readIndex","readData"
 * Alberto Gallinaro || 2018-03-23 || Realizzazione classe DataReader
 * Alberto Gallinaro || 2018-03-23 || Creazione file

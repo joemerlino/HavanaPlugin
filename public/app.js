@@ -4,17 +4,19 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-15
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
+*
+* Descrizione: entry point dell'applicazione, qui sono presenti le componenti
+*              principali dell;app, i service, le direttive e le chiamate ai
+*              metodi che renderizzano grafo / stack
 *
 * Registro modifiche :
 * Lisa Parma         || 2018-03-26 || Realizzazione modulo Stack Trace
-* Giuseppe Merlino        || 2018-03-19 || Realizzazione servizio per chiamate API con iniezione nel controller
-* Giuseppe Merlino        || 2018-03-18 || Stesura funzione "dragended","dragged"
+* Giuseppe Merlino   || 2018-03-19 || Realizzazione servizio per chiamate API con iniezione nel controller
+* Giuseppe Merlino   || 2018-03-18 || Stesura funzione "dragended","dragged"
 * Alberto Gallinaro  || 2018-03-17 || Stesura funzione "ticked","dragstarted"
 * Alberto Gallinaro  || 2018-03-16 || Inserimento componente per visualizzare il grafo e impostazioni
 * Francesco Parolini || 2018-03-15 || Inserimento import e link ad elasticsearch

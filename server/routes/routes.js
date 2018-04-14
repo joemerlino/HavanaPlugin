@@ -4,12 +4,13 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-20
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
+*
+* Descrizione: server api, qui vengolo implementate gli endopoint API che si
+*              occupano di effettuare chiamate ad elasticsearch
 *
 * Registro modifiche :
 * Paolo Eccher || 2018-03-20 || Scrittura funzione default

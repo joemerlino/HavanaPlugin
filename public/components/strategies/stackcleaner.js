@@ -4,16 +4,16 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-30
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
 *
-* Registro modifiche : 
-
-
+* Descrizione: classe per la pulizia dei dati per una stack: non deve creare la
+*						 stack ma solamente pulire i dati da metadati ed informazioni
+*						 inutili
+*
+* Registro modifiche :
 * Davide Zago || 2018-04-05 || Realizzazione funzione "clean"
 * Lisa Parma  || 2018-03-31 || Realizzazione classe StackCleaner
 * Lisa Parma  || 2018-03-30 || Creazione file
@@ -22,11 +22,9 @@
 
 
 //  STRATEGY
-
-// classe per la pulizia dei dati per un grafo: non deve creare il grafo ma solamente pulire i dati da metadati ed informazioni inutil
 class StackCleaner {
 	clean(data) {
-		
+
 	  var cleanedStackData = {};
 	  cleanedStackData['pageload'] = [];
 	  cleanedStackData['http'] = [];
@@ -40,7 +38,7 @@ class StackCleaner {
 	    if ( "type" in data[i] && data[i]["type"] == "pageload") {
 	      	cleanedStackData['pageload'][countPL++] = data[i];
 	    }
-	    
+
 	    if("type" in data[i] && data[i]["type"] == "http"){
 	    	cleanedStackData['http'][countHT++] = data[i];
 	    }
@@ -51,7 +49,7 @@ class StackCleaner {
 
 	  }
 	  return cleanedStackData;
-		
+
 	  /*return data;*/
   }
 }

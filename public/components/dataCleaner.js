@@ -4,25 +4,24 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-22
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
+*
+* Descrizione: classe che si deve occupare di pulire i dati che arrivano grezzi
+*              da elasticsearch. Per modularità essa deve poter pulire i dati in
+*              modi diversi: per questo si avvale di classi strategy che
+*              determinano il vero comportamento di questa classe
 *
 * Registro modifiche :
-* Elia Montecchio || 2018-03-24 || Implementazione funzione "cleanDataStack" 
+* Elia Montecchio || 2018-03-24 || Implementazione funzione "cleanDataStack"
 * Elia Montecchio || 2018-03-23 || Implementazione funzioni "removeMetaDataFromIndex" e "CleanData"
 * Lisa Parma      || 2018-03-22 || Realizzazione classe DataCleaner
 * Lisa Parma      || 2018-03-22 || Creazione file
 *
 */
 
-
-// classe che si deve occupare di pulire i dati che arrivano grezzi da elasticsearch.
-// per la modularità essa deve poter pulire i dati in modi diversi: per questo si avvale di classi strategy
-// che determinano il vero comportamento di questa classe
 class DataCleaner {
 
   constructor(strategy) {

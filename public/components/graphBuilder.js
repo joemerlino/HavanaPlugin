@@ -4,14 +4,16 @@
 * Versione : 1.0
 * Tipo : Javascript
 * Data : 2018-03-27
-* Autore : SWEefty Team 
-* E-mail : sweeftyteam@gmail.com 
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
 *
-* Licenza :				
-*				
-* Descrizione: 
+* Licenza :
 *
-* Registro modifiche : 
+* Descrizione: classe che contiene la logica del grafo, qui i dati puliti vengo-
+*              no elaborati logicamente e restitutiti in forma corretta per
+*              essere renderizzati
+*
+* Registro modifiche :
 * Alberto Gallinaro  || 2018-04-10 || Rivista logica funzione "getGraph"
 * Davide Zago        || 2018-04-10 || Implementazione funzione "getGraph"
 * Giuseppe Merlino   || 2018-04-08 || Corretto BUG sulla variabile id_counter della funzione "getNodes"
