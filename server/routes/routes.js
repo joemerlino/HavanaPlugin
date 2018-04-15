@@ -13,12 +13,14 @@
 *              occupano di effettuare chiamate ad elasticsearch
 *
 * Registro modifiche :
+* Francesco Parolini || 2018-04-14 || Implementato il limite di documenti ritornati
 * Paolo Eccher || 2018-03-20 || Scrittura funzione default
 * Paolo Eccher || 2018-03-20 || Creazione file
 *
 */
 
 var elasticsearch = require('elasticsearch');
+let ConfigOptions = require('./config');
 
 export default function (server) {
 
@@ -82,6 +84,23 @@ export default function (server) {
         handler(req, reply) {
             // console.log(req['query']['index']); // da testare
             const requiredIndex= req['query']['index'];
+            const documentsQueryLimit = req['query']['limit']; // limite di risposte richiesto dall'utente
+            // TODO : ricerca per tipo di trace
+            const documentsQuery = req['query']['type'];
+            var documentsLimit;
+
+            if(documentsQueryLimit == null){
+                // non è stato richiesto un limite -> il limite è quello della configurazione di default
+                documentsLimit = ConfigOptions.getMaxDocumentsNumber();
+            } else {
+                if(documentsQueryLimit > ConfigOptions.getMaxDocumentsNumber()){
+                    // richiesti più documenti di quelli configurati -> richiesta limitata a quelli configurati
+                    documentsLimit = ConfigOptions.getMaxDocumentsNumber();
+                } else {
+                    // richiesto un numero ragionevole di documenti -> può essere utilizzato
+                    documentsLimit = parseInt(documentsQueryLimit);
+                }
+            }
 
             var client = new elasticsearch.Client({
                 // host: '34.245.86.64:9200',
@@ -89,7 +108,8 @@ export default function (server) {
             });
 
             client.search({
-                index: requiredIndex
+                index: requiredIndex, 
+                size : documentsLimit
             }).then(function (resp) {
                 reply(resp);
             }, function (err) {
