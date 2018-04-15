@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: crea un oggetto che contiene tutti i parametri configurabili dall'amministratore del plugin
 *

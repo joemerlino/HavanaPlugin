@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: classe che si deve occupare della lettura di dati da elasticsearch
 *              ritorna dati grezzi. Si avvale del service dichiarato in app.js

@@ -1,3 +1,28 @@
+/*
+
+* File : d3functions.js
+* Versione : 1.0
+* Tipo : Javascript
+* Data : 2018-04-12
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: 
+*						
+*						 
+*
+* Registro modifiche :
+* Davide Zago         || 2018-04-14 || Apportate correzioni alla funzione "render"
+* Davide Zago         || 2018-04-13 || Realizzazione funzione "render"
+* Francesco Parolini  || 2018-04-12 || Realizzazione classe D3Helper
+* Francesco Parolini  || 2018-04-12 || Creazione file
+*
+*/
+
+
+
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
 import databaseSvg from 'plugins/stab-havana/res/img/database.svg';
 

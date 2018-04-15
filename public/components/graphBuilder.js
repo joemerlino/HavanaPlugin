@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: classe che contiene la logica del grafo, qui i dati puliti vengo-
 *              no elaborati logicamente e restitutiti in forma corretta per

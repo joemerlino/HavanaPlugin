@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: entry point dell'applicazione, qui sono presenti le componenti
 *              principali dell'app, il controller che gestisce il rendeing delle

@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: server api, qui vengolo implementate gli endopoint API che si
 *              occupano di effettuare chiamate ad elasticsearch

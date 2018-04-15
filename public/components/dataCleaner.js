@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: classe che si deve occupare di pulire i dati che arrivano grezzi
 *              da elasticsearch. Per modularità essa deve poter pulire i dati in

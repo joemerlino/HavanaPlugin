@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: classe per la pulizia dei dati per una stack: non deve creare la
 *						 stack ma solamente pulire i dati da metadati ed informazioni

@@ -7,7 +7,7 @@
 * Autore : SWEefty Team
 * E-mail : sweeftyteam@gmail.com
 *
-* Licenza :
+* Licenza : GPLv3
 *
 * Descrizione: classe per la pulizia dei dati per un grafo: non crea il grafo ma
 *             pulisce solamente i dati dai metadati ed informazioni inutili
