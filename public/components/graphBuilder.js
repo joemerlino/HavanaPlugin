@@ -124,7 +124,6 @@ class GraphBuilder {
   //per ora riesce a captare chiamate a DB, senza esempi di server è difficile
   //TODO: refactorizzare
   getLinks(nodes, data) {
-
     var links = [];
     for (var i = 0; i < data.length; i++) {
       //analizza chiamate a db

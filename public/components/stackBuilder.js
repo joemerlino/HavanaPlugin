@@ -11,7 +11,7 @@
 *
 * Descrizione: classe che contiene la logica della stack, qui i dati puliti vengo-
 *              no elaborati logicamente stabilendo le relazioni tra loro e
-*             restitutiti in forma corretta per essere renderizzati 
+*             restitutiti in forma corretta per essere renderizzati
 *
 * Registro modifiche :
 

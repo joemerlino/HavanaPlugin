@@ -6,6 +6,10 @@ var fetchUrl = require("fetch").fetchUrl;
 
 chai.use(chaiHttp)
 
+let devPrefix = process.argv[3];
+console.log("Parametro rilevato: " + process.argv[3]);
+
+
 function extrapolateIndex(body) {
   let tmp = []
   body.forEach((el) => {
@@ -22,7 +26,7 @@ function extrapolateIndex(body) {
 
 describe('Rest API test', () => {
   it('it should GET all the indices', (done) => {
-    fetchUrl('http://localhost:5601/eyf/api/havana/allIndices', function(err, meta, body) {
+    fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/allIndices`, function(err, meta, body) {
       let tmp = extrapolateIndex(JSON.parse(body.toString()))
       tmp.should.be.an('array');
 
@@ -31,11 +35,11 @@ describe('Rest API test', () => {
   });
 
   it('it should GET one index', (done) => {
-    fetchUrl('http://localhost:5601/eyf/api/havana/allIndices', function(err, meta, body) {
+    fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/allIndices`, function(err, meta, body) {
       let res = JSON.parse(body.toString());
       let tmp = extrapolateIndex(res);
 
-      fetchUrl('http://localhost:5601/eyf/api/havana/index?index=' + tmp[0], function(err, meta, body) {
+      fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/index?index=` + tmp[0], function(err, meta, body) {
         let response = JSON.parse(body.toString());
 
         response.should.be.an('object');
@@ -46,13 +50,13 @@ describe('Rest API test', () => {
   });
 
   it('it should GET all the data from indexes', (done) => {
-    fetchUrl('http://localhost:5601/eyf/api/havana/allIndices', function(err, meta, body) {
+    fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/allIndices`, function(err, meta, body) {
       let res = JSON.parse(body.toString());
       let tmp = extrapolateIndex(res);
 
       let data = []
       tmp.forEach((el) => {
-        fetchUrl('http://localhost:5601/eyf/api/havana/index?index=' + tmp[0], function(err, meta, body) {
+        fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/index?index=` + tmp[0], function(err, meta, body) {
           data.push(JSON.parse(res.toString()))
         })
       })

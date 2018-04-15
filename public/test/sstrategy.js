@@ -1,6 +1,6 @@
 const d = require('../components/dataCleaner');
 var assert = require('assert');
-const GStrategy = require('../components/strategies/graphcleaner');
+const SStrategy = require('../components/strategies/stackcleaner');
 const chai = require('chai')
 const should = chai.should();
 
@@ -1197,13 +1197,19 @@ const tmpData = [
 ]
 
 let dc = new d();
-dc.setStrategy(new GStrategy());
+dc.setStrategy(new SStrategy());
 
-describe('DataCleaner unit test with GraphCleaner strategy', () =>{
-  describe('Testing cleanData() function', () => {
-    it('should return an array when called, it evaluates all GraphCleaner methods', () =>{
-      let res = dc.cleanData(tmpData)
-      res.should.be.an('array');
+describe('DataCleaner unit test with StackCleaner strategy', () =>{
+  describe('#clean()', () => {
+    let res = dc.cleanData(tmpData)
+    it('should return an array when called, it evaluates all StackCleaner methods', () =>{
+      res.should.be.an('object');
+      res.should.have.deep.property('pageload')
+    })
+    it('returned object should have: pageload, http, query properties ', () =>{
+      res.should.have.deep.property('pageload')
+      res.should.have.deep.property('http')
+      res.should.have.deep.property('query')
     })
   });
 })
