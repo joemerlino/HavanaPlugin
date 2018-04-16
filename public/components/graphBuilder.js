@@ -91,7 +91,7 @@ class GraphBuilder {
     return nodes;
   }
 
-  //COntrolla se nodo era già presente, per determinarlo controlla sorgente e target
+  //Controlla se nodo era già presente, per determinarlo controlla sorgente e target
   checkIfLinkIsNotPresent(links, candidate) {
     var result = true;
     for (var i = 0; i < links.length && result == true; i++) {

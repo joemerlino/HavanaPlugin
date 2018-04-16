@@ -49,8 +49,6 @@ class StackCleaner {
 
 	  }
 	  return cleanedStackData;
-
-	  /*return data;*/
   }
 }
 

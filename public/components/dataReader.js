@@ -29,7 +29,6 @@ class DataReader {
     }
 
     // imposta la sorgente dei dati
-    // TODO: questa diventerà elasticsearchClient  !!!!!!!
     setElasticsearchInstance(elastic) {
         this.es = elastic;
     }
@@ -51,13 +50,6 @@ class DataReader {
 
             return this.es.getData(res);
         });
-        // let customIndices = [
-        //     'stagemonitor-spans-2018.03.25',
-        //     'stagemonitor-spans-2018.03.28',
-        //     'stagemonitor-spans-2018.03.29',
-        //     'stagemonitor-spans-2018.04.01'
-        // ]
-        // return this.es.getData(customIndices);
     }
 }
 

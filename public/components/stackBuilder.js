@@ -43,7 +43,7 @@ class StackBuilder {
     this.dr = dr;
   }
 
-  /* --- Dati belli in build --- */
+  /* Pulizia dati per la build delle trace */
 
   tableToTree(table, rowP) {
     var tree = [];
@@ -130,7 +130,7 @@ class StackBuilder {
   }
 
 
-  /* ---- structure functionss ------ */
+  /* Funzioni per la strutturazione dei dati */
 
   build_pageload_request(traceHTTP, tracePL) {
     var traceHP = {}
