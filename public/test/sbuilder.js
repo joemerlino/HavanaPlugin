@@ -1,4 +1,4 @@
-const SBuilder = require('../components/stackbuilder');
+  const SBuilder = require('../components/stackbuilder');
 const chai = require('chai')
 const should = chai.should();
 
@@ -133,6 +133,11 @@ describe('StackBuilder tester', () => {
       tree.should.have.deep.property('call_tree')
       tree.should.have.deep.property('status_code')
       tree.should.have.deep.property('timestamp')
+    })
+    it('it should correctly identify type property', () => {
+      tree.type.should.not.be.null
+      // console.log(tree.type);
+
     })
 
   }) // describe

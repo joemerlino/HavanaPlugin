@@ -41,7 +41,6 @@ describe('Rest API test', () => {
 
       fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/index?index=` + tmp[0], function(err, meta, body) {
         let response = JSON.parse(body.toString());
-
         response.should.be.an('object');
         done()
       })
@@ -49,7 +48,7 @@ describe('Rest API test', () => {
 
   });
 
-  it('it should GET all the data from indexes', (done) => {
+  it('it should only return data containing traces', (done) => {
     fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/allIndices`, function(err, meta, body) {
       let res = JSON.parse(body.toString());
       let tmp = extrapolateIndex(res);
@@ -57,11 +56,14 @@ describe('Rest API test', () => {
       let data = []
       tmp.forEach((el) => {
         fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/index?index=` + tmp[0], function(err, meta, body) {
-          data.push(JSON.parse(res.toString()))
+          let d = JSON.parse(body.toString());
+          d.hits.hits.forEach((el) => {
+            el.should.have.deep.property('trace_id')
+          })
+          data.push(JSON.parse(body.toString()))
         })
-      })
-
-      data.should.be.an('array');
+      });
+      // data.should.be.an('array');
       done();
     })
   })

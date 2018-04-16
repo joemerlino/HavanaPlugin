@@ -1785,13 +1785,25 @@ describe('GraphBuilder tester', () => {
   describe('Testing getLinks function', () => {
     let links = gb.getLinks(nodes, mdata);
     it('it should return array with nodes\' links', () => {
-      // console.log(links);
+      console.log(links);
       links.should.be.an('array');
     })
     it('it should be well structured', () => {
       links[0].should.have.deep.property('source')
       links[0].should.have.deep.property('target')
       links[0].should.have.deep.property('type')
+    })
+    it('it shouldn\'t have duplicated links', () => {
+      // bool duplicates = false;
+      // console.log(nodes);
+      for (var i = 0; i < links.length; i++) {
+        for (var j = i + 1; j < links.length; j++) {
+          if (links[j].id == links[i].id) {
+          if (links[i].source == links[j].links && links[i].target == links[j].target)
+            throw new Error("Found duplicated links")
+          }
+        }
+      }
     })
 
   }) // describe
@@ -1805,6 +1817,17 @@ describe('GraphBuilder tester', () => {
       nodes[0].should.have.deep.property('name')
       nodes[0].should.have.deep.property('type')
       nodes[0].should.have.deep.property('id')
+    })
+    it('it shouldn\'t have duplicated nodes', () => {
+      // bool duplicates = false;
+      // console.log(nodes);
+      for (var i = 0; i < nodes.length; i++) {
+        for (var j = i + 1; j < nodes.length; j++) {
+          if (nodes[j].id == nodes[i].id) {
+            throw new Error("Found duplicated nodes")
+          }
+        }
+      }
     })
 
   }) // describe
