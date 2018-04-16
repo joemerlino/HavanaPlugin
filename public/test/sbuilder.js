@@ -112,7 +112,6 @@ describe('StackBuilder tester', () => {
   describe('Testing tableToTree function', () => {
     let tree = sb.tableToTree(table, rowP);
     it('it should return an array ', () => {
-      // console.log(tree);
       tree.should.be.an('array');
     })
     it('it should be well structured by having name, selftime and totaltime props', () => {
@@ -120,7 +119,6 @@ describe('StackBuilder tester', () => {
       tree[0].should.have.deep.property('selftime')
       tree[0].should.have.deep.property('totaltime')
     })
-
   }) // describe
 
   describe('Testing build_tree function', () => {
@@ -136,8 +134,6 @@ describe('StackBuilder tester', () => {
     })
     it('it should correctly identify type property', () => {
       tree.type.should.not.be.null
-      // console.log(tree.type);
-
     })
 
   }) // describe
@@ -153,6 +149,5 @@ describe('StackBuilder tester', () => {
       tree.should.have.deep.property('status_code')
       tree.should.have.deep.property('timestamp')
     })
-
   }) // describe
 })

@@ -29,7 +29,6 @@ describe('Rest API test', () => {
     fetchUrl(`http://localhost:5601/${devPrefix}/api/havana/allIndices`, function(err, meta, body) {
       let tmp = extrapolateIndex(JSON.parse(body.toString()))
       tmp.should.be.an('array');
-
       done()
     })
   });
@@ -63,7 +62,6 @@ describe('Rest API test', () => {
           data.push(JSON.parse(body.toString()))
         })
       });
-      // data.should.be.an('array');
       done();
     })
   })
