@@ -1,7 +1,7 @@
 /*
 
 * File : dataReader.js
-* Versione : 1.0
+* Versione : 1.0.0
 * Tipo : Javascript
 * Data : 2018-03-23
 * Autore : SWEefty Team

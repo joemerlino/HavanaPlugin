@@ -1,7 +1,7 @@
 /*
 
 * File : app.js
-* Versione : 1.0
+* Versione : 1.0.0
 * Tipo : Javascript
 * Data : 2018-03-15
 * Autore : SWEefty Team

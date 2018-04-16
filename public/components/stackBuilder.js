@@ -1,7 +1,7 @@
 /*
 
 * File : stackBuilder.js
-* Versione : 1.0
+* Versione : 1.0.0
 * Tipo : Javascript
 * Data : 2018-04-05
 * Autore : SWEefty Team

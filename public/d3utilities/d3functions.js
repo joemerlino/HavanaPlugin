@@ -1,7 +1,7 @@
 /*
 
 * File : d3functions.js
-* Versione : 1.0
+* Versione : 1.0.0
 * Tipo : Javascript
 * Data : 2018-04-12
 * Autore : SWEefty Team
