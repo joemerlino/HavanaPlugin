@@ -1,4 +1,25 @@
-  const SBuilder = require('../components/stackbuilder');
+/*
+
+* File : gbuilder.js
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-04-14
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: unit tests per stackbuilder
+*
+* Registro modifiche :
+* Alberto Gallinaro  || 2018-04-17 || Testing build_request
+* Lisa Parma         || 2018-04-17 || StackBuilder test
+* Alberto Gallinaro  || 2018-04-16 || Import dati mock
+* Lisa Parma         || 2018-04-14 || Creazione file
+*
+*/
+
+const SBuilder = require('../components/stackbuilder');
 const chai = require('chai')
 const should = chai.should();
 

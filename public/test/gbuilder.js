@@ -1,3 +1,24 @@
+/*
+
+* File : gbuilder.js
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-04-15
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: unit tests per graphbuilder
+*
+* Registro modifiche :
+* Alberto Gallinaro  || 2018-04-16 || Test getNodes
+* Lisa Parma         || 2018-04-15 || Test graph builder
+* Lisa Parma         || 2018-04-15 || Creazione file
+* Alberto Gallinaro  || 2018-04-15 || Import dati mock
+*
+*/
+
 const GBuilder = require('../components/graphbuilder');
 const chai = require('chai')
 const should = chai.should();

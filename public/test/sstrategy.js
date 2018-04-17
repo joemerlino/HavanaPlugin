@@ -1,3 +1,21 @@
+/*
+
+* File : sstrategy.js
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-04-17
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: unit tests per strategia stackcleaner
+*
+* Registro modifiche :
+* Lisa Parma         || 2018-04-17 || Implementazione test
+* Lisa Parma         || 2018-04-17 || Creazione file
+*
+*/
 const d = require('../components/dataCleaner');
 var assert = require('assert');
 const SStrategy = require('../components/strategies/stackcleaner');

@@ -1,4 +1,22 @@
+/*
 
+* File : gbuilder.js
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-04-18
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: unit test per le chiamate Rest
+*
+* Registro modifiche :
+* Alberto Gallinaro  || 2018-04-18 || RestAPI test
+* Lisa Parma         || 2018-04-18 || funzione extrapolateIndex e import dati mock
+* Alberto Gallinaro  || 2018-04-18 || Creazione file
+*
+*/
 let chai = require('chai');
 let should = chai.should();
 let chaiHttp = require('chai-http');
