@@ -28,7 +28,9 @@
 
 import moment from 'moment';
 import chrome from 'ui/chrome';
-import { uiModules } from 'ui/modules';
+import {
+  uiModules
+} from 'ui/modules';
 import uiRoutes from 'ui/routes';
 
 // Imports for strategies and classes
@@ -60,57 +62,39 @@ uiRoutes
 uiModules
   .get('app/stabHavana', [])
   .controller('stabHavanaHelloWorld', function($scope, $route, $interval, servomuto) {
-    $scope.title = 'Havana';
-    $scope.description = 'Havana plugin implementation';
-
-    // link ai dati su elasticsearch
-    const elasticInstance = $route.current.locals;
 
     // lettori di dati
     let dr = new DataReader(servomuto);
     console.log('Indici delle traces:');
-    // console.log(dr.readData());
     dr.readData().then(res => {
       console.log("App js: ");
       console.log(res);
     });
-
-
 
     // strategia con cui pulire i dati
     let strategy = new GraphCleaner();
     // pulitore di dati
     let dc = new DataCleaner(strategy);
 
-
-    // function getLimit() {
-    //   return 3000;
-    // }
-
-    // // componente dal quale ottenere il grafo 
+    // // componente dal quale ottenere il grafo
     let g = new GraphBuilder(dr);
 
-    // // check dei dati sottoforma di grafo
-
+    // check dei dati sottoforma di grafo
     g.getGraph().then(function(res) {
       console.log('Dati finali del grafo');
       console.log(res);
 
-      // impostazione dei nodi del grafo 
-      const ddd = res;
-
+      // impostazione dei nodi del grafo
       const d3h = new D3Helper(res);
-
       d3h.render();
 
     }).catch(e => console.log(e));;
 
     // // strategia con cui pulire i dati
     let stack_strategy = new StackCleaner();
+    let s = new StackBuilder(dr);
 
     dc.setStrategy(stack_strategy);
-
-    let s = new StackBuilder(dr);
 
     s.getStack().then(res => {
       $scope.nodes = res;
@@ -125,7 +109,6 @@ uiModules
     // ritorna un array composto da tutti e soli gli indici che contengono nel nome spans
     this.tracesIndices = function() {
       return $http.get('../api/havana/allIndices').then(function(resp) {
-        // console.log(resp);
         var tracesIndices = new Array();
         for (var k in resp['data']) {
           if (resp['data'][k]['index'].includes('span')) {
