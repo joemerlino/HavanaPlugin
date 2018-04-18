@@ -58,11 +58,13 @@ class GraphBuilder {
   // dato un array di span contenente richieste http e a db deve estrapolare una
   // lista di tutti i nodi che faranno parte della mappa senza che vi siano
   // ripetizioni
+  //TODO:rinominare in buildNodes
   getNodes(data) {
     var id_counter = 1;
     var nodes = [];
-    for (var i = 0; i < data.length; i++) {
 
+    for (var i = 0; i < data.length; i++) {
+    //by paulio: qui chiamerei una funzia che genera un candidato, tipo buildCandidate(data[i]), che costruisce un candidato e poi chiama checkIfNodeIsNotPresent su nodes e il candidato, perchè cosi fa abba cagare
       if (data[i]['type'] == "jdbc") {
         var candidate = {
           "name": data[i]['db.type'],
@@ -122,7 +124,9 @@ class GraphBuilder {
 
   //data una lista di nodi e di richiesta http, db costruisce un array di collegamenti tra nodi
   //per ora riesce a captare chiamate a DB, senza esempi di server è difficile
-  //TODO: refactorizzare
+  //TODO:rinominare in buildLinks
+  //TODO: refactorizzare, in particolare l'aggiornamento sull'average time che è oscieno
+  //TODO: creare una funzione buildCandidate(data[i]) che crea un candidato, speculare a quella in getNodes()
   getLinks(nodes, data) {
     var links = [];
     for (var i = 0; i < data.length; i++) {
