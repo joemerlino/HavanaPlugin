@@ -25,14 +25,13 @@
 class StackCleaner {
 	clean(data) {
 
+		var countPL = 0;
+		var countHT = 0;
+		var countQR = 0;
 	  var cleanedStackData = {};
 	  cleanedStackData['pageload'] = [];
 	  cleanedStackData['http'] = [];
 	  cleanedStackData['query'] = [];
-
-	  var countPL = 0;
-	  var countHT = 0;
-	  var countQR = 0;
 
 	  for ( var i = 0 ; i < data.length ; i++ ) {
 	    if ( "type" in data[i] && data[i]["type"] == "pageload") {

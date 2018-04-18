@@ -9,9 +9,10 @@
 *
 * Licenza : GPLv3
 *
-* Descrizione: 
-*						
-*						 
+* Descrizione: classe che riunisce tutte le funzionalita' di d3js che vengono
+*              utilizzate per renderizzare il grafo
+*
+*
 *
 * Registro modifiche :
 * Davide Zago         || 2018-04-14 || Apportate correzioni alla funzione "render"
@@ -20,8 +21,6 @@
 * Francesco Parolini  || 2018-04-12 || Creazione file
 *
 */
-
-
 
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
 import databaseSvg from 'plugins/stab-havana/res/img/database.svg';
@@ -36,6 +35,7 @@ var d3 = Object.assign(
   require("d3-drag")
 );
 
+
 class D3Helper {
 
   constructor(res) {
@@ -43,9 +43,7 @@ class D3Helper {
     this.timeLimit = 3000;
   }
 
-
   render() {
-
     var svg = d3.select("svg"),
       width = +svg.attr("width"),
       height = +svg.attr("height"),

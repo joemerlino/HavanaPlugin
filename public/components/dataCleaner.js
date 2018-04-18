@@ -37,20 +37,20 @@ class DataCleaner {
     var flatData = new Array();
 
     data.forEach(el => {
-        flatData.push(el['_source']);
+      flatData.push(el['_source']);
     });
 
     return flatData;
   }
 
   removeMetaDataFromIndeces(data) {
-      var flatData = [];
-      data.forEach(el => {
-          let tmp = this.removeMetaDataFromIndex(el.data.hits.hits);
-          flatData.push(tmp);
-      });
+    var flatData = [];
+    data.forEach(el => {
+      let tmp = this.removeMetaDataFromIndex(el.data.hits.hits);
+      flatData.push(tmp);
+    });
 
-      return flatData;
+    return flatData;
   }
 
   cleanData(data) {

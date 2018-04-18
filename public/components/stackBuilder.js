@@ -28,8 +28,6 @@
 *
 */
 
-
-
 let StackCleaner = require('./strategies/stackcleaner');
 let DataCleaner = require('./dataCleaner');
 
@@ -126,9 +124,7 @@ class StackBuilder {
 
     var tabPLUS = this.more_data(treeTAB);
     return this.tableToTree(tabPLUS, 0);
-
   }
-
 
   /* Funzioni per la strutturazione dei dati */
 
@@ -171,6 +167,7 @@ class StackBuilder {
       x['database'] = list[i]['db.type'];
       aux[count++] = x;
     }
+    
     return aux;
   }
 

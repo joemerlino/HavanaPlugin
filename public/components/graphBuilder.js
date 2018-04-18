@@ -29,7 +29,6 @@
 *
 */
 
-
 let GraphCleaner = require('./strategies/graphcleaner');
 let DataCleaner = require('./dataCleaner');
 
@@ -44,8 +43,9 @@ class GraphBuilder {
   }
 
   checkIfNodeIsNotPresent(dg, st) {
-    //dg contiene tutte i nodi da plottare, st(singletrace) è il candidato ad entrare nell'insieme.
-    //funzione che controlla che un candidato ad entrare nel set dei nodi univoci non sia già presente nel set (Array)
+    // dg contiene tutte i nodi da plottare, st(singletrace) è il candidato ad
+    // entrare nell'insieme. Funzione che controlla che un candidato ad entrare
+    // nel set dei nodi univoci non sia già presente nel set (Array)
     var result = true;
     for (var i = 0; i < dg.length && result == true; i++) {
       if (dg[i].name == st.name) {
@@ -146,10 +146,15 @@ class GraphBuilder {
           links.push(candidate);
         } else { //se invece era presente aggiorna il suo tempo medio di risposta
           var index = this.getIndexOfSameLink(links, candidate);
-          var total_response_time = links[index]['avg_response_time_ms'] * links[index]['number_of_requests'];
-          total_response_time = total_response_time + candidate['avg_response_time_ms'];
-          candidate['number_of_requests'] = links[index]['number_of_requests'] + 1;
-          candidate['avg_response_time_ms'] = total_response_time / candidate['number_of_requests'];
+          var total_response_time =
+            links[index]['avg_response_time_ms'] *
+            links[index]['number_of_requests'];
+          total_response_time =
+            total_response_time + candidate['avg_response_time_ms'];
+          candidate['number_of_requests'] =
+            links[index]['number_of_requests'] + 1;
+          candidate['avg_response_time_ms'] =
+            total_response_time / candidate['number_of_requests'];
 
           //togli il collegamento e inserisci il candidate con tempo medio e numero di richieste aggiornato
           var index = this.getIndexOfSameLink(links, candidate);
@@ -187,9 +192,6 @@ class GraphBuilder {
         dataGraph['nodes'] = nodesArr;
         dataGraph['links'] = linksArr;
 
-        d = dataGraph; // useless ma la lascio per legacy
-
-        // return this.data;
         resolve(dataGraph);
 
       }).catch(e => console.log(e));

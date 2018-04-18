@@ -22,113 +22,111 @@
 var elasticsearch = require('elasticsearch');
 let ConfigOptions = require('./config');
 
-export default function (server) {
+export default function(server) {
 
-    server.route({
-        path: '/api/havana/allIndices',
-        method: 'GET',
-        handler(req, reply) {
-            var client = new elasticsearch.Client({
-                host: 'localhost:9200',
-                // host: '34.245.86.64:9200',
-            });
-            client.cat.indices({
-                format : 'json'
-            }).then(function (resp) {
-                reply(resp);
-            }, function (err) {
-                console.trace(err.message);
-            });
+  server.route({
+    path: '/api/havana/allIndices',
+    method: 'GET',
+    handler(req, reply) {
+      var client = new elasticsearch.Client({
+        host: 'localhost:9200',
+        // host: '34.245.86.64:9200',
+      });
+      client.cat.indices({
+        format: 'json'
+      }).then(function(resp) {
+        reply(resp);
+      }, function(err) {
+        console.trace(err.message);
+      });
+    }
+  })
+
+  // // funzione per la lettura di tutti gli indici presenti nella lista degli indici
+  // function forwardFetchIndices(indicesList, elasticClient, pastResults, reply) {
+  //     // TODO: sistemare, se indiceList è vuoto si rompe!
+
+  //     if (indicesList.length == 1) {
+  //         // 1 solo indice => puoi completare immediatamente la ricerca erestituire
+  //         const currentIndex = indicesList.pop();
+  //         elasticClient.search({
+  //             index: currentIndex
+  //         }).then(function (resp) {
+
+  //             pastResults.push(resp.hits.hits);
+  //             reply(pastResults);
+
+  //         }, function (err) {
+  //             console.trace(err.message);
+  //         });
+
+  //     } else {
+  //         // più di 1 indice => devi eseguire la ricerca sul corrente e far restituire la risposta in seguito
+  //         const currentIndex = indicesList.pop();
+  //         elasticClient.search({
+  //             index: currentIndex
+  //         }).then(function (resp) {
+
+  //             pastResults.push(resp.hits.hits);
+  //             forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
+
+  //         }, function (err) {
+  //             console.trace(err.message);
+  //         });
+  //     }
+  // }
+
+  server.route({
+    path: '/api/havana/index',
+    method: 'GET',
+    handler(req, reply) {
+      // console.log(req['query']['index']); // da testare
+      const requiredIndex = req['query']['index'];
+      const documentsQueryLimit = req['query']['limit']; // limite di risposte richiesto dall'utente
+      // TODO : ricerca per tipo di trace
+      const documentsQuery = req['query']['type'];
+      var documentsLimit;
+
+      if (documentsQueryLimit == null) {
+        // non è stato richiesto un limite -> il limite è quello della configurazione di default
+        documentsLimit = ConfigOptions.getMaxDocumentsNumber();
+      } else {
+        if (documentsQueryLimit > ConfigOptions.getMaxDocumentsNumber()) {
+          // richiesti più documenti di quelli configurati -> richiesta limitata a quelli configurati
+          documentsLimit = ConfigOptions.getMaxDocumentsNumber();
+        } else {
+          // richiesto un numero ragionevole di documenti -> può essere utilizzato
+          documentsLimit = parseInt(documentsQueryLimit);
         }
-    })
+      }
 
-    // const { callWithRequest } = server.plugins.elasticsearch.getCluster('data');
+      var client = new elasticsearch.Client({
+        // host: '34.245.86.64:9200',
+        host: 'localhost:9200',
+      });
 
-    // // funzione per la lettura di tutti gli indici presenti nella lista degli indici
-    // function forwardFetchIndices(indicesList, elasticClient, pastResults, reply) {
-    //     // TODO: sistemare, se indiceList è vuoto si rompe!
+      client.search({
+        index: requiredIndex,
+        size: documentsLimit
+      }).then(function(resp) {
+        reply(resp);
+      }, function(err) {
+        console.trace(err.message);
+      });
+    }
+  })
 
-    //     if (indicesList.length == 1) {
-    //         // 1 solo indice => puoi completare immediatamente la ricerca erestituire
-    //         const currentIndex = indicesList.pop();
-    //         elasticClient.search({
-    //             index: currentIndex
-    //         }).then(function (resp) {
+  // server.route({
+  //     path: '/api/havana/indices',
+  //     method: 'GET',
+  //     handler(req, reply) {
 
-    //             pastResults.push(resp.hits.hits);
-    //             reply(pastResults);
+  //         var client = new elasticsearch.Client({
+  //             host: '34.245.86.64:9200',
+  //         });
 
-    //         }, function (err) {
-    //             console.trace(err.message);
-    //         });
-
-    //     } else {
-    //         // più di 1 indice => devi eseguire la ricerca sul corrente e far restituire la risposta in seguito
-    //         const currentIndex = indicesList.pop();
-    //         elasticClient.search({
-    //             index: currentIndex
-    //         }).then(function (resp) {
-
-    //             pastResults.push(resp.hits.hits);
-    //             forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
-
-    //         }, function (err) {
-    //             console.trace(err.message);
-    //         });
-    //     }
-    // }
-
-    server.route({
-        path: '/api/havana/index',
-        method: 'GET',
-        handler(req, reply) {
-            // console.log(req['query']['index']); // da testare
-            const requiredIndex= req['query']['index'];
-            const documentsQueryLimit = req['query']['limit']; // limite di risposte richiesto dall'utente
-            // TODO : ricerca per tipo di trace
-            const documentsQuery = req['query']['type'];
-            var documentsLimit;
-
-            if(documentsQueryLimit == null){
-                // non è stato richiesto un limite -> il limite è quello della configurazione di default
-                documentsLimit = ConfigOptions.getMaxDocumentsNumber();
-            } else {
-                if(documentsQueryLimit > ConfigOptions.getMaxDocumentsNumber()){
-                    // richiesti più documenti di quelli configurati -> richiesta limitata a quelli configurati
-                    documentsLimit = ConfigOptions.getMaxDocumentsNumber();
-                } else {
-                    // richiesto un numero ragionevole di documenti -> può essere utilizzato
-                    documentsLimit = parseInt(documentsQueryLimit);
-                }
-            }
-
-            var client = new elasticsearch.Client({
-                // host: '34.245.86.64:9200',
-                host: 'localhost:9200',
-            });
-
-            client.search({
-                index: requiredIndex, 
-                size : documentsLimit
-            }).then(function (resp) {
-                reply(resp);
-            }, function (err) {
-                console.trace(err.message);
-            });
-        }
-    })
-
-    // server.route({
-    //     path: '/api/havana/indices',
-    //     method: 'GET',
-    //     handler(req, reply) {
-
-    //         var client = new elasticsearch.Client({
-    //             host: '34.245.86.64:9200',
-    //         });
-
-    //         forwardFetchIndices(getIndices(), client, new Array(), reply);
-    //     }
-    // });
+  //         forwardFetchIndices(getIndices(), client, new Array(), reply);
+  //     }
+  // });
 
 }

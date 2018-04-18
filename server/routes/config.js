@@ -16,16 +16,17 @@
 *
 */
 
-// Imposta il numero massimo di documenti che possono essere letti in una sola richiesta dal lato server del plguin per evitare di leggere tutto un indice
-class ConfigOptions{
+// Imposta il numero massimo di documenti che possono essere letti in una sola
+// richiesta dal lato server del plguin per evitare di leggere tutto un indice
+class ConfigOptions {
 
-    constructor(){
-        this.MAX_DOCUMENTS_NUMBER = 10;
-    }
+  constructor() {
+    this.MAX_DOCUMENTS_NUMBER = 10;
+  }
 
-    getMaxDocumentsNumber(){
-        return this.MAX_DOCUMENTS_NUMBER;
-    }
+  getMaxDocumentsNumber() {
+    return this.MAX_DOCUMENTS_NUMBER;
+  }
 }
 
 module.exports = new ConfigOptions();

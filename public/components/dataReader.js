@@ -24,33 +24,31 @@
 // ritorna dati grezzi
 class DataReader {
 
-    constructor(elasticInstance) {
-        this.es = elasticInstance;
-    }
+  constructor(elasticInstance) {
+    this.es = elasticInstance;
+  }
 
-    // imposta la sorgente dei dati
-    setElasticsearchInstance(elastic) {
-        this.es = elastic;
-    }
+  // imposta la sorgente dei dati
+  setElasticsearchInstance(elastic) {
+    this.es = elastic;
+  }
 
-    tracesIndices(){
-        const indices = this.es.tracesIndices();
-        return indices;
-    }
+  tracesIndices() {
+    const indices = this.es.tracesIndices();
+    return indices;
+  }
 
-    readIndex(indexName){
-        return this.es.getIndex(indexName);
-    }
+  readIndex(indexName) {
+    return this.es.getIndex(indexName);
+  }
 
-    readData() {
-        // Esempio: passo dei dati al nostro getData dove verranno gestiti
-        return this.tracesIndices().then(res => {
-            console.log("Trace ricevuti: ");
-            console.log(res);
-
-            return this.es.getData(res);
-        });
-    }
+  readData() {
+    return this.tracesIndices().then(res => {
+      console.log("Trace ricevuti: ");
+      console.log(res);
+      return this.es.getData(res);
+    });
+  }
 }
 
 module.exports = DataReader;
