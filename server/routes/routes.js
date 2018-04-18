@@ -105,16 +105,10 @@ export default function(server) {
         host: 'localhost:9200',
       });
 
-      client.search({
-        index: requiredIndex,
-        size: documentsLimit
-      }).then(function(resp) {
-        reply(resp);
-      }, function(err) {
-        console.trace(err.message);
-      });
-    }
-  })
+            var client = new elasticsearch.Client({
+                // host: '34.245.86.64:9200',
+                host: 'localhost:9200',
+            });
 
   // server.route({
   //     path: '/api/havana/indices',
