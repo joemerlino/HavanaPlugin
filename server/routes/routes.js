@@ -29,8 +29,8 @@ export default function(server) {
     method: 'GET',
     handler(req, reply) {
       var client = new elasticsearch.Client({
-        host: 'localhost:9200',
-        // host: '34.245.86.64:9200',
+        //host: 'localhost:9200',
+        host: '34.245.86.64:9200',
       });
       client.cat.indices({
         format: 'json'
@@ -101,15 +101,20 @@ export default function(server) {
       }
 
       var client = new elasticsearch.Client({
-        // host: '34.245.86.64:9200',
-        host: 'localhost:9200',
+        host: '34.245.86.64:9200',
+        //host: 'localhost:9200',
       });
-
-            var client = new elasticsearch.Client({
-                // host: '34.245.86.64:9200',
-                host: 'localhost:9200',
-            });
-
+      
+      client.search({
+        index: requiredIndex,
+        size: documentsLimit
+      }).then(function(resp) {
+        reply(resp);
+      }, function(err) {
+        console.trace(err.message);
+      });
+    } 
+  })
   // server.route({
   //     path: '/api/havana/indices',
   //     method: 'GET',
