@@ -33,8 +33,9 @@ let DataCleaner = require('./dataCleaner');
 
 class StackBuilder {
 
-  constructor(dataReader) {
-    this.dr = dataReader;
+  constructor() {
+    // this.dr = dataReader;
+    this.traces = [];
   }
 
   setDataReader(dr) {
@@ -167,7 +168,7 @@ class StackBuilder {
       x['database'] = list[i]['db.type'];
       aux[count++] = x;
     }
-    
+
     return aux;
   }
 
@@ -205,64 +206,132 @@ class StackBuilder {
 
   /*---------------------------- */
 
-  getStack() {
-    return new Promise((resolve, reject) => {
-      this.dataCleaner = new DataCleaner(new StackCleaner());
-      this.dr.readData().then(res => {
-        console.log("Dati in getStack: ");
-        console.log(res);
+  buildTrace(el, traceID, pageload, db) {
+    var trace = {};
 
-        var tmp = [];
+    var pageload = this.checkPageload(traceID);
 
-        res.forEach(el => {
-          this.data = this.dataCleaner.cleanDataStack(el);
+    if (pageload != null) { // se ha un pageload associato
 
-          var dataStack = {};
-          var countRQ = 0;
+      trace = this.build_pageload_request(el, pageload);
 
-          for (var i = 0; i < this.data['http'].length; i++) {
+      var queries = this.checkQueries(traceID);
 
-            var traceID = this.data['http'][i]['trace_id'];
-            var trace = {};
+      if (queries != null) { // se ha anche delle query associate
+        trace['DBrequest'] = queries;
+        trace['type'] = "JDBC";
+        trace['duration'] = trace['duration'] + this.changeDuration(queries);
+      }
+      dataStack[countRQ++] = trace;
+    } else {
+      // Singola richiesta HTTP
 
-            var pageload = this.checkPageload(traceID);
+      this.traces.push(this.build_request(el));
+      dataStack[countRQ++] = trace;
+    }
+  } // function
 
-            if (pageload != null) { // se ha un pageload associato
+  buildTraces(http, pageload, db) {
+    res.forEach(http => {
 
-              trace = this.build_pageload_request(this.data['http'][i], pageload);
+      var dataStack = {};
+      var countRQ = 0;
 
-              var queries = this.checkQueries(traceID);
+      for (var i = 0; i < http.length; i++) {
 
-              if (queries != null) { // se ha anche delle query associate
-                trace['DBrequest'] = queries;
-                trace['type'] = "JDBC";
-                trace['duration'] = trace['duration'] + this.changeDuration(queries);
-              }
-              dataStack[countRQ++] = trace;
-            } else {
-              // Singola richiesta HTTP
-              trace = this.build_request(this.data['http'][i]);
-              dataStack[countRQ++] = trace;
-            }
-          }
+        var traceID = http[i]['trace_id'];
 
-          this.data = dataStack;
+        buildTrace(http[i], traceID, pageload, db);
+        // var trace = {};
+        //
+        // var pageload = this.checkPageload(traceID);
+        //
+        // if (pageload != null) { // se ha un pageload associato
+        //
+        //   trace = this.build_pageload_request(http[i], pageload);
+        //
+        //   var queries = this.checkQueries(traceID);
+        //
+        //   if (queries != null) { // se ha anche delle query associate
+        //     trace['DBrequest'] = queries;
+        //     trace['type'] = "JDBC";
+        //     trace['duration'] = trace['duration'] + this.changeDuration(queries);
+        //   }
+        //   dataStack[countRQ++] = trace;
+        // } else {
+        //   // Singola richiesta HTTP
+        //   trace = this.build_request(http[i]);
+        //   dataStack[countRQ++] = trace;
+        // }
+      }
 
-          tmp.push(dataStack);
-
-        })
-
-        var def = [];
-        tmp.forEach(el => {
-          Object.keys(el).forEach(ss => {
-            def.push(el[ss]);
-          })
-        })
-
-        resolve(def);
-      });
+      // this.data = dataStack;
+      //
+      // tmp.push(dataStack);
 
     })
+  }
+
+
+  getStack() {
+    // return new Promise((resolve, reject) => {
+    //   this.dataCleaner = new DataCleaner(new StackCleaner());
+    //   this.dr.readData().then(res => {
+    //     console.log("Dati in getStack: ");
+    //     console.log(res);
+    //
+    //     var tmp = [];
+    //
+    //     res.forEach(el => {
+    //       this.data = this.dataCleaner.cleanDataStack(el);
+    //
+    //       var dataStack = {};
+    //       var countRQ = 0;
+    //
+    //       for (var i = 0; i < http.length; i++) {
+    //
+    //         var traceID = http[i]['trace_id'];
+    //         var trace = {};
+    //
+    //         var pageload = this.checkPageload(traceID);
+    //
+    //         if (pageload != null) { // se ha un pageload associato
+    //
+    //           trace = this.build_pageload_request(this.data['http'][i], pageload);
+    //
+    //           var queries = this.checkQueries(traceID);
+    //
+    //           if (queries != null) { // se ha anche delle query associate
+    //             trace['DBrequest'] = queries;
+    //             trace['type'] = "JDBC";
+    //             trace['duration'] = trace['duration'] + this.changeDuration(queries);
+    //           }
+    //           dataStack[countRQ++] = trace;
+    //         } else {
+    //           // Singola richiesta HTTP
+    //           trace = this.build_request(this.data['http'][i]);
+    //           dataStack[countRQ++] = trace;
+    //         }
+    //       }
+    //
+    //       this.data = dataStack;
+    //
+    //       tmp.push(dataStack);
+    //
+    //     })
+    //
+    //     var def = [];
+    //     tmp.forEach(el => {
+    //       Object.keys(el).forEach(ss => {
+    //         def.push(el[ss]);
+    //       })
+    //     })
+    //
+    //     resolve(def);
+    //   });
+    //
+    // })
+    return this.traces;
   }
 
 }

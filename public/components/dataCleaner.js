@@ -36,10 +36,23 @@ class DataCleaner {
   removeMetaDataFromIndex(data) {
     var flatData = new Array();
 
-    data.forEach(el => {
-      flatData.push(el['_source']);
-    });
+    let tmp = [];
 
+    console.log("Data: ");
+    console.log(data);
+
+    data.forEach((el) => {
+      // console.log("el");
+      // console.log(el);
+      // tmp.push(el.data.hits.hits);
+      flatData.push(el['_source']);
+    })
+
+    tmp.forEach(el => {
+      // flatData.push(el['_source']);
+    });
+    console.log("flat: ");
+    console.log(flatData);
     return flatData;
   }
 
@@ -61,7 +74,7 @@ class DataCleaner {
 
   cleanDataStack(data) {
     return this.strategy.clean(
-      this.removeMetaDataFromIndex(data.data.hits.hits)
+      this.removeMetaDataFromIndex(data)
     );
   }
 

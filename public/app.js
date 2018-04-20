@@ -42,6 +42,8 @@ let GraphCleaner = require('./components/strategies/graphcleaner');
 let StackCleaner = require('./components/strategies/stackcleaner');
 let D3Helper = require('./d3utilities/d3functions');
 
+let StackBuilderDirector = require('./components/StackBuilderDirector');
+
 import 'ui/autoload/styles';
 import './less/main.less';
 import template from './templates/index.html';
@@ -89,17 +91,28 @@ uiModules
       d3h.render();
 
     }).catch(e => console.log(e));;
+    //
+    // // // strategia con cui pulire i dati
+    // let stack_strategy = new StackCleaner();
+    // let s = new StackBuilder(dr);
+    //
+    // dc.setStrategy(stack_strategy);
+    //
+    // s.getStack().then(res => {
+    //   $scope.nodes = res;
+    //   $scope.$apply();
+    // }).catch(e => console.log(e));
 
-    // // strategia con cui pulire i dati
-    let stack_strategy = new StackCleaner();
-    let s = new StackBuilder(dr);
 
-    dc.setStrategy(stack_strategy);
+    // ----------------------------------------------
+    const stackBuilder = new StackBuilder();
+    const drrrr = new DataReader(servomuto);
+    const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
 
-    s.getStack().then(res => {
+    // It might do the trick
+    StackDirector.constructStack().then(res => {
       $scope.nodes = res;
-      $scope.$apply();
-    }).catch(e => console.log(e));
+    })
 
   })
 

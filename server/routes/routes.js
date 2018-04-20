@@ -29,7 +29,7 @@ export default function(server) {
     method: 'GET',
     handler(req, reply) {
       var client = new elasticsearch.Client({
-        //host: 'localhost:9200',
+        // host: 'localhost:9200',
         host: '34.245.86.64:9200',
       });
       client.cat.indices({
@@ -104,7 +104,7 @@ export default function(server) {
         host: '34.245.86.64:9200',
         //host: 'localhost:9200',
       });
-      
+
       client.search({
         index: requiredIndex,
         size: documentsLimit
@@ -113,7 +113,7 @@ export default function(server) {
       }, function(err) {
         console.trace(err.message);
       });
-    } 
+    }
   })
   // server.route({
   //     path: '/api/havana/indices',
