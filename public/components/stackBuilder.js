@@ -207,6 +207,7 @@ class StackBuilder {
   /*---------------------------- */
 
   buildTrace(el, traceID, pageload, db) {
+
     var trace = {};
 
     var pageload = this.checkPageload(traceID);
@@ -222,17 +223,24 @@ class StackBuilder {
         trace['type'] = "JDBC";
         trace['duration'] = trace['duration'] + this.changeDuration(queries);
       }
-      dataStack[countRQ++] = trace;
+      // dataStack[countRQ++] = trace;
+      this.traces.push(trace);
+
+
     } else {
       // Singola richiesta HTTP
 
       this.traces.push(this.build_request(el));
-      dataStack[countRQ++] = trace;
+      // dataStack[countRQ++] = trace;
     }
   } // function
 
   buildTraces(http, pageload, db) {
-    res.forEach(http => {
+    this.data = {
+      'http': http,
+      'pageload': pageload,
+      'query': db
+    }
 
       var dataStack = {};
       var countRQ = 0;
@@ -240,8 +248,9 @@ class StackBuilder {
       for (var i = 0; i < http.length; i++) {
 
         var traceID = http[i]['trace_id'];
-
-        buildTrace(http[i], traceID, pageload, db);
+        // console.log("traceID");
+        // console.log(traceID);
+        this.buildTrace(http[i], traceID, pageload, db);
         // var trace = {};
         //
         // var pageload = this.checkPageload(traceID);
@@ -269,7 +278,9 @@ class StackBuilder {
       //
       // tmp.push(dataStack);
 
-    })
+
+    console.log("Traces: ");
+    console.log(this.traces);
   }
 
 

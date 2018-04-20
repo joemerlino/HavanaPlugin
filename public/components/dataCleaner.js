@@ -36,23 +36,15 @@ class DataCleaner {
   removeMetaDataFromIndex(data) {
     var flatData = new Array();
 
-    let tmp = [];
-
-    console.log("Data: ");
-    console.log(data);
-
     data.forEach((el) => {
-      // console.log("el");
-      // console.log(el);
-      // tmp.push(el.data.hits.hits);
-      flatData.push(el['_source']);
+      el.data.hits.hits.forEach((l) => {
+        flatData.push(l['_source']);
+      });
     })
 
-    tmp.forEach(el => {
-      // flatData.push(el['_source']);
-    });
-    console.log("flat: ");
+    console.log("flat");
     console.log(flatData);
+
     return flatData;
   }
 

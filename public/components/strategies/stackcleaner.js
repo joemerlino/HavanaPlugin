@@ -33,8 +33,11 @@ class StackCleaner {
 	  cleanedStackData['http'] = [];
 	  cleanedStackData['query'] = [];
 
+		// console.log("Dati in stackclenaer");
+		// console.log(data);
+
 		data.forEach((el) => {
-			console.log(el);
+			// console.log(el);
 			if("type" in el) {
         switch(el.type) {
           case "pageload": cleanedStackData.push(el);

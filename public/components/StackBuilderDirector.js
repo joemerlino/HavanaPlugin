@@ -13,24 +13,20 @@ class StackBuilderDirector {
 
   constructStack() {
     this.dataCleaner = new DataCleaner(new StackStrategy());
-    console.log("DR: ");
-    console.log(this.dr);
     return new Promise((resolve, reject) => {
       // this.dataCleaner = new DataCleaner(new StackCleaner());
       this.dr.readData().then(res => {
-        console.log("Dati in getStack: ");
-        console.log(res);
+        // console.log("Dati in getStack: ");
+        // console.log(res);
 
-        console.log("res: ");
-        console.log(res.hits);
-        let data = [];
-        data.push(this.dataCleaner.cleanDataStack(res));
+        let data = this.dataCleaner.cleanDataStack(res);
+        this.divideRequest(data);
 
-        console.log("datsss");
-        console.log(data);
-        // divideRequest(data);
+        this.stackBuilder.buildTraces(this.http, this.pageload, this.db);
 
-        this.stackBuilder.builTraces(this.http, this.pageload, this.db);
+        // console.log(this.http);
+        // console.log(this.pageload);
+        // console.log(this.db);
 
         resolve(this.stackBuilder.traces);
       });
@@ -41,6 +37,8 @@ class StackBuilderDirector {
 
   divideRequest(requests) {
     requests.forEach((el) => {
+      // console.log("el");
+      // console.log(el);
       if("type" in el) {
         switch(el.type) {
           case "pageload": this.pageload.push(el);

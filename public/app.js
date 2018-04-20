@@ -64,33 +64,33 @@ uiRoutes
 uiModules
   .get('app/stabHavana', [])
   .controller('stabHavanaHelloWorld', function($scope, $route, $interval, servomuto) {
-
-    // lettori di dati
-    let dr = new DataReader(servomuto);
-    console.log('Indici delle traces:');
-    dr.readData().then(res => {
-      console.log("App js: ");
-      console.log(res);
-    });
-
-    // strategia con cui pulire i dati
-    let strategy = new GraphCleaner();
-    // pulitore di dati
-    let dc = new DataCleaner(strategy);
-
-    // // componente dal quale ottenere il grafo
-    let g = new GraphBuilder(dr);
-
-    // check dei dati sottoforma di grafo
-    g.getGraph().then(function(res) {
-      console.log('Dati finali del grafo');
-      console.log(res);
-
-      // impostazione dei nodi del grafo
-      const d3h = new D3Helper(res);
-      d3h.render();
-
-    }).catch(e => console.log(e));;
+    //
+    // // lettori di dati
+    // let dr = new DataReader(servomuto);
+    // console.log('Indici delle traces:');
+    // dr.readData().then(res => {
+    //   console.log("App js: ");
+    //   console.log(res);
+    // });
+    //
+    // // strategia con cui pulire i dati
+    // let strategy = new GraphCleaner();
+    // // pulitore di dati
+    // let dc = new DataCleaner(strategy);
+    //
+    // // // componente dal quale ottenere il grafo
+    // let g = new GraphBuilder(dr);
+    //
+    // // check dei dati sottoforma di grafo
+    // g.getGraph().then(function(res) {
+    //   console.log('Dati finali del grafo');
+    //   console.log(res);
+    //
+    //   // impostazione dei nodi del grafo
+    //   const d3h = new D3Helper(res);
+    //   d3h.render();
+    //
+    // }).catch(e => console.log(e));
     //
     // // // strategia con cui pulire i dati
     // let stack_strategy = new StackCleaner();
@@ -111,7 +111,12 @@ uiModules
 
     // It might do the trick
     StackDirector.constructStack().then(res => {
+      console.log("dati ricevuti: ");
+      console.log(res);
       $scope.nodes = res;
+      console.log("$scope");
+      console.log($scope.nodes);
+      $scope.$apply();
     })
 
   })
