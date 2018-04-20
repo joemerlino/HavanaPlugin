@@ -58,13 +58,18 @@ class DataCleaner {
     return flatData;
   }
 
+
   cleanData(data) {
+    console.log("Dati ricevuti>");
+    console.log(data);
     return this.strategy.clean(
       this.removeMetaDataFromIndeces(data)
     );
   }
 
   cleanDataStack(data) {
+    console.log("Dati ricevuti>");
+    console.log(data);
     return this.strategy.clean(
       this.removeMetaDataFromIndex(data)
     );

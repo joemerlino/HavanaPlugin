@@ -43,6 +43,7 @@ let StackCleaner = require('./components/strategies/stackcleaner');
 let D3Helper = require('./d3utilities/d3functions');
 
 let StackBuilderDirector = require('./components/StackBuilderDirector');
+let GraphBuilderDirector = require('./components/GraphBuilderDirector');
 
 import 'ui/autoload/styles';
 import './less/main.less';
@@ -66,7 +67,19 @@ uiModules
   .controller('stabHavanaHelloWorld', function($scope, $route, $interval, servomuto) {
     //
     // // lettori di dati
-    // let dr = new DataReader(servomuto);
+    let dr = new DataReader(servomuto);
+    let gb = new GraphBuilder(dr);
+
+    let gdirector = new GraphBuilderDirector(dr, gb);
+
+    gdirector.constructGraph().then(res => {
+      console.log("Dati ricevuti per graph");
+      console.log(res);
+      const d3h = new D3Helper(res);
+      d3h.render();
+    })
+
+
     // console.log('Indici delle traces:');
     // dr.readData().then(res => {
     //   console.log("App js: ");
@@ -105,19 +118,19 @@ uiModules
 
 
     // ----------------------------------------------
-    const stackBuilder = new StackBuilder();
-    const drrrr = new DataReader(servomuto);
-    const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
-
-    // It might do the trick
-    StackDirector.constructStack().then(res => {
-      console.log("dati ricevuti: ");
-      console.log(res);
-      $scope.nodes = res;
-      console.log("$scope");
-      console.log($scope.nodes);
-      $scope.$apply();
-    })
+    // const stackBuilder = new StackBuilder();
+    // const drrrr = new DataReader(servomuto);
+    // const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
+    //
+    // // It might do the trick
+    // StackDirector.constructStack().then(res => {
+    //   console.log("dati ricevuti: ");
+    //   console.log(res);
+    //   $scope.nodes = res;
+    //   console.log("$scope");
+    //   console.log($scope.nodes);
+    //   $scope.$apply();
+    // })
 
   })
 

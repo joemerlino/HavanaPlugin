@@ -11,6 +11,10 @@ class StackBuilderDirector {
     this.db = [];
   }
 
+  setDataReader(dr) {
+    this.dr = dr;
+  }
+
   constructStack() {
     this.dataCleaner = new DataCleaner(new StackStrategy());
     return new Promise((resolve, reject) => {

@@ -24,16 +24,16 @@
 //  STRATEGY
 class GraphCleaner {
 
+  // clean(data) {
+  //   var cleanedGraphData = [];
+  //   data.forEach(el => {
+  //     cleanedGraphData.push(this.wipe(el));
+  //   })
+  //
+  //   return cleanedGraphData;
+  // }
+
   clean(data) {
-    var cleanedGraphData = [];
-    data.forEach(el => {
-      cleanedGraphData.push(this.wipe(el));
-    })
-
-    return cleanedGraphData;
-  }
-
-  wipe(data) {
     var cleanedGraphData = [];
     var counter = 0;
     var sec_counter = 0;
