@@ -13,6 +13,7 @@
 *              occupano di effettuare chiamate ad elasticsearch
 *
 * Registro modifiche :
+* Francesco Parolini || 2018-04-20 || Implementato lettura host elasticsearch dalle configurazioni
 * Francesco Parolini || 2018-04-14 || Implementato il limite di documenti ritornati
 * Paolo Eccher || 2018-03-20 || Scrittura funzione default
 * Paolo Eccher || 2018-03-20 || Creazione file
@@ -25,12 +26,13 @@ let ConfigOptions = require('./config');
 export default function(server) {
 
   server.route({
+    // ROUTE per la lettura degli indici del database Elasticsearch
     path: '/api/havana/allIndices',
     method: 'GET',
     handler(req, reply) {
       var client = new elasticsearch.Client({
-        //host: 'localhost:9200',
-        host: '34.245.86.64:9200',
+        host: ConfigOptions.getElasticsearchHost(),
+        // host: '34.245.86.64:9200',
       });
       client.cat.indices({
         format: 'json'
@@ -42,45 +44,11 @@ export default function(server) {
     }
   })
 
-  // // funzione per la lettura di tutti gli indici presenti nella lista degli indici
-  // function forwardFetchIndices(indicesList, elasticClient, pastResults, reply) {
-  //     // TODO: sistemare, se indiceList è vuoto si rompe!
-
-  //     if (indicesList.length == 1) {
-  //         // 1 solo indice => puoi completare immediatamente la ricerca erestituire
-  //         const currentIndex = indicesList.pop();
-  //         elasticClient.search({
-  //             index: currentIndex
-  //         }).then(function (resp) {
-
-  //             pastResults.push(resp.hits.hits);
-  //             reply(pastResults);
-
-  //         }, function (err) {
-  //             console.trace(err.message);
-  //         });
-
-  //     } else {
-  //         // più di 1 indice => devi eseguire la ricerca sul corrente e far restituire la risposta in seguito
-  //         const currentIndex = indicesList.pop();
-  //         elasticClient.search({
-  //             index: currentIndex
-  //         }).then(function (resp) {
-
-  //             pastResults.push(resp.hits.hits);
-  //             forwardFetchIndices(indicesList, elasticClient, pastResults, reply);
-
-  //         }, function (err) {
-  //             console.trace(err.message);
-  //         });
-  //     }
-  // }
-
   server.route({
+    //ROUTE per la lettura dei documenti di un indice del database Elasticsearch
     path: '/api/havana/index',
     method: 'GET',
     handler(req, reply) {
-      // console.log(req['query']['index']); // da testare
       const requiredIndex = req['query']['index'];
       const documentsQueryLimit = req['query']['limit']; // limite di risposte richiesto dall'utente
       // TODO : ricerca per tipo di trace
@@ -101,8 +69,8 @@ export default function(server) {
       }
 
       var client = new elasticsearch.Client({
-        host: '34.245.86.64:9200',
-        //host: 'localhost:9200',
+        // host: '34.245.86.64:9200',
+        host: ConfigOptions.getElasticsearchHost(),
       });
       
       client.search({
@@ -115,17 +83,4 @@ export default function(server) {
       });
     } 
   })
-  // server.route({
-  //     path: '/api/havana/indices',
-  //     method: 'GET',
-  //     handler(req, reply) {
-
-  //         var client = new elasticsearch.Client({
-  //             host: '34.245.86.64:9200',
-  //         });
-
-  //         forwardFetchIndices(getIndices(), client, new Array(), reply);
-  //     }
-  // });
-
 }

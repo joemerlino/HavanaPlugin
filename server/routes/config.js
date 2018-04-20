@@ -12,6 +12,7 @@
 * Descrizione: crea un oggetto che contiene tutti i parametri configurabili dall'amministratore del plugin
 *
 * Registro modifiche :
+* Francesco Parolini || 2018-04-20 || Implementato elasticsearch host configurabile
 * Francesco Parolini || 2018-04-14 || Creazione e scrittura del file
 *
 */
@@ -22,10 +23,24 @@ class ConfigOptions {
 
   constructor() {
     this.MAX_DOCUMENTS_NUMBER = 10;
+    this.ELASTICSEARCH_HOST_IP = "localhost";
+    this.ELASTICSEARCH_HOST_PORT = "9200";
   }
 
   getMaxDocumentsNumber() {
     return this.MAX_DOCUMENTS_NUMBER;
+  }
+
+  getElasticsearchHostIp(){
+    return this.ELASTICSEARCH_HOST_IP;
+  }
+
+  getElasticsearchHostPort(){
+    return this.ELASTICSEARCH_HOST_PORT;
+  }
+
+  getElasticsearchHost(){
+    return this.ELASTICSEARCH_HOST_IP+':'+this.ELASTICSEARCH_HOST_PORT;
   }
 }
 
