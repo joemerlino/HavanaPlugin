@@ -118,19 +118,19 @@ uiModules
 
 
     // ----------------------------------------------
-    // const stackBuilder = new StackBuilder();
-    // const drrrr = new DataReader(servomuto);
-    // const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
-    //
-    // // It might do the trick
-    // StackDirector.constructStack().then(res => {
-    //   console.log("dati ricevuti: ");
-    //   console.log(res);
-    //   $scope.nodes = res;
-    //   console.log("$scope");
-    //   console.log($scope.nodes);
-    //   $scope.$apply();
-    // })
+    const stackBuilder = new StackBuilder();
+    const drrrr = new DataReader(servomuto);
+    const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
+    
+    // It might do the trick
+    StackDirector.constructStack().then(res => {
+      console.log("dati ricevuti: ");
+      console.log(res);
+      $scope.nodes = res;
+      console.log("$scope");
+      console.log($scope.nodes);
+      $scope.$apply();
+    })
 
   })
 
