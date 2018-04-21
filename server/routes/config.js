@@ -22,7 +22,7 @@
 class ConfigOptions {
 
   constructor() {
-    this.MAX_DOCUMENTS_NUMBER = 10;
+    this.MAX_DOCUMENTS_NUMBER = 500;
     this.ELASTICSEARCH_HOST_IP = "localhost";
     this.ELASTICSEARCH_HOST_PORT = "9200";
   }
