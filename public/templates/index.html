@@ -41,14 +41,14 @@
         </tr>
       </thead>
       <tbody >
-        <tr ng-repeat-start="item in nodes">
+        <tr ng-repeat-start="item in nodes | orderBy: '-timestamp'">
           <td colspan="5" class="table-gap"></td>
         </tr>
         <tr class="main-row">
           <td><div class="data">{{$index+1}}</div></td>
           <td><div class="data">{{item.name}} - {{item.type}}</div></td>
-          <td><div class="data">{{item.duration}} ms</div></td>
-          <td><div class="data">{{item.timestamp}}</div></td>
+          <td><div class="data">{{item.duration | limitTo: 8}} ms</div></td>
+          <td><div class="data">{{item.timestamp | limitTo: 10}} <br/> {{item.timestamp | limitTo: -17 | limitTo: 8}} </div></td>
           <td><div class="data">{{item.error}}</div></td>
         </tr>
         <tr class="contentRow">
@@ -99,7 +99,7 @@
                       <td>{{x.text}}</td>
                       <td>{{x.database}}</td>
                       <td>{{x.duration}}</td>
-                      <td>{{x.timestamp}}</td>
+                      <td>{{x.timestamp | limitTo: 10}} <br/> {{item.timestamp | limitTo: -17 | limitTo: 8}}</td>
                     </tr>
                   </tbody>
                 </table>
