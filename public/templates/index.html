@@ -1,3 +1,24 @@
+<!--*
+
+* File : index.html
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-03-23
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: template della vista esposta all'utente del plugin
+*
+* Registro modifiche :
+* Lisa Parma        || 2018-03-23 || Realizzazione CSS
+* Lisa Parma        || 2018-03-23 || Realizzazione Stack Trace
+* Alberto Gallinaro || 2018-03-23 || Creazione file
+*
+*-->
+
+
 <div class="container" ng-controller="stabHavanaHelloWorld">
   <div class="row">
     <h1>Mappa Topologica</h1>
@@ -26,8 +47,8 @@
         <tr class="main-row">
           <td><div class="data">{{$index+1}}</div></td>
           <td><div class="data">{{item.name}} - {{item.type}}</div></td>
-          <td><div class="data">{{item.duration}} ms</div></td>
-          <td><div class="data">{{item.timestamp}}</div></td>
+          <td><div class="data">{{item.duration | limitTo: 8}} ms</div></td>
+          <td><div class="data">{{item.timestamp | limitTo: 10}} <br/> {{item.timestamp | limitTo: -17 | limitTo: 8}} </div></td>
           <td><div class="data">{{item.error}}</div></td>
         </tr>
         <tr class="contentRow">
@@ -78,7 +99,7 @@
                       <td>{{x.text}}</td>
                       <td>{{x.database}}</td>
                       <td>{{x.duration}}</td>
-                      <td>{{x.timestamp}}</td>
+                      <td>{{x.timestamp | limitTo: 10}} <br/> {{item.timestamp | limitTo: -17 | limitTo: 8}}</td>
                     </tr>
                   </tbody>
                 </table>

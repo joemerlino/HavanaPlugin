@@ -156,9 +156,9 @@ uiModules
       })
     };
 
-    // ritorna un indice, per ora fisso, ma un bel giorno variabile
+    // ritorna i documenti di un indice
     this.getIndex = function(index) {
-      return $http.get('../api/havana/index?index=' + index).then(function(resp) { // da testare
+      return $http.get('../api/havana/index?index=' + index).then(function(resp) { 
         return resp;
       });
     };

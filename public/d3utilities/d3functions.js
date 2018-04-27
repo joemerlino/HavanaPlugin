@@ -55,7 +55,6 @@ class D3Helper {
       .force("link", d3.forceLink().distance(150).id(function(d) {
         return d.id;
       }))
-      .force("charge", d3.forceManyBody())
       .force("center", d3.forceCenter(width / 2, height / 2));
 
     var link = svg.append("g")
@@ -85,7 +84,7 @@ class D3Helper {
       .enter().append("text")
       .attr("font-size", "10pt")
       .text(function(d) {
-        return d.type
+        return d.type;
       });
 
     var node = svg.append("g")
@@ -103,8 +102,7 @@ class D3Helper {
       .attr("height", 30)
       .call(d3.drag()
         .on("start", dragstarted)
-        .on("drag", dragged)
-        .on("end", dragended));
+        .on("drag", dragged));
 
     node.append("title")
       .text(function(d) {
@@ -187,7 +185,7 @@ class D3Helper {
     }
 
     function dragstarted(d) {
-      if (!d3.event.active) simulation.alphaTarget(0.3).restart();
+      if (!d3.event.active) simulation.alphaTarget(1).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
@@ -197,9 +195,6 @@ class D3Helper {
       d.fy = d3.event.y;
     }
 
-    function dragended(d) {
-      d3.select(this).classed("active", false);
-    }
 
   }
 }

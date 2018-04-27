@@ -1,3 +1,21 @@
+/*
+
+* File : index.js
+* Versione : 1.0.0
+* Tipo : Javascript
+* Data : 2018-03-20
+* Autore : SWEefty Team
+* E-mail : sweeftyteam@gmail.com
+*
+* Licenza : GPLv3
+*
+* Descrizione: TODO: scrivere
+*
+* Registro modifiche :
+* Paolo Eccher || 2018-03-20 || Creazione file
+*
+*/
+
 
 import exampleRoute from './server/routes/routes';
 export default function (kibana) {
