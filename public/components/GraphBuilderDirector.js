@@ -20,19 +20,8 @@ class GraphBuilderDirector {
         let d = this.dataCleaner.cleanDataStack(res)
         var dataGraph = {};
 
-        console.log("Dati puliti> ");
-        console.log(d);
-        // let data = []; //flaterizzo data
-        // for (var i = 0; i < d.length; i++) {
-        //   for (var j = 0; j < d[i].length; j++) {
-        //     data.push(d[i][j]);
-        //   }
-        // }
-
-        // console.log("Datadatadata>");
-        // console.log(data);
-        let nodesArr = this.graphBuilder.getNodes(d);
-        let linksArr = this.graphBuilder.getLinks(nodesArr, d);
+        let nodesArr = this.graphBuilder.buildNodes(d);
+        let linksArr = this.graphBuilder.buildLinks(nodesArr, d);
 
         console.log("nodesArr");
         console.log(nodesArr);

@@ -16,14 +16,14 @@
 * Registro modifiche :
 * Alberto Gallinaro  || 2018-04-10 || Rivista logica funzione "getGraph"
 * Davide Zago        || 2018-04-10 || Implementazione funzione "getGraph"
-* Giuseppe Merlino   || 2018-04-08 || Corretto BUG sulla variabile id_counter della funzione "getNodes"
-* Alberto Gallinaro  || 2018-04-07 || Costruita array di collegamenti tra nodi funzione "getLinks"
-* Elia Montecchio    || 2018-04-06 || Implementate chiamate server funzione "getLinks"
-* Elia Montecchio    || 2018-04-05 || Scrittura funzione "getLinks"
+* Giuseppe Merlino   || 2018-04-08 || Corretto BUG sulla variabile id_counter della funzione "buildNodes"
+* Alberto Gallinaro  || 2018-04-07 || Costruita array di collegamenti tra nodi funzione "buildLinks"
+* Elia Montecchio    || 2018-04-06 || Implementate chiamate server funzione "buildLinks"
+* Elia Montecchio    || 2018-04-05 || Scrittura funzione "buildLinks"
 * Paolo Eccher       || 2018-04-04 || Rivista funzione funzioni "checkIfNodeIsNotPresent"
-* Francesco Parolini || 2018-04-03 || Implementazione funzioni "getLinks"
+* Francesco Parolini || 2018-04-03 || Implementazione funzioni "buildLinks"
 * Alberto Gallinaro  || 2018-03-30 || Implementazione funzioni "getIdOfNode","getIndexOfSameLink"
-* Davide Zago        || 2018-03-28 || Implementazione funzioni "checkIfNodeIsNotPresent","getNodes"
+* Davide Zago        || 2018-03-28 || Implementazione funzioni "checkIfNodeIsNotPresent","buildNodes"
 * Alberto Gallinaro  || 2018-03-27 || Realizzazione classe GraphBuilder
 * Davide Zago        || 2018-03-27 || Creazione file
 *
@@ -31,11 +31,13 @@
 
 let GraphCleaner = require('./strategies/graphcleaner');
 let DataCleaner = require('./dataCleaner');
+let Graph = require('./Graph');
 
 class GraphBuilder {
 
   constructor(dataReader) {
     this.dr = dataReader;
+    this.graph = new Graph();
   }
 
   setDataReader(dr) {
@@ -58,8 +60,7 @@ class GraphBuilder {
   // dato un array di span contenente richieste http e a db deve estrapolare una
   // lista di tutti i nodi che faranno parte della mappa senza che vi siano
   // ripetizioni
-  //TODO:rinominare in buildNodes
-  getNodes(data) {
+  buildNodes(data) {
     var id_counter = 1;
     var nodes = [];
 
@@ -71,8 +72,9 @@ class GraphBuilder {
           "type": "Database",
           "id": id_counter
         }
-        if (this.checkIfNodeIsNotPresent(nodes, candidate)) {
-          nodes.push(candidate);
+        if (this.checkIfNodeIsNotPresent(this.graph.getNodes(), candidate)) {
+          // nodes.push(candidate);
+          this.graph.addNode(candidate);
           id_counter++;
         }
 
@@ -84,13 +86,13 @@ class GraphBuilder {
           "type": "Server",
           "id": id_counter
         }
-        if (this.checkIfNodeIsNotPresent(nodes, candidate)) {
-          nodes.push(candidate);
+        if (this.checkIfNodeIsNotPresent(this.graph.getNodes(), candidate)) {
+          this.graph.addNode(candidate);
           id_counter++;
         }
       }
     }
-    return nodes;
+    return this.graph.getNodes();
   }
 
   //Controlla se nodo era già presente, per determinarlo controlla sorgente e target
@@ -124,49 +126,50 @@ class GraphBuilder {
 
   //data una lista di nodi e di richiesta http, db costruisce un array di collegamenti tra nodi
   //per ora riesce a captare chiamate a DB, senza esempi di server è difficile
-  //TODO:rinominare in buildLinks
   //TODO: refactorizzare, in particolare l'aggiornamento sull'average time che è oscieno
-  //TODO: creare una funzione buildCandidate(data[i]) che crea un candidato, speculare a quella in getNodes()
-  getLinks(nodes, data) {
-    var links = [];
+  //TODO: creare una funzione buildCandidate(data[i]) che crea un candidato, speculare a quella in buildNodes()
+  buildLinks(nodes, data) {
+    // var links = [];
     for (var i = 0; i < data.length; i++) {
       //analizza chiamate a db
       if ("db.type" in data[i]) {
         //crea un collegamento candidato ad entrare nel set dei links
         var candidate = {
-          "source": this.getIdOfNode(nodes, data[i].application),
-          "target": this.getIdOfNode(nodes, data[i]['db.type']),
+          "source": this.getIdOfNode(this.graph.getNodes(), data[i].application),
+          "target": this.getIdOfNode(this.graph.getNodes(), data[i]['db.type']),
           "type": "Database", //per ora è fisso
           "avg_response_time_ms": data[i].duration_ms,
           "number_of_requests": 1
         }
 
         //se il link non era presente (controllo su univocità della coppia source/target) nella lista dei links inseriscilo
-        if (this.checkIfLinkIsNotPresent(links, candidate)) {
-          links.push(candidate);
+        if (this.checkIfLinkIsNotPresent(this.graph.getLinks(), candidate)) {
+          // links.push(candidate);
+          this.graph.addLink(candidate)
         } else { //se invece era presente aggiorna il suo tempo medio di risposta
-          var index = this.getIndexOfSameLink(links, candidate);
+          var index = this.getIndexOfSameLink(this.graph.getLinks(), candidate);
           var total_response_time =
-            links[index]['avg_response_time_ms'] *
-            links[index]['number_of_requests'];
+            this.graph.links[index]['avg_response_time_ms'] *
+            this.graph.links[index]['number_of_requests'];
           total_response_time =
             total_response_time + candidate['avg_response_time_ms'];
           candidate['number_of_requests'] =
-            links[index]['number_of_requests'] + 1;
+            this.graph.links[index]['number_of_requests'] + 1;
           candidate['avg_response_time_ms'] =
             total_response_time / candidate['number_of_requests'];
 
           //togli il collegamento e inserisci il candidate con tempo medio e numero di richieste aggiornato
-          var index = this.getIndexOfSameLink(links, candidate);
+          var index = this.getIndexOfSameLink(this.graph.getLinks(), candidate);
           if (index > -1) {
-            var x = links.splice(index, 1);
+            var x = this.graph.getLinks().splice(index, 1);
           }
-          links.push(candidate);
+          // links.push(candidate);
+          this.graph.addLink(candidate);
 
         }
       }
     }
-    return links;
+    return this.graph.getLinks();
   }
 
   getGraph() {
@@ -186,8 +189,8 @@ class GraphBuilder {
           }
         }
 
-        let nodesArr = this.getNodes(data);
-        let linksArr = this.getLinks(nodesArr, data);
+        let nodesArr = this.buildNodes(data);
+        let linksArr = this.buildLinks(nodesArr, data);
 
         dataGraph['nodes'] = nodesArr;
         dataGraph['links'] = linksArr;
