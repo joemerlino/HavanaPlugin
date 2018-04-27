@@ -29,9 +29,9 @@ class StackCleaner {
 		var countHT = 0;
 		var countQR = 0;
 	  var cleanedStackData = [];
-	  cleanedStackData['pageload'] = [];
-	  cleanedStackData['http'] = [];
-	  cleanedStackData['query'] = [];
+	  // cleanedStackData['pageload'] = [];
+	  // cleanedStackData['http'] = [];
+	  // cleanedStackData['query'] = [];
 
 		// console.log("Dati in stackclenaer");
 		// console.log(data);

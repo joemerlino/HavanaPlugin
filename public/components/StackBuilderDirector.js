@@ -24,6 +24,8 @@ class StackBuilderDirector {
         // console.log(res);
 
         let data = this.dataCleaner.cleanDataStack(res);
+        console.log("DATADFATADATA: ");
+        console.log(data);
         this.divideRequest(data);
 
         this.stackBuilder.buildTraces(this.http, this.pageload, this.db);
@@ -40,6 +42,8 @@ class StackBuilderDirector {
   }
 
   divideRequest(requests) {
+      console.log("Requests: ");
+      console.log(requests);
     requests.forEach((el) => {
       // console.log("el");
       // console.log(el);

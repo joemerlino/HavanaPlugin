@@ -121,7 +121,7 @@ uiModules
     const stackBuilder = new StackBuilder();
     const drrrr = new DataReader(servomuto);
     const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
-    
+
     // It might do the trick
     StackDirector.constructStack().then(res => {
       console.log("dati ricevuti: ");
@@ -131,6 +131,19 @@ uiModules
       console.log($scope.nodes);
       $scope.$apply();
     })
+
+    $scope.sortBy = "";
+    $scope.sortReverse = false;
+
+    $scope.sortQueryBy = "";
+    $scope.sortQueryReverse = false;
+
+
+    $scope.orderByName = function() {
+        console.log("ordino per nome uajo");
+    }
+
+
 
   })
 
