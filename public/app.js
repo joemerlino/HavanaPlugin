@@ -42,6 +42,9 @@ let GraphCleaner = require('./components/strategies/graphcleaner');
 let StackCleaner = require('./components/strategies/stackcleaner');
 let D3Helper = require('./d3utilities/d3functions');
 
+let StackBuilderDirector = require('./components/StackBuilderDirector');
+let GraphBuilderDirector = require('./components/GraphBuilderDirector');
+
 import 'ui/autoload/styles';
 import './less/main.less';
 import template from './templates/index.html';
@@ -62,44 +65,78 @@ uiRoutes
 uiModules
   .get('app/stabHavana', [])
   .controller('stabHavanaHelloWorld', function($scope, $route, $interval, servomuto) {
-
-    // lettori di dati
+    //
+    // // lettori di dati
     let dr = new DataReader(servomuto);
-    console.log('Indici delle traces:');
-    dr.readData().then(res => {
-      console.log("App js: ");
+    let gb = new GraphBuilder(dr);
+
+    let gdirector = new GraphBuilderDirector(dr, gb);
+
+    gdirector.constructGraph().then(res => {
+      console.log("Dati ricevuti per graph");
       console.log(res);
-    });
-
-    // strategia con cui pulire i dati
-    let strategy = new GraphCleaner();
-    // pulitore di dati
-    let dc = new DataCleaner(strategy);
-
-    // // componente dal quale ottenere il grafo
-    let g = new GraphBuilder(dr);
-
-    // check dei dati sottoforma di grafo
-    g.getGraph().then(function(res) {
-      console.log('Dati finali del grafo');
-      console.log(res);
-
-      // impostazione dei nodi del grafo
       const d3h = new D3Helper(res);
       d3h.render();
+    })
 
-    }).catch(e => console.log(e));;
 
+    // console.log('Indici delle traces:');
+    // dr.readData().then(res => {
+    //   console.log("App js: ");
+    //   console.log(res);
+    // });
+    //
     // // strategia con cui pulire i dati
-    let stack_strategy = new StackCleaner();
-    let s = new StackBuilder(dr);
+    // let strategy = new GraphCleaner();
+    // // pulitore di dati
+    // let dc = new DataCleaner(strategy);
+    //
+    // // // componente dal quale ottenere il grafo
+    // let g = new GraphBuilder(dr);
+    //
+    // // check dei dati sottoforma di grafo
+    // g.getGraph().then(function(res) {
+    //   console.log('Dati finali del grafo');
+    //   console.log(res);
+    //
+    //   // impostazione dei nodi del grafo
+    //   const d3h = new D3Helper(res);
+    //   d3h.render();
+    //
+    // }).catch(e => console.log(e));
+    //
+    // // // strategia con cui pulire i dati
+    // let stack_strategy = new StackCleaner();
+    // let s = new StackBuilder(dr);
+    //
+    // dc.setStrategy(stack_strategy);
+    //
+    // s.getStack().then(res => {
+    //   $scope.nodes = res;
+    //   $scope.$apply();
+    // }).catch(e => console.log(e));
 
-    dc.setStrategy(stack_strategy);
 
-    s.getStack().then(res => {
+    // ----------------------------------------------
+    const stackBuilder = new StackBuilder();
+    const drrrr = new DataReader(servomuto);
+    const StackDirector = new StackBuilderDirector(drrrr, stackBuilder);
+
+    // It might do the trick
+    StackDirector.constructStack().then(res => {
+      console.log("dati ricevuti: ");
+      console.log(res);
       $scope.nodes = res;
+      console.log("$scope");
+      console.log($scope.nodes);
       $scope.$apply();
-    }).catch(e => console.log(e));
+    })
+
+    $scope.sortBy = "";
+    $scope.sortReverse = false;
+
+    $scope.sortQueryBy = "";
+    $scope.sortQueryReverse = false;
 
   })
 

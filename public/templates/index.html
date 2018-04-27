@@ -35,13 +35,13 @@
         <tr>
           <th id="nr"> Nr. </th>
           <th id="name"> Richiesta </th>
-          <th id="time"> Execution Time</th>
-          <th id="time2"> Timestamp </th>
+          <th id="time"><a href="" ng-click="sortBy = 'duration'; sortReverse = !sortReverse"> Execution Time</a></th>
+          <th id="time2"><a href="" ng-click="sortBy = 'timestamp'; sortReverse = !sortReverse"> Timestamp </th>
           <th id="err"> Errore </th>
         </tr>
       </thead>
       <tbody >
-        <tr ng-repeat-start="item in nodes | orderBy: '-timestamp'">
+        <tr ng-repeat-start="item in nodes | orderBy:sortBy:sortReverse">
           <td colspan="5" class="table-gap"></td>
         </tr>
         <tr class="main-row">
@@ -89,12 +89,12 @@
                       <th id="nrQR"> Nr. </th>
                       <th id="nameQR"> Query </th>
                       <th id="db"> Database </th>
-                      <th id="timeQR"> Execution Time</th>
-                      <th id="time2QR"> Timestamp </th>
+                      <th id="timeQR"><a href="" ng-click="sortQueryBy = 'duration'; sortQueryReverse = !sortQueryReverse"> Execution Time </a></th>
+                      <th id="time2QR"><a href="" ng-click="sortQueryBy = 'duration'; sortQueryReverse = !sortQueryReverse"> Timestamp </a></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="x in item.DBrequest" src="x" class="queries">
+                    <tr ng-repeat="x in item.DBrequest | orderBy:sortQueryBy:sortQueryReverse" src="x" class="queries">
                       <td>{{index+1}}</td>
                       <td>{{x.text}}</td>
                       <td>{{x.database}}</td>

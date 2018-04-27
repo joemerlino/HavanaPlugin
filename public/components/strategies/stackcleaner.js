@@ -28,25 +28,44 @@ class StackCleaner {
 		var countPL = 0;
 		var countHT = 0;
 		var countQR = 0;
-	  var cleanedStackData = {};
-	  cleanedStackData['pageload'] = [];
-	  cleanedStackData['http'] = [];
-	  cleanedStackData['query'] = [];
+	  var cleanedStackData = [];
+	  // cleanedStackData['pageload'] = [];
+	  // cleanedStackData['http'] = [];
+	  // cleanedStackData['query'] = [];
 
-	  for ( var i = 0 ; i < data.length ; i++ ) {
-	    if ( "type" in data[i] && data[i]["type"] == "pageload") {
-	      	cleanedStackData['pageload'][countPL++] = data[i];
-	    }
+		// console.log("Dati in stackclenaer");
+		// console.log(data);
 
-	    if("type" in data[i] && data[i]["type"] == "http"){
-	    	cleanedStackData['http'][countHT++] = data[i];
-	    }
+		data.forEach((el) => {
+			// console.log(el);
+			if("type" in el) {
+        switch(el.type) {
+          case "pageload": cleanedStackData.push(el);
+          break;
 
-	    if("type" in data[i] && data[i]["type"] == "jdbc"){
-	    	cleanedStackData['query'][countQR++] = data[i];
-	    }
+          case "http": cleanedStackData.push(el);
+          break;
 
-	  }
+          case "jdbc": cleanedStackData.push(el);
+          break;
+        }
+      }
+		});
+
+	  // for ( var i = 0 ; i < data.length ; i++ ) {
+	  //   if ( "type" in data[i] && data[i]["type"] == "pageload") {
+	  //     	cleanedStackData['pageload'][countPL++] = data[i];
+	  //   }
+		//
+	  //   if("type" in data[i] && data[i]["type"] == "http"){
+	  //   	cleanedStackData['http'][countHT++] = data[i];
+	  //   }
+		//
+	  //   if("type" in data[i] && data[i]["type"] == "jdbc"){
+	  //   	cleanedStackData['query'][countQR++] = data[i];
+	  //   }
+		//
+		// }
 	  return cleanedStackData;
   }
 }
