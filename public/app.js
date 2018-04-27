@@ -138,13 +138,6 @@ uiModules
     $scope.sortQueryBy = "";
     $scope.sortQueryReverse = false;
 
-
-    $scope.orderByName = function() {
-        console.log("ordino per nome uajo");
-    }
-
-
-
   })
 
   // Service che esegue le chiamate alle api, viene iniettato sul controller

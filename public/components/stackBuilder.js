@@ -30,11 +30,13 @@
 
 let StackCleaner = require('./strategies/stackcleaner');
 let DataCleaner = require('./dataCleaner');
+let StackTrace = require('./StackTrace');
 
 class StackBuilder {
 
   constructor() {
     // this.dr = dataReader;
+    this.stacktrace = new StackTrace();
     this.traces = [];
   }
 
@@ -224,13 +226,15 @@ class StackBuilder {
         trace['duration'] = trace['duration'] + this.changeDuration(queries);
       }
       // dataStack[countRQ++] = trace;
-      this.traces.push(trace);
+      // this.traces.push(trace);
+      this.stacktrace.addTrace(trace);
 
 
     } else {
       // Singola richiesta HTTP
 
-      this.traces.push(this.build_request(el));
+      // this.traces.push(this.build_request(el));
+      this.stacktrace.addTrace(this.build_request(el));
       // dataStack[countRQ++] = trace;
     }
   } // function
@@ -280,7 +284,7 @@ class StackBuilder {
 
 
     console.log("Traces: ");
-    console.log(this.traces);
+    console.log(this.stacktrace.traces);
   }
 
 
@@ -342,7 +346,8 @@ class StackBuilder {
     //   });
     //
     // })
-    return this.traces;
+    // return this.traces;
+    return this.stacktrace.getTraces();
   }
 
 }
