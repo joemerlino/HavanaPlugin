@@ -54,7 +54,7 @@
         <tr class="contentRow">
           <td colspan="5" class="content-td">
             <div class="contentST">
-              <div class="list-switcher">
+              <div class="list-switcher" ng-if="item.DBrequest">
               <p class="fieldset">
                 <input type="radio" name="view" value="call" id="call-{{item.trace_id}}" checked>
                 <label for="call-{{item.trace_id}}">Call tree</label>
@@ -307,7 +307,7 @@
       left: -16px;
       right: -16px;
       bottom: 0;
-      top: -58px;
+      top: -36px;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
       z-index: 2;
       border-radius: 3px;
@@ -366,6 +366,7 @@
       border-radius: 50em;
       border: 2px solid #A1E2FF;;
       margin: 2em;
+      margin-bottom: 0em;
     }
 
     .list-switcher input[type="radio"] {
@@ -420,7 +421,7 @@
     }
 
     .calltree, .querylist {
-      padding: 0em 3em 3em 3em;
+      padding: 3em;
     }
 
     .call-table {
