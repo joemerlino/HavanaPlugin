@@ -41,15 +41,15 @@
         </tr>
       </thead>
       <tbody >
-        <tr ng-repeat-start="item in nodes | orderBy:sortBy:sortReverse">
+        <tr ng-repeat-start="item in nodes | orderBy: '-timestamp' | orderBy:sortBy:sortReverse">
           <td colspan="5" class="table-gap"></td>
         </tr>
         <tr class="main-row">
           <td><div class="data">{{$index+1}}</div></td>
-          <td><div class="data">{{item.name}} - {{item.type}}</div></td>
+          <td><div class="data">{{item.name}}</div></td>
           <td><div class="data">{{item.duration | limitTo: 8}} ms</div></td>
-          <td><div class="data">{{item.timestamp | limitTo: 10}} <br/> {{item.timestamp | limitTo: -17 | limitTo: 8}} </div></td>
-          <td><div class="data">{{item.error}}</div></td>
+          <td><div class="data">{{item.timestamp | limitTo: 10}} - {{item.timestamp | limitTo: -17 | limitTo: 8}} </div></td>
+          <td><div class="data correct" ng-if="false == item.error">{{item.error}}</div><div class="data error" ng-if="true == item.error">{{item.status_code}} </div></td>
         </tr>
         <tr class="contentRow">
           <td colspan="5" class="content-td">
@@ -248,8 +248,12 @@
       color: #99999;
     }
 
-    #nr, #time, #time2{
+    #nr, #time{
       width: 1em;
+    }
+
+    #time2 {
+      width: 20%;
     }
 
     #err{
@@ -340,6 +344,14 @@
 
     .expanded {
       display: table-row;
+    }
+
+    .error {
+      color: #E01F25;
+    }
+
+    .correct {
+      color: #00A000;
     }
 
     /* Switcher */
