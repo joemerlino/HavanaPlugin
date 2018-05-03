@@ -9,7 +9,9 @@
 *
 * Licenza : GPLv3
 *
-* Descrizione: TODO: scrivere
+* Descrizione: entry point dell'applicazione, qui viene richiesta a Kibana
+*              un'istanza di ElasticSearch e viene istanziato il Server API
+*              insieme al plugin vero e propio
 *
 * Registro modifiche :
 * Paolo Eccher || 2018-03-20 || Creazione file

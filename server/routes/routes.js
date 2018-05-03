@@ -31,8 +31,8 @@ export default function(server) {
     method: 'GET',
     handler(req, reply) {
       var client = new elasticsearch.Client({
-        // host: 'localhost:9200',
-        host: '34.245.86.64:9200',
+        host: 'localhost:9200',
+        // host: '34.245.86.64:9200',
       });
       client.cat.indices({
         format: 'json'
