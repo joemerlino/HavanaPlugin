@@ -26,10 +26,12 @@
         <button id='reset' title='Reset Layout to Beginning'>
               <i class='fa fa-undo'></i>
         </button>
+        <button id='switch' title='Fullscreen switch'>
+              <i class='fa fa-arrows-alt'></i>
+        </button>
         <svg id="canv" width="960" height="500">
         </svg>
       </div>
-    <div class="fs-button">hello</div> 
     
     <br /><br /><br/>
 
@@ -121,8 +123,20 @@
 
 
     <script type="text/javascript">
-    $('.fs-button').on('click', function(){
+    $('#switch').on('click', function(){
       var docElm = document.getElementById('fullscreen');
+      if (document.exitFullscreen) {
+          document.exitFullscreen();
+      }
+      else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+      }
+      else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+      }
+      else if (document.msExitFullscreen) {
+          document.msExitFullscreen();
+      }
       if (docElm.requestFullscreen) {
           docElm.requestFullscreen();
       }
@@ -135,6 +149,7 @@
       else if (docElm.msRequestFullscreen) {
           docElm.msRequestFullscreen();
       }
+
     });
 
     $(document).ready(function() {
