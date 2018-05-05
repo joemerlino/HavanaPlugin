@@ -1,5 +1,4 @@
 /*
-
 * File : d3functions.js
 * Versione : 1.0.0
 * Tipo : Javascript
@@ -24,6 +23,8 @@
 
 import serverSvg from 'plugins/stab-havana/res/img/server.svg';
 import databaseSvg from 'plugins/stab-havana/res/img/database.svg';
+
+
 
 var d3 = Object.assign(
   require("d3-selection"),
@@ -129,6 +130,10 @@ class D3Helper {
       .scaleExtent([1 / 2, 8])
       .on("zoom", zoomed));
 
+    d3.select('#reset').on('click', function() {
+      svg.call(zoomed, d3.zoomIdentity);
+    });
+
     function zoomed() {
       node.attr("transform", d3.event.transform);
       link.attr("transform", d3.event.transform);
@@ -195,7 +200,7 @@ class D3Helper {
       d.fy = d3.event.y;
     }
 
-
+    
   }
 }
 

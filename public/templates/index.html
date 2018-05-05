@@ -22,14 +22,18 @@
 <div class="container" ng-controller="stabHavanaHelloWorld">
   <div class="row">
     <h1>Mappa Topologica</h1>
-      <div class="col-12-sm">
-        <svg width="960" height="500"></svg>
+      <div id='fullscreen' class="col-12-sm">
+        <button id='reset' title='Reset Layout to Beginning'>
+              <i class='fa fa-undo'></i>
+        </button>
+        <svg id="canv" width="960" height="500">
+        </svg>
       </div>
-
+    <div class="fs-button">hello</div> 
+    
     <br /><br /><br/>
 
     <h1>Stack Trace</h1>
-
     <table class="stack">
       <thead>
         <tr>
@@ -117,6 +121,21 @@
 
 
     <script type="text/javascript">
+    $('.fs-button').on('click', function(){
+      var docElm = document.getElementById('fullscreen');
+      if (docElm.requestFullscreen) {
+          docElm.requestFullscreen();
+      }
+      else if (docElm.mozRequestFullScreen) {
+          docElm.mozRequestFullScreen();
+      }
+      else if (docElm.webkitRequestFullScreen) {
+          docElm.webkitRequestFullScreen();
+      }
+      else if (docElm.msRequestFullscreen) {
+          docElm.msRequestFullscreen();
+      }
+    });
 
     $(document).ready(function() {
 
@@ -211,6 +230,16 @@
         border-bottom-right-radius: 4px;
         border-bottom-left-radius: 4px;
     }
+
+    #myDiv.fullscreen{
+      z-index: 9999; 
+      width: 100%; 
+      height: 100%; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+    }
+    #myDiv{background:#cc0000; width:500px; height:400px;}
 
     /**/
 
