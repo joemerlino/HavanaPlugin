@@ -130,28 +130,45 @@
       }
       else if (document.mozCancelFullScreen) {
           document.mozCancelFullScreen();
+          cancelFullscreen();
       }
       else if (document.webkitCancelFullScreen) {
           document.webkitCancelFullScreen();
+          cancelFullscreen();
       }
       else if (document.msExitFullscreen) {
           document.msExitFullscreen();
+          cancelFullscreen();
       }
       if (docElm.requestFullscreen) {
           docElm.requestFullscreen();
       }
       else if (docElm.mozRequestFullScreen) {
           docElm.mozRequestFullScreen();
+          switchToFullscreen();
       }
       else if (docElm.webkitRequestFullScreen) {
           docElm.webkitRequestFullScreen();
+          switchToFullscreen();
       }
       else if (docElm.msRequestFullscreen) {
           docElm.msRequestFullscreen();
+          switchToFullscreen();
       }
 
     });
-
+  function switchToFullscreen(){
+    //document.getElementById('reset').click();
+    document.getElementById('canv').style.width = "100%";
+    document.getElementById('canv').style.height = "100%";
+    document.getElementById('fullscreen').style.width = "100%";
+  }
+  function cancelFullscreen(){
+    //document.getElementById('reset').click();
+    console.log('cancelFullscreen');
+    document.getElementById('canv').style.width = "960px";
+    document.getElementById('canv').style.height = "500px";
+  }
     $(document).ready(function() {
 
       /* Expand row */

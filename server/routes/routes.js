@@ -31,8 +31,8 @@ export default function(server) {
     method: 'GET',
     handler(req, reply) {
       var client = new elasticsearch.Client({
-        host: ConfigOptions.getElasticsearchHost(),
-        //host: '54.154.152.204:9200',
+        //host: ConfigOptions.getElasticsearchHost(),
+        host: '54.154.152.204:9200',
       });
       client.cat.indices({
         format: 'json'
@@ -69,8 +69,8 @@ export default function(server) {
       }
 
       var client = new elasticsearch.Client({
-        //host: '34.245.86.64:9200',
-        host: ConfigOptions.getElasticsearchHost(),
+        host: '54.154.152.204:9200',
+        //host: ConfigOptions.getElasticsearchHost(),
       });
 
       client.search({

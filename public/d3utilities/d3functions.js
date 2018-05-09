@@ -133,7 +133,7 @@ class D3Helper {
     d3.select('#reset').on('click', function() {
       svg.call(zoomed, d3.zoomIdentity);
     });
-
+  
     function zoomed() {
       node.attr("transform", d3.event.transform);
       link.attr("transform", d3.event.transform);

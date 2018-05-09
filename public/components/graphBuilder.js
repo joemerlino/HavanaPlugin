@@ -92,100 +92,7 @@ class GraphBuilder {
         }
       }
     }
-    return [
-
-    {
-
-      "name": "AWS Server",
-
-      "type": "Server",
-
-      "id": 1,
-
-      "stack_trace" : [
-          {
-            "nome": "SQL QUERY",
-            "error" : false,
-            "duration" : 3
-          },
-          {
-            "nome": "SYS_CALL",
-            "error" : true,
-            "duration" : 711
-          }
-      ]
-    },
-
-    {
-
-      "name": "DB_STORE",
-
-      "type": "Database",
-
-      "id": 2,
-
-      "stack_trace" : [
-          {
-            "nome": "SQL QUERY",
-            "error" : false,
-            "duration" : 340
-          },
-          {
-            "nome": "SYS_CALL",
-            "error" : true,
-            "duration" : 1200
-          }
-      ]
-
-    },
-
-    {
-
-      "name": "Neo4j",
-
-      "type": "Database",
-
-      "id": 3,
-
-      "stack_trace" : [
-          {
-            "nome": "executing query",
-            "error" : false,
-            "duration" : 21
-          },
-          {
-            "nome": "com.graph.reflect.distr",
-            "error" : true,
-            "duration" : 11
-          }
-      ]
-
-    },
-
-    {
-
-      "name": "Graph Database",
-
-      "type": "Database",
-
-      "id": 4,
-
-      "stack_trace" : [
-          {
-            "nome": "computing query",
-            "error" : false,
-            "duration" : 800
-          },
-          {
-            "nome": "SYS_CALL",
-            "error" : true,
-            "duration" : 12
-          }
-      ]
-
-    }
-
-  ];
+    return this.graph.getNodes();
 
   }
 
@@ -263,49 +170,7 @@ class GraphBuilder {
         }
       }
     }
-    return [
-
-    {
-
-      "source": 1,
-
-      "target": 2,
-
-      "type": "40"
-
-    },
-
-    {
-
-      "source": 1,
-
-      "target": 3,
-
-      "type": "20"
-
-    },
-
-    {
-
-      "source": 2,
-
-      "target": 4,
-
-      "type": "40"
-
-    },
-
-    {
-
-      "source": 1,
-
-      "target": 4,
-
-      "type": "10"
-
-    }
-
-  ];
+    return this.graph.getLinks();
   }
 
   getGraph() {
